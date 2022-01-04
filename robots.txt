@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Sitemap: https://bugoverdose.github.io/sitemap/sitemap-index.xml
+Host: https://bugoverdose.github.io
