@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[RSS Feed | bugoverdose]]></title><description><![CDATA[Dev blog by Jeong Jinwoo]]></description><link>https://bugoverdose.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Wed, 05 Jan 2022 07:38:28 GMT</lastBuildDate><item><title><![CDATA[개발 블로그를 시작하며]]></title><description><![CDATA[블로그 v1.0.0을 완료하였다. 약 10일 정도 작업을 하였고 현재 구글과 네이버에 각각 등록한 상황이다. 수정 및 추가하고 싶은 기능들이 아직도 꾸준히 생겨나고 있으나 이대로는 끝이 없을 듯 하여 일단 나의 첫 글을 남기고자 한다.]]></description><link>https://bugoverdose.github.io/essay/starting-a-dev-blog/</link><guid isPermaLink="false">https://bugoverdose.github.io/essay/starting-a-dev-blog/</guid><pubDate>Wed, 05 Jan 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;지난 해 12월 23일에 깃헙에 저장소를 생성한 이후 올해 1월 4일을 기준으로
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[RSS Feed | bugoverdose]]></title><description><![CDATA[Dev blog by Jeong Jinwoo]]></description><link>https://bugoverdose.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Wed, 05 Jan 2022 10:00:59 GMT</lastBuildDate><item><title><![CDATA[개발 블로그를 시작하며]]></title><description><![CDATA[블로그 v1.0.0을 완료하였다. 약 10일 정도 작업을 하였고 현재 구글과 네이버에 각각 등록한 상황이다. 수정 및 추가하고 싶은 기능들이 아직도 꾸준히 생겨나고 있으나 이대로는 끝이 없을 듯 하여 일단 나의 첫 글을 남기고자 한다.]]></description><link>https://bugoverdose.github.io/essay/starting-a-dev-blog/</link><guid isPermaLink="false">https://bugoverdose.github.io/essay/starting-a-dev-blog/</guid><pubDate>Wed, 05 Jan 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;지난 해 12월 23일에 깃헙에 저장소를 생성한 이후 올해 1월 4일을 기준으로
 블로그 v1.0.0을 완료하였다.
 실질적으로 약 10일 정도 작업을 하였고,
 &lt;code&gt;github.io&lt;/code&gt; 도메인으로 현재 구글과 네이버에 각각 등록한 상황이다.&lt;/p&gt;&lt;p&gt;수정 및 추가하고 싶은 기능들이 아직도 꾸준히 생겨나고 있으나
@@ -51,10 +51,10 @@ GraphQL 쿼리로 이를 조회하는 경험을 할 수 있어서 굉장히 좋�
 Gatsby v2를 사용하는 올-드한 프로젝트임에도 많은 이들의 사랑을 꾸준히 받고 있다.&lt;/p&gt;&lt;p&gt;그렇지만 Gatsby는 현재 빠른 속도로 발전하는 프레임워크이기 때문에
 일단은 최신 버전을 사용하는 것이 유지보수 측면에서 장기적으로 적절하다고 생각한다.
 2021년 3월과 10월에 각각 v3.0.0과 v4.0.0이 릴리즈된 것만 보아도
-버전 업데이트 속도가 실로 정신나갔다고밖에 말할 수 없다.&lt;/p&gt;&lt;p&gt;만일 Gatsby나 프로젝트 구조 및 설정에 대한 이해가 부족한 상태에서
-탬플릿을 사용할 경우 플러그인 중 하나가 deprecate되거나
-버전 마이그레이션이 필요한 상황이 생겼을 때
-나 자신이 문제 상황에 원활하게 대처할 수 있을지 의문이 든다.&lt;/p&gt;&lt;h2&gt;나는 어떤 글을 쓸 것인가&lt;/h2&gt;&lt;p&gt;솔직히 잘 모르겠다. 거 뭐 해본적이 있어야지 말이다.
+버전 업데이트 속도가 실로 정신나갔다고밖에 말할 수 없다.&lt;/p&gt;&lt;p&gt;Gatsby의 프로젝트 구조 및 플러그인 설정 방법에 대한 이해가 부족한
+사람이 별 생각 없이 탬플릿을 사용할 경우,
+향후 플러그인 중 하나가 deprecate되거나 버전 마이그레이션이 필요한 상황이 생겼을 때
+과연 문제 상황에 원활하게 대처할 수 있을지 솔직히 의구심이 든다.&lt;/p&gt;&lt;h2&gt;나는 어떤 글을 쓸 것인가&lt;/h2&gt;&lt;p&gt;솔직히 잘 모르겠다. 거 뭐 해본적이 있어야지 말이다.
 스스로를 &amp;#x27;필자&amp;#x27;라고 지칭해야 할지 &amp;#x27;나&amp;#x27;라고 지칭하는 것이 적절한지도 현재 고민하는 중이다.
 전반적으로 문어체를 추구할지 구어체에 가깝게 작성할지도 생각 중이다.&lt;/p&gt;&lt;p&gt;그렇지만 일단 현재 블로그 결과물이 생각보다 잘 나왔고,
 이왕 이렇게 된거 한 번 제대로 관리해보고자 한다.
