@@ -1,4 +1,141 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[RSS Feed | bugoverdose]]></title><description><![CDATA[Dev blog by Jeong Jinwoo]]></description><link>https://bugoverdose.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Thu, 06 Jan 2022 01:04:12 GMT</lastBuildDate><item><title><![CDATA[개발 블로그를 시작하며]]></title><description><![CDATA[블로그 v1.0.0을 완료하였다. 약 10일 정도 작업을 하였고 현재 구글과 네이버에 각각 등록한 상황이다. 수정 및 추가하고 싶은 기능들이 아직도 꾸준히 생겨나고 있으나 이대로는 끝이 없을 듯 하여 일단 나의 첫 글을 남기고자 한다.]]></description><link>https://bugoverdose.github.io/essay/starting-a-dev-blog/</link><guid isPermaLink="false">https://bugoverdose.github.io/essay/starting-a-dev-blog/</guid><pubDate>Wed, 05 Jan 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;지난 해 12월 23일에 깃헙에 저장소를 생성한 이후 올해 1월 4일을 기준으로
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[RSS Feed | bugoverdose]]></title><description><![CDATA[Dev blog by Jeong Jinwoo]]></description><link>https://bugoverdose.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Thu, 06 Jan 2022 12:37:52 GMT</lastBuildDate><item><title><![CDATA[컴퓨터는 어떻게 사고하는가: 비트와 논리연산에 대하여]]></title><description><![CDATA[논리 연산이라는 개념에서 출발하여 하이레벨에서 로우레벨로 차근차근 내려가봅시다. 기계어, 비트, 불리언 연산, 게이트, 플립플롭 등의 개념에 대해 가볍게 다룹니다. 궁극적으로 컴퓨터의 구조 및 동작 방식에 대한 최소한의 이해를 목표로 합니다.]]></description><link>https://bugoverdose.github.io/computer-science/bit-and-logic-operation/</link><guid isPermaLink="false">https://bugoverdose.github.io/computer-science/bit-and-logic-operation/</guid><pubDate>Thu, 06 Jan 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;논리 연산(logic operation)이란 기본적으
+로 불리언 값,
+즉 참 혹은 거짓 중 하나의 값을 반환하는 연산을 의미한다.
+예를 들어 자바스크립트 및 JSX 문법을 기준으로
+&lt;code&gt;if (a &amp;gt; 5) return true&lt;/code&gt;의 &lt;code&gt;a &amp;gt; 5&lt;/code&gt; 부분,
+&lt;code&gt;a === 1 ? &amp;quot;1이다&amp;quot; : &amp;quot;1이 아니다&amp;quot;&lt;/code&gt;의 &lt;code&gt;a === 1&lt;/code&gt; 부분,
+&lt;code&gt;{!loading &amp;amp;&amp;amp; &amp;lt;Component /&amp;gt;}&lt;/code&gt;의 &lt;code&gt;!loading&lt;/code&gt; 부분과 같이
+조건문에 해당되는 코드들에서는 전부 논리 연산이 발생한다고 볼 수 있다.&lt;/p&gt;&lt;p&gt;그러나 논리연산은 이처럼 프로그래밍 언어에서 조건문을
+수행하도록 명시적으로 지정하는 경우에만 일어난다고 볼 수 없다.
+하드웨어 레벨에서 보았을 때 컴퓨터에서 일어나는 모든 처리는
+본질적으로 논리 연산에 기반을 두고 동작하는 것으로 보인다.&lt;/p&gt;&lt;h2&gt;컴퓨터의 개념과 기계어&lt;/h2&gt;&lt;p&gt;사실 컴퓨터라는 용어는 기계로서의 컴퓨터가 발명되기 이전부터 존재했다.
+당시 컴퓨터는 계산 도구를 활용하여 숫자와 관련된 단순 계산 작업을 하는 사람들, 즉 직종을 의미하였다.
+물론 현대에 와서 기계로서의 컴퓨터는 극한으로 고도화되었고,
+인간 컴퓨터라는 직무를 대체하게 되었다. 그러나 과거와 마찬가지로
+&lt;em&gt;상황에 따라 들어온 입력에 대해 적절한 계산을 수행하고 그 값을 출력한다&lt;/em&gt;는 점에서
+그 본질은 크게 변하지 않았다고 볼 수 있다.&lt;/p&gt;&lt;p&gt;그렇다면 인간과 기계로서의 컴퓨터의 차이는 어디에 있을까?
+다양한 측면이 있겠지만 필자는 가장 큰 차이가 바로 &lt;strong&gt;언어 체계&lt;/strong&gt;에 있다고 생각한다.
+인간의 언어는 &lt;em&gt;텍스트&lt;/em&gt;에 기반하는데 반해
+컴퓨터의 언어인 기계어는 &lt;em&gt;비트와 논리연산&lt;/em&gt;에 기반을 두고 있다.&lt;/p&gt;&lt;h3&gt;인간의 언어: 텍스트&lt;/h3&gt;&lt;p&gt;.js, .py, .java 등 어떤 확장자를 사용하든지 간에
+대부분의 경우 프로그래머가 파일에 작성하는 코드는 결국 본질적으로 텍스트에 불과하다.
+각 프로그래밍 언어의 문법을 기준으로
+각 텍스트는 변수의 선언, 값 할당, 제어문 등 다양한 의미를 지닐 수 있지만
+이는 인간의 기준에서만 그러하다.
+컴퓨터의 입장에서 이 모든 코드는 그저 텍스트일 뿐이며,
+이러한 텍스트가 컴파일러에 의해 기계어로 변환되어야 비로소 컴퓨터는 이를 이해하고 실행할 수 있게 된다.&lt;/p&gt;&lt;p&gt;별도의 IDE 없이 메모장으로 만든 텍스트 파일에 자바 문법 코드를 작성하고
+.java 확장자로 저장하면 컴파일러로 해당 파일의 코드를 실행할 수 있다는 점이
+이러한 과정을 명시적으로 보여준다.
+마찬가지로 url의 쿼리나 해쉬 값 혹은 input 태그의 값으로 특정한 형식의 텍스트를 입력하여
+서버에 요청을 보냄으로써
+애플리케이션에 코드를 주입하는 종류의 웹공격이 가능한 것도 바로 이 점 때문이다.&lt;/p&gt;&lt;h3&gt;기계어: 비트와 연산&lt;/h3&gt;&lt;p&gt;그렇다면 컴파일러에 의해 변환된 코드를 컴퓨터는 어떻게 이해할까?
+결론부터 말하자면 &lt;strong&gt;컴퓨터의 세계는 수학의 세계&lt;/strong&gt;라고 볼 수 있다.
+다만, 인간은 일반적으로 10진법을 사용하는 데 반해 컴퓨터는 2진법을 사용하여 계산을 한다.
+이는 컴퓨터가 모든 데이터를 비트로써 &lt;em&gt;물리적으로&lt;/em&gt; 저장하고 다룬다는 점을 뜻한다.&lt;/p&gt;&lt;p&gt;비트(bit)란 binary digit의 줄임말로 0 혹은 1 중 하나의 값을 지니는 단위라고 이해하면 편하다.
+그리고 복수의 비트를 하나의 단위로 간주할 경우
+각 비트가 지니는 0 혹은 1의 &lt;em&gt;값&lt;/em&gt;과 각 비트의 &lt;em&gt;위치&lt;/em&gt;를 기준으로
+각 단위는 2진법 체계의 값을 나타낼 수 있게 된다.
+대표적인 예로 8비트로 구성된 하나의 바이트(byte)는 0부터 2&lt;sup&gt;8&lt;/sup&gt;-1까지의 값들을
+나타낼 수 있다.&lt;/p&gt;&lt;p&gt;그렇다면 여기서 우리는 의문을 가져보아야 한다.
+대체 왜 컴퓨터는 모든 것을 10진법이 아닌
+2진법으로 나타내고 비트로 데이터를 다루는 것일까?
+바로 이 지점에서 우리는 드디어 &lt;strong&gt;로우 레벨에서의 논리연산&lt;/strong&gt;과
+&lt;strong&gt;전자회로&lt;/strong&gt;에 대한 이야기를 시작해볼 수 있다.&lt;/p&gt;&lt;h2&gt;논리 연산의 본질&lt;/h2&gt;&lt;p&gt;논리 연산이란 &lt;em&gt;입력된 비트들의 값&lt;/em&gt;을 토대로
+&lt;em&gt;새로운 비트&lt;/em&gt;를 &lt;strong&gt;만들어내는 동작&lt;/strong&gt;이라고 볼 수 있다.
+위에서 우리는 논리 연산을 참 혹은 거짓 중 하나의 값을 반환하는 연산이라고 정의하였다.
+그리고 비트에 담기는 1 혹은 0의 값이 바로 이 참과 거짓에 해당된다고 볼 수 있다.&lt;/p&gt;&lt;p&gt;이해를 위해 &lt;code&gt;if (a &amp;gt; 5) return true&lt;/code&gt;라는 코드를 보면
+&lt;code&gt;a &amp;gt; 5&lt;/code&gt;는 a의 값이 5보다 큰 지 확인하고
+그 값이 참이면 참을, 거짓이면 거짓을 반환하라는 의미이다.
+즉 해당 연산의 결과로 인해
+&lt;strong&gt;참 혹은 거짓이라는 값이 컴퓨터 내에 물리적으로 생성&lt;/strong&gt;되고
+해당 값을 조건절로 감싸고 있는 if 문은 해당 값에 따라 조건문 내부의 코드를
+실행할지 말지에 대해 결정하게 되는 것이다.
+그리고 해당 코드가 실행되는 과정에서
+변수 a에 담긴 값과 5라는 리터럴은 해당 위치에서 호출되었지만
+컴퓨터의 메모리에서 사라지지 않으며 이후 다른 코드들에서 그대로 쓸 수 있다.&lt;/p&gt;&lt;h2&gt;Boolean Algebra&lt;/h2&gt;&lt;p&gt;그동안 참 혹은 거짓의 값이라고 말한 데이터는
+각종 프로그래밍 언어들에서 boolean이라는 자료형으로 불린다.
+해당 명칭은 영국의 수학자 George Boole에 이름에서 나온 것이며
+그는 불리언 대수(Boolean algebra)라는 4가지 연산 규칙을 고안한 사람이다.&lt;/p&gt;&lt;p&gt;그는 NOT, AND, OR, XOR라는 불리언 연산자를 제안하였는데
+바로 이 연산자들이 논리연산, 회로의 뼈대라고 볼 수 있다.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;NOT : 논리적 반대를 의미한다. 유일하게 단일 비트에 대해 적용된다.&lt;ul&gt;&lt;li&gt;이해: 비트의 값이 거짓인 경우 참을, 참인 경우 거짓을 출력&lt;/li&gt;&lt;li&gt;본질: 입력의 상태를 반대로 반전시킨 결과를 출력&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;li&gt;AND : 둘 이상의 비트에 대해 적용되지만 프로그래밍 문법에서는 두 개의 입력값만을 받는다.&lt;ul&gt;&lt;li&gt;이해: 2비트 연산의 경우 a AND b에서 a와 b가 모두 참일 때만 참을, 그 외에는 거짓을 출력&lt;/li&gt;&lt;li&gt;본질: 입력된 모든 비트가 참일 때만 참을 출력&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;li&gt;OR : 둘 이상의 비트에 대해 적용되지만 프로그래밍 문법에서는 두 개의 입력값만을 받는다.&lt;ul&gt;&lt;li&gt;이해: 2비트 연산의 경우 a OR b에서 a와 b가 모두 거짓일 때만 거짓을, 그 외에는 참을 출력&lt;/li&gt;&lt;li&gt;본질: 입력된 모든 비트 중 하나만이라도 참이면 참을 출력&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;li&gt;XOR : 배타적 OR(exclusive OR)의 줄임말이다. NOT, AND, OR 연산의 조합으로 구현될 수 있다.&lt;ul&gt;&lt;li&gt;첫번째 비트와 두번째 비트가 서로 다른 경우에 참. 같은 경우 거짓을 출력&lt;/li&gt;&lt;li&gt;구현 예시: (a XOR b) == (a OR b) AND (NOT(a AND b))&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;사실 XOR 외에는 전부 일반적인 프로그래밍 언어들에 기초 문법으로
+존재하는 기능들이기 때문에 개념을 이해하는 데 어려움은 없을 것이다.
+그런데 앞서 언급했듯이 컴퓨터는 이처럼 프로그래밍 문법으로 명시적으로
+작성하지 않은 코드에 대해서도 논리 연산을 적용하여 실행한다.
+그리고 위의 불리언 연산자들은 바로 이러한 연산을 이해하기 위한 핵심이라고 볼 수 있다.&lt;/p&gt;&lt;h3&gt;예제: 컴퓨터의 사칙연산&lt;/h3&gt;&lt;p&gt;누구나 쉽게 이해할 수 있도록 사칙연산 중에서도 덧셈을 예제로 준비해보았다.&lt;/p&gt;&lt;p&gt;&lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position:relative;display:block;margin-left:auto;margin-right:auto;max-width:590px&quot;&gt;
+      &lt;a class=&quot;gatsby-resp-image-link&quot; href=&quot;/static/b9e4c95e61067a2b1f51bb8a3875789d/d93d9/decimal-add.png&quot; style=&quot;display:block&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;
+    &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom:22.2972972972973%;position:relative;bottom:0;left:0;background-image:url(&amp;#x27;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAECAYAAACOXx+WAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAA10lEQVQY012P22qDQBRF/f+f6ZO0tGkriUovJioZDY29QB7siLQGxwvFqas4LRK64TzsxWafcyz+5Ps+WZZxqpXrceMGjOM4M/tqySYWsz82X1xcu8RRaLzVdR1KKYQQpGlq4MTatiWKYm69NVNd3/e0TYPjr4m2O5PTeuCQl6zuQ7L9k1lsSSnJ85wkScxM5UVRMPFNGHJmL6hrRVmWSPnO+cJl6d3RKMWx+mS7e8a+dAgeH6iqCot/On1vGDR+IND6e2bJ/mAuHMdfVnzUOF7A2+uLyf0Amc0pBQ+aEJcAAAAASUVORK5CYII=&amp;#x27;);background-size:cover;display:block&quot;&gt;&lt;/span&gt;
+  &lt;img class=&quot;gatsby-resp-image-image&quot; alt=&quot;십진법 덧셈&quot; title=&quot;십진법 덧셈&quot; src=&quot;/static/b9e4c95e61067a2b1f51bb8a3875789d/fcda8/decimal-add.png&quot; srcSet=&quot;/static/b9e4c95e61067a2b1f51bb8a3875789d/12f09/decimal-add.png 148w,/static/b9e4c95e61067a2b1f51bb8a3875789d/e4a3f/decimal-add.png 295w,/static/b9e4c95e61067a2b1f51bb8a3875789d/fcda8/decimal-add.png 590w,/static/b9e4c95e61067a2b1f51bb8a3875789d/efc66/decimal-add.png 885w,/static/b9e4c95e61067a2b1f51bb8a3875789d/c83ae/decimal-add.png 1180w,/static/b9e4c95e61067a2b1f51bb8a3875789d/d93d9/decimal-add.png 1243w&quot; sizes=&quot;(max-width: 590px) 100vw, 590px&quot; style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;/&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;&lt;p&gt;먼저 우리가 초등학교에서 배운 10진법에서의 덧셈 방식을 한번 봐보자.
+우리는 두 수가 있을 때 각 자릿수의 값을 더한 개별 결과에 대해
+해당 값이 10 이상인 경우 한 자리 위에 1의 값을 더하는 올림 작업을 수행하고,
+해당 자릿수의 1의 자리 값은 그대로 해당 자릿수에 할당한다.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;1의 자리는 &lt;code&gt;5 + 0 = 5&lt;/code&gt;이므로 올림 작업을 수행하지 않고 5를 그대로 할당한다.&lt;/li&gt;&lt;li&gt;10의 자리는 &lt;code&gt;8 + 3 = 11&lt;/code&gt;이므로 올림 작업을 수행하여 일단은 1만을 할당한다.&lt;/li&gt;&lt;li&gt;100의 자리는 &lt;code&gt;1 + 1 = 2&lt;/code&gt;이지만 올림을 적용받으므로 &lt;code&gt;2 + 1 = 3&lt;/code&gt;이 된다.&lt;/li&gt;&lt;li&gt;결국 100의 자리에서는 올림 작업을 수행하지 않으므로 3을 할당하고 &lt;code&gt;315&lt;/code&gt;가 답이 된다.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;즉, 각 자릿수에 대해 개별적으로 덧셈을 적용하고
+&lt;em&gt;올림 작업 수행 여부&lt;/em&gt;와 &lt;em&gt;해당 자릿수에 할당할 값을 결정&lt;/em&gt;하는 두 가지 연산이
+실행된다는 점이다.
+이때 올림 작업의 경우 2진법이든 10진법이든
+언제나 한 자리 위에 1을 더하는 방식으로 적용되며
+10진법이기 때문에 10을 기준으로 적용 여부를 결정하게 된다.&lt;/p&gt;&lt;p&gt;이러한 원리는 10진법이든, 2진법이든, 16진법이든 동일하게 적용된다. 아래 예시를 한번 봐보자.&lt;/p&gt;&lt;p&gt;&lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position:relative;display:block;margin-left:auto;margin-right:auto;max-width:590px&quot;&gt;
+      &lt;a class=&quot;gatsby-resp-image-link&quot; href=&quot;/static/803f2e975a072aedbc03fc5e6c5c9bd3/27e9a/binary-add.png&quot; style=&quot;display:block&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;
+    &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom:22.2972972972973%;position:relative;bottom:0;left:0;background-image:url(&amp;#x27;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAECAYAAACOXx+WAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAA0klEQVQY012QX0vDMBxF+/0/kU+CDzpxTsM61FC6dja2tX8TREnT2SOJTsH7di+Hk/CL+IkxhqqqcM6dJoZh5EZIrJ1+t0y17J5SWD5Df7cz+6IlzzKWZSGy1gaJF9Z1HSDf/a614TZOcG4Om5smMtUg0+fAHY8zr50mL3uUKr6FTdNQliVFUZAkSRD3vQcU+eHA2fkVbdsxDAPli2KzlazWAqNHtB55kCl3uwQhBF3XEfEv/pVT/M8uVvfY6e8Mcq+4vN54MnT99sFaPBLH29C/AJRvLr+dshN4AAAAAElFTkSuQmCC&amp;#x27;);background-size:cover;display:block&quot;&gt;&lt;/span&gt;
+  &lt;img class=&quot;gatsby-resp-image-image&quot; alt=&quot;이진법 덧셈&quot; title=&quot;이진법 덧셈&quot; src=&quot;/static/803f2e975a072aedbc03fc5e6c5c9bd3/fcda8/binary-add.png&quot; srcSet=&quot;/static/803f2e975a072aedbc03fc5e6c5c9bd3/12f09/binary-add.png 148w,/static/803f2e975a072aedbc03fc5e6c5c9bd3/e4a3f/binary-add.png 295w,/static/803f2e975a072aedbc03fc5e6c5c9bd3/fcda8/binary-add.png 590w,/static/803f2e975a072aedbc03fc5e6c5c9bd3/efc66/binary-add.png 885w,/static/803f2e975a072aedbc03fc5e6c5c9bd3/c83ae/binary-add.png 1180w,/static/803f2e975a072aedbc03fc5e6c5c9bd3/27e9a/binary-add.png 1253w&quot; sizes=&quot;(max-width: 590px) 100vw, 590px&quot; style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;/&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;&lt;p&gt;위의 &lt;code&gt;11 + 11 = 110&lt;/code&gt;은 10진법을 기준으로 &lt;code&gt;3 + 3 = 6&lt;/code&gt;으로 표현되는 매우 간단한 연산이다.
+10진법과의 차이점은 각 자릿수에 할당될 수 있는 값의 범위가 0과 1로 줄어들었다는 점밖에 없다.
+그런데 이처럼 값의 범위가 두 가지로 줄어들었다는 점은 너무나도 큰 의미를 지닌다.
+바로 &lt;strong&gt;불리언 연산을 통해 덧셈 작업을 수행&lt;/strong&gt;할 수 있는 조건이 마련되었다는 것이다.
+위에서 수행한 덧셈 작업을 불리언 연산을 통해 수행하면 다음과 같다.&lt;/p&gt;&lt;p&gt;&lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position:relative;display:block;margin-left:auto;margin-right:auto;max-width:502px&quot;&gt;
+      &lt;a class=&quot;gatsby-resp-image-link&quot; href=&quot;/static/f3105429d07e57b346532f3bd77742b0/eea79/boolean-add.png&quot; style=&quot;display:block&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;
+    &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom:106.08108108108108%;position:relative;bottom:0;left:0;background-image:url(&amp;#x27;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAVCAYAAABG1c6oAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAC+ElEQVQ4y52U6XLiVhCF/f7vkdRUqlLJjxnbyQxeEmMmNosRaEELi5DYLLSAEJIAfSmJAc9ieya5VVe3r7r66Kj7dJ/wgyvLsuN5sNMkoVIVKFfbR9/J/wXLn9luR02QublvPQ/4RUCWsft0/3znaxEEe4ZxTEs2aKnDI8bJa4yeW2GSUhPa+NEaazbjw1WZy9s6wWLBZrN5meF45lMVVOqSgTVxiKMIAod0oBEZMktFIGzU+Fipc3Zxi+f5bNL0ZUClO+bX8xveXdwj9ifMZ4/YJRH7TGD08zXjny4Zve3w/kLht3d/fj+H0TrBDUK8KCEyhyQPTWbilPEjTFwYuzD1wBpHDMbOMfb7OdRU6PXylwcvsCusIFyg9S2iPB3PMjyA5V/LbUkim0739ieZZLuM7W4PPpx4nF/doarqE+DXsiiCcqdtk5nm3t5uv5FOUTgnoKW+wvCzfwZBeFE6WrdXnD1rxmmpwmQyeQKMk5QwiglXa1brlDhNSVcRaccoMpW312aTssuZb7f49pBe+4HHrs6DIPPhpoZhGAVokiScSJrJ6VWVt6V/uK4qVBtNlLbMpDsl8H1kRUZRlKI7/EVIUJNwfzll9KbEQ3PKm9/Pubu7Kxhut1tOBiOH+6bKbUOmIfXQu32s/hDXnOLOXUzTxLJsVknMsjfAKSsM5BWWDU0x4bJSp9vt/rfhsO+5EETx6bqOGDke6zj9QsPfVvmlqus62XK5V2CWYc0WtPURiiyhadorsvka7KBJWSaLYw6isR8X6EOHIPDxPO/HO6UA6/eh3z+CzaYTZl5EUxlgGDqu6z6Nr12h/B3b7X4fsLI4AcOATgcGgyOY7wdIkoSomVTqMrIsYRhdHMchzaeNbFiUyg2uPgqU6x3akkLf6OHoI+aiRFeS6Nk2YRgWQXEc5gKh1TF4/3cVSRIRRZH1er2fh23NLDR4dl3lj7/qNAQRTVKZajazuYuiaWiqzmIZMJ/76PoOXYOLmzGVehux3abZbB6L8i/580EpmsnOtgAAAABJRU5ErkJggg==&amp;#x27;);background-size:cover;display:block&quot;&gt;&lt;/span&gt;
+  &lt;img class=&quot;gatsby-resp-image-image&quot; alt=&quot;불리언 연산을 통한 이진법 덧셈&quot; title=&quot;불리언 연산을 통한 이진법 덧셈&quot; src=&quot;/static/f3105429d07e57b346532f3bd77742b0/eea79/boolean-add.png&quot; srcSet=&quot;/static/f3105429d07e57b346532f3bd77742b0/12f09/boolean-add.png 148w,/static/f3105429d07e57b346532f3bd77742b0/e4a3f/boolean-add.png 295w,/static/f3105429d07e57b346532f3bd77742b0/eea79/boolean-add.png 502w&quot; sizes=&quot;(max-width: 502px) 100vw, 502px&quot; style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;/&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;&lt;p&gt;핵심은 각 자릿수에 있는 1을 참으로, 0을 거짓으로 간주하고
+각 자릿수의 숫자들에 대해 AND 연산과 XOR 연산을 수행하는 것이다. 이때
+&lt;strong&gt;AND 연산 결과는 다음 자릿수에 올림을 적용 여부를 결정하며,&lt;/strong&gt;
+&lt;strong&gt;XOR 연산 결과는 해당 자릿수의 값 존재 여부를 결정한다.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;혹시 &lt;em&gt;엥? 그냥 더하면 되는 것을 왜 이렇게 작업하는거지?&lt;/em&gt;라는 생각이 드는가?
+놀랍게도 뇌가 없는 고철 덩어리들은 그 &lt;em&gt;그냥 더하는 행위&lt;/em&gt;를 할 줄을 모른다.
+즉, 인간의 지능으로 수행할 수 있는 작업들을 어떻게 해야
+고철 덩어리들이 그럴듯하게 모방할 수 있을지에 대해 고민한 결과가 바로
+2진법 체계와 논리 연산에 기반을 둔 컴퓨터라고 볼 수 있다.&lt;/p&gt;&lt;p&gt;그리고 이처럼 기계만의 방식으로 각종 작업을 수행하기 위해 사용되는 도구가 바로
+컴퓨터의 구성요소인 &lt;strong&gt;회로&lt;/strong&gt; 혹은 &lt;strong&gt;게이트&lt;/strong&gt;라고 볼 수 있다.&lt;/p&gt;&lt;h2&gt;게이트와 회로&lt;/h2&gt;&lt;p&gt;회로(circuit)라는 단어를 들으면 뭔지도 잘 모르겠지만
+일단 머리가 갑자기 지끈거리는 것이 정상적인 반응일 것이다.
+만일 그렇다면 지금 본인이 있는 방의 전등을 한 번 껐다 켜보자.
+그대는 스위치에 물리적인 조작을 가함으로써 회로를 조작한 것이다.
+물론 현대 사회의 컴퓨터는 그대가 조작한 스위치에 비해 훨씬 복잡한 구조를 지니고 있다.
+해당 게시물에서는 위에서 언급한 내용을 기준으로 이에 대해 아주 가볍게만 다루고자 한다.&lt;/p&gt;&lt;p&gt;앞서 우리는 덧셈 작업을 컴퓨터가 어떻게 수행하는지에 대해 이야기하였다.
+그렇다면 &lt;code&gt;3 + 4&lt;/code&gt;이라는 덧셈 작업에서 가장 필요한 것은 무엇일까?
+그렇다. 3과 4라는 값을 저장하고 활용할 수 있는 것이다.
+인간의 뇌는 작업기억에 이러한 정보들을 실시간으로 관리하고 적절하게 활용할 수 있다.
+그렇다면 컴퓨터는 이러한 정보를 어떻게 저장하고 활용할 수 있을까?&lt;/p&gt;&lt;h3&gt;게이트와 플립플롭 회로&lt;/h3&gt;&lt;p&gt;&lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position:relative;display:block;margin-left:auto;margin-right:auto;max-width:590px&quot;&gt;
+      &lt;a class=&quot;gatsby-resp-image-link&quot; href=&quot;/static/5ae9e4bc74b9997000840acee978d0ac/63a68/logic-gate.png&quot; style=&quot;display:block&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;
+    &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom:51.35135135135135%;position:relative;bottom:0;left:0;background-image:url(&amp;#x27;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAKCAYAAAC0VX7mAAAACXBIWXMAAA7DAAAOwwHHb6hkAAABV0lEQVQoz3VSXW+CQBDk//8l+1RN6kMLmgpaEoFDqEbxW0FBmGbWHAVtNyF73M3Nzc6uUVUVGN9xhP5bH6ZlIc8L2eOZPmeejB2Y1gDN0BiNM/Qi8D10u68YDIdIswzX67UG3S+WsEefeP8w5Z/neZ4/kRtclGUpG0mSYLvdYrVaYb/f43g84nK5IE3T+lIYhoKLokjy6XQSnMYYTbmWZcHzPCFlLJdLzOdzbDabmtA0TcxmM6zXa8GRlLjD4XAn1FIZ5/NZPhLwy7KsJirLO4ZKbrebEO12uwdbql8PWcpkMoYKFZqPNCsIlYJt2wiC4M/GiELtn22P0Hnp4Mt1/+0gy+32enDGzhNhqylN2QyW2vTt0RY2ik2hh1qQzq2m0GillGR6NJ1OEcdxa4SokiUTx0ngRBCjBbQUFkUhl3m4WCxECdVyX2N835cuu64rj1Ix51F7+AN7BgIfT1w+mwAAAABJRU5ErkJggg==&amp;#x27;);background-size:cover;display:block&quot;&gt;&lt;/span&gt;
+  &lt;img class=&quot;gatsby-resp-image-image&quot; alt=&quot;논리 게이트&quot; title=&quot;논리 게이트&quot; src=&quot;/static/5ae9e4bc74b9997000840acee978d0ac/fcda8/logic-gate.png&quot; srcSet=&quot;/static/5ae9e4bc74b9997000840acee978d0ac/12f09/logic-gate.png 148w,/static/5ae9e4bc74b9997000840acee978d0ac/e4a3f/logic-gate.png 295w,/static/5ae9e4bc74b9997000840acee978d0ac/fcda8/logic-gate.png 590w,/static/5ae9e4bc74b9997000840acee978d0ac/63a68/logic-gate.png 629w&quot; sizes=&quot;(max-width: 590px) 100vw, 590px&quot; style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;/&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;&lt;p&gt;논리 게이트(logic gate)란 입력 값들에 대해
+일정한 불리언 연산을 수행한 결과를 출력하는 장치라고 볼 수 있다.
+다양한 기술을 이용하여 구현될 수 있으며,
+일반적으로 현대식 컴퓨터 내부 사용되는 게이트는
+전압 수준에 따라 1 혹은 0을 나타내는 전자회로들로 구성된다.
+그리고 이러한 게이트가 기본 단위로 모여
+더욱 구체적인 기능을 하는 회로를 구성하게 된다.
+그러한 회로 중 하나가 바로 컴퓨터 메모리의 기본 단위가 되는
+플립플롭(flip-flop) 회로다.&lt;/p&gt;&lt;p&gt;플립플롭 회로는 다양한 구조를 띠지만 기본 원리는 자체는 간단하다.&lt;/p&gt;&lt;ol&gt;&lt;li&gt;출력 값으로 0 혹은 1의 값을 꾸준히 유지한다.&lt;/li&gt;&lt;li&gt;특정 위치에 특정한 입력값이 &lt;strong&gt;순간적으로&lt;/strong&gt; 들어오는 경우 출력값은 변화한다.&lt;/li&gt;&lt;li&gt;입력값이 다시 기존으로 돌아가더라도 &lt;strong&gt;변화한 출력값은 그대로 유지된다.&lt;/strong&gt;&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;이해를 위해 매우 간단한 플립플롭 구조를 가져와보았다.&lt;/p&gt;&lt;p&gt;&lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position:relative;display:block;margin-left:auto;margin-right:auto;max-width:590px&quot;&gt;
+      &lt;a class=&quot;gatsby-resp-image-link&quot; href=&quot;/static/5e44e90a71d57e2ba0dad4abd8ce1870/bb3ba/flip-flop-example.png&quot; style=&quot;display:block&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;
+    &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom:33.78378378378378%;position:relative;bottom:0;left:0;background-image:url(&amp;#x27;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAHCAYAAAAIy204AAAACXBIWXMAAA7DAAAOwwHHb6hkAAABL0lEQVQoz2WR646CMBCFff9nWxP/yKUCLRWLgAa5Cg3lmBkXN7s7SUNnOPNl5nSHPzEMAx+KxTn0Q495nn9ppnnGbO0nt9Z+NLuu63A6nWCMQV3XaJsGWimIIECRpoijiGtSSj63qsLteoWKIgRhiPv9DmMu/GVg3/fY77+gtcbhcOBimqYMLI2BlhKrtfwvy3Mcj0dM44iyKOD7PpRS8DyP+9Z1xW6aJvieByEEQynyPIfWKYJQoCpLOOeg4hjd+YwwDFmTZRnOlAuBoih+gHSh/auq4pW2eD6fuNJqSr19It/6gYGbX6Qh8DYIA8nDJEl4zQ1IU8VxzBOQt8uyvPNLhiiK+BHIMymT/0ASPx41mqbhRp54mviBxnHE6hyv3LYta+z365JVBKX61kfAF+7FEsGyAlZhAAAAAElFTkSuQmCC&amp;#x27;);background-size:cover;display:block&quot;&gt;&lt;/span&gt;
+  &lt;img class=&quot;gatsby-resp-image-image&quot; alt=&quot;플립플롭&quot; title=&quot;플립플롭&quot; src=&quot;/static/5e44e90a71d57e2ba0dad4abd8ce1870/fcda8/flip-flop-example.png&quot; srcSet=&quot;/static/5e44e90a71d57e2ba0dad4abd8ce1870/12f09/flip-flop-example.png 148w,/static/5e44e90a71d57e2ba0dad4abd8ce1870/e4a3f/flip-flop-example.png 295w,/static/5e44e90a71d57e2ba0dad4abd8ce1870/fcda8/flip-flop-example.png 590w,/static/5e44e90a71d57e2ba0dad4abd8ce1870/efc66/flip-flop-example.png 885w,/static/5e44e90a71d57e2ba0dad4abd8ce1870/bb3ba/flip-flop-example.png 1121w&quot; sizes=&quot;(max-width: 590px) 100vw, 590px&quot; style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;/&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;&lt;p&gt;해당 플립플롭에서 두 입력값이 모두 0일 때 출력값은 0으로 유지된다.
+위쪽의 입력값이 순간적으로 1로 변하면 출력값은 1로 변하게 되는데, 이때 변한 출력값은
+입력값이 다시 0으로 되돌아가더라도 그대로 유지된다는 특성을 띤다.
+바로 이러한 성질을 활용하면 특정 위치에 물리적으로 존재하는 논리회로는
+비트 단위로 데이터를 저장하고 있을 뿐만 아니라
+외부 조작을 통해 그 값을 수정할 수 있게 된다.&lt;/p&gt;&lt;p&gt;그리고 실제 컴퓨터에 들어가는 칩(chip) 하나 하나는
+초고밀도 집적회로(VLSI) 기술을 통해
+수백만 개의 플립플롭과 제어회로로 구성된다.&lt;/p&gt;&lt;h2&gt;맺으며&lt;/h2&gt;&lt;p&gt;해당 게시글은 최대한 다양한 주제를 겉핥기식으로 다루고 있다.
+그러나 전달하고자 하는 핵심은 간단하다.
+컴퓨터와 프로그래밍 언어는 전부 인간이 특정한 의도를 지니고 만들어낸 것이며,
+컴퓨터는 복잡하지만 체계적으로 설계된 물리적인 도구라는 것이다.&lt;/p&gt;&lt;p&gt;그리고 논리연산의 결과와 비트에 담기는 데이터가 참/거짓,
+On/Off, 1/0 등 두 가지로 구분된다는 점은
+우연의 일치가 아니라 바로 이러한 컴퓨터의 구조에 대해
+옅볼 수 있는 중요한 힌트라고 볼 수 있다.&lt;/p&gt;&lt;p&gt;보다 체계적이고 깊이 있는 지식을 원한다면 컴퓨터 구조에 관한
+서적을 찾아보는 것을 권장한다.&lt;/p&gt;&lt;hr/&gt;&lt;div&gt;참고문서&lt;/div&gt;&lt;ul&gt;&lt;li&gt;컴퓨터 과학 총론: &lt;a href=&quot;https://www.kyobobook.co.kr/product/detailViewKor.laf?barcode=9788993712629&quot;&gt;링크&lt;/a&gt;&lt;/li&gt;&lt;li&gt;한 권으로 읽는 컴퓨터 구조와 프로그래밍: &lt;a href=&quot;https://www.kyobobook.co.kr/product/detailViewKor.laf?barcode=9791189909284&quot;&gt;링크&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[개발 블로그를 시작하며]]></title><description><![CDATA[블로그 버전 1의 개발을 완료하였다. 10일 정도 작업을 하였고 현재 도메인을 구글과 네이버에 각각 등록한 상황이다. 수정 및 추가하고 싶은 기능들이 아직도 꾸준히 생겨나고 있으나 이대로는 끝이 없을 듯 하여 일단 나의 첫 글을 남기고자 한다.]]></description><link>https://bugoverdose.github.io/essay/starting-a-dev-blog/</link><guid isPermaLink="false">https://bugoverdose.github.io/essay/starting-a-dev-blog/</guid><pubDate>Wed, 05 Jan 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;지난 해 12월 23일에 깃헙에 저장소를 생성한 이후 올해 1월 4일을 기준으로
 블로그 v1.0.0을 완료하였다.
 실질적으로 약 10일 정도 작업을 하였고,
 &lt;code&gt;github.io&lt;/code&gt; 도메인으로 현재 구글과 네이버에 각각 등록한 상황이다.&lt;/p&gt;&lt;p&gt;수정 및 추가하고 싶은 기능들이 아직도 꾸준히 생겨나고 있으나
