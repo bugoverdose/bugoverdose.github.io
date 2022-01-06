@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[RSS Feed | bugoverdose]]></title><description><![CDATA[Dev blog by Jeong Jinwoo]]></description><link>https://bugoverdose.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Wed, 05 Jan 2022 10:15:59 GMT</lastBuildDate><item><title><![CDATA[개발 블로그를 시작하며]]></title><description><![CDATA[블로그 v1.0.0을 완료하였다. 약 10일 정도 작업을 하였고 현재 구글과 네이버에 각각 등록한 상황이다. 수정 및 추가하고 싶은 기능들이 아직도 꾸준히 생겨나고 있으나 이대로는 끝이 없을 듯 하여 일단 나의 첫 글을 남기고자 한다.]]></description><link>https://bugoverdose.github.io/essay/starting-a-dev-blog/</link><guid isPermaLink="false">https://bugoverdose.github.io/essay/starting-a-dev-blog/</guid><pubDate>Wed, 05 Jan 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;지난 해 12월 23일에 깃헙에 저장소를 생성한 이후 올해 1월 4일을 기준으로
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[RSS Feed | bugoverdose]]></title><description><![CDATA[Dev blog by Jeong Jinwoo]]></description><link>https://bugoverdose.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Thu, 06 Jan 2022 01:04:12 GMT</lastBuildDate><item><title><![CDATA[개발 블로그를 시작하며]]></title><description><![CDATA[블로그 v1.0.0을 완료하였다. 약 10일 정도 작업을 하였고 현재 구글과 네이버에 각각 등록한 상황이다. 수정 및 추가하고 싶은 기능들이 아직도 꾸준히 생겨나고 있으나 이대로는 끝이 없을 듯 하여 일단 나의 첫 글을 남기고자 한다.]]></description><link>https://bugoverdose.github.io/essay/starting-a-dev-blog/</link><guid isPermaLink="false">https://bugoverdose.github.io/essay/starting-a-dev-blog/</guid><pubDate>Wed, 05 Jan 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;지난 해 12월 23일에 깃헙에 저장소를 생성한 이후 올해 1월 4일을 기준으로
 블로그 v1.0.0을 완료하였다.
 실질적으로 약 10일 정도 작업을 하였고,
 &lt;code&gt;github.io&lt;/code&gt; 도메인으로 현재 구글과 네이버에 각각 등록한 상황이다.&lt;/p&gt;&lt;p&gt;수정 및 추가하고 싶은 기능들이 아직도 꾸준히 생겨나고 있으나
@@ -36,7 +36,7 @@ css 속성들을 전부 하나 하나 작성하면서 디자인해나갔다.&lt;
 개발과정에서 SEO(검색엔진 최적화), Open Graph 프로토콜 등 다양한 주제를 공부하고
 그 지식을 실제 프로젝트에 적용해볼 기회가 생겨서 무엇보다도 좋았다.
 해당 사이트가 활성화되면 Google Analysis 등 다른 도구들도 본격적으로 활용해보고자 한다.&lt;/p&gt;&lt;p&gt;또한 Gatsby에 이번 기회에 입문하였는데 BFF(Backend For Frontend) 프레임워크답게
-mdx, yaml, xml 파일의 형식으로 자료를 효율적으로 구조화하고
+mdx, yaml, json 파일의 형식으로 자료를 효율적으로 구조화하고
 GraphQL 쿼리로 이를 조회하는 경험을 할 수 있어서 굉장히 좋았다.
 관계형 데이터베이스와 SQL문이라는 고정된 형식에서 벗어남으로써
 백엔드 개발자로서의 전체적인 시야가 더 넓어질 수 있었다고 생각한다.&lt;/p&gt;&lt;h3&gt;통제&lt;/h3&gt;&lt;p&gt;무엇보다도 프로젝트에 대한 통제력을 확보하는 것이 가장 중요한 이유였다.&lt;/p&gt;&lt;p&gt;프로젝트 내에 존재하는 모든 코드에 대해 개발자 본인이 이해를 하고 있어야
