@@ -1,14 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[RSS Feed | bugoverdose]]></title><description><![CDATA[공부하고 경험한 내용을 깔끔하게 설명하는 것을 목표로 하는 개발 블로그입니다. 컴퓨터 구조, 네트워크, 웹 개발, 백엔드 개발 등 다양한 주제를 포괄적으로 다룹니다.]]></description><link>https://bugoverdose.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Sat, 08 Jan 2022 06:53:30 GMT</lastBuildDate><item><title><![CDATA[컴퓨터는 어떻게 사고하는가: 비트와 논리연산에 대하여]]></title><description><![CDATA[논리 연산이라는 개념에서 출발하여 하이레벨에서 로우레벨로 차근차근 내려가봅니다. 기계어, 비트, 불리언 연산, 게이트, 플립플롭 등의 개념에 대해 가볍게 다룹니다. 궁극적으로 컴퓨터의 구조 및 동작 방식에 대한 최소한의 이해를 목표로 합니다.]]></description><link>https://bugoverdose.github.io/computer-science/bit-and-logic-operation/</link><guid isPermaLink="false">https://bugoverdose.github.io/computer-science/bit-and-logic-operation/</guid><pubDate>Thu, 06 Jan 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;논리 연산(logic operation)이란 기본적으
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[RSS Feed | bugoverdose]]></title><description><![CDATA[공부하고 경험한 내용을 깔끔하게 설명하는 것을 목표로 하는 개발 블로그입니다. 컴퓨터 구조, 네트워크, 웹 개발, 백엔드 개발 등 다양한 주제를 포괄적으로 다룹니다.]]></description><link>https://bugoverdose.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Sat, 08 Jan 2022 08:34:24 GMT</lastBuildDate><item><title><![CDATA[컴퓨터는 어떻게 사고하는가: 비트와 논리연산에 대하여]]></title><description><![CDATA[논리연산이라는 개념에서 출발하여 하이레벨에서 로우레벨로 차근차근 내려가봅니다. 기계어, 비트, 불리언 연산, 게이트, 플립플롭 등의 개념에 대해 가볍게 다룹니다. 궁극적으로 컴퓨터의 구조 및 동작 방식에 대한 최소한의 이해를 목표로 합니다.]]></description><link>https://bugoverdose.github.io/computer-science/bit-and-logic-operation/</link><guid isPermaLink="false">https://bugoverdose.github.io/computer-science/bit-and-logic-operation/</guid><pubDate>Thu, 06 Jan 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;논리연산(logic operation)이란 기본적으
 로 불리언 값,
 즉 참 혹은 거짓 중 하나의 값을 반환하는 연산을 의미한다.
 예를 들어 자바스크립트 및 JSX 문법을 기준으로
 &lt;code&gt;if (a &amp;gt; 5) return true&lt;/code&gt;의 &lt;code&gt;a &amp;gt; 5&lt;/code&gt; 부분,
 &lt;code&gt;a === 1 ? &amp;quot;1이다&amp;quot; : &amp;quot;1이 아니다&amp;quot;&lt;/code&gt;의 &lt;code&gt;a === 1&lt;/code&gt; 부분,
 &lt;code&gt;{!loading &amp;amp;&amp;amp; &amp;lt;Component /&amp;gt;}&lt;/code&gt;의 &lt;code&gt;!loading&lt;/code&gt; 부분과 같이
-조건문에 해당되는 코드들에서는 전부 논리 연산이 발생한다고 볼 수 있다.&lt;/p&gt;&lt;p&gt;그러나 논리연산은 이처럼 프로그래밍 언어에서 조건문을
+조건문에 해당되는 코드들에서는 전부 논리연산이 발생한다고 볼 수 있다.&lt;/p&gt;&lt;p&gt;그러나 논리연산은 이처럼 프로그래밍 언어에서 조건문을
 수행하도록 명시적으로 지정하는 경우에만 일어난다고 볼 수 없다.
 하드웨어 레벨에서 보았을 때 컴퓨터에서 일어나는 모든 처리는
-본질적으로 논리 연산에 기반을 두고 동작하는 것으로 보인다.&lt;/p&gt;&lt;h2&gt;컴퓨터의 개념과 기계어&lt;/h2&gt;&lt;p&gt;사실 컴퓨터라는 용어는 기계로서의 컴퓨터가 발명되기 이전부터 존재했다.
+본질적으로 논리연산에 기반을 두고 동작하는 것으로 보인다.&lt;/p&gt;&lt;h2&gt;컴퓨터의 개념과 기계어&lt;/h2&gt;&lt;p&gt;사실 컴퓨터라는 용어는 기계로서의 컴퓨터가 발명되기 이전부터 존재했다.
 당시 컴퓨터는 계산 도구를 활용하여 숫자와 관련된 단순 계산 작업을 하는 사람들, 즉 직종을 의미하였다.
 물론 현대에 와서 기계로서의 컴퓨터는 극한으로 고도화되었고,
 인간 컴퓨터라는 직무를 대체하게 되었다. 그러나 과거와 마찬가지로
@@ -39,9 +39,9 @@
 대체 왜 컴퓨터는 모든 것을 10진법이 아닌
 2진법으로 나타내고 비트로 데이터를 다루는 것일까?
 바로 이 지점에서 우리는 드디어 &lt;strong&gt;로우 레벨에서의 논리연산&lt;/strong&gt;과
-&lt;strong&gt;전자회로&lt;/strong&gt;에 대한 이야기를 시작해볼 수 있다.&lt;/p&gt;&lt;h2&gt;논리 연산의 본질&lt;/h2&gt;&lt;p&gt;논리 연산이란 &lt;em&gt;입력된 비트들의 값&lt;/em&gt;을 토대로
+&lt;strong&gt;전자회로&lt;/strong&gt;에 대한 이야기를 시작해볼 수 있다.&lt;/p&gt;&lt;h2&gt;논리연산의 본질&lt;/h2&gt;&lt;p&gt;논리연산이란 &lt;em&gt;입력된 비트들의 값&lt;/em&gt;을 토대로
 &lt;em&gt;새로운 비트&lt;/em&gt;를 &lt;strong&gt;만들어내는 동작&lt;/strong&gt;이라고 볼 수 있다.
-위에서 우리는 논리 연산을 참 혹은 거짓 중 하나의 값을 반환하는 연산이라고 정의하였다.
+위에서 우리는 논리연산을 참 혹은 거짓 중 하나의 값을 반환하는 연산이라고 정의하였다.
 그리고 비트에 담기는 1 혹은 0의 값이 바로 이 참과 거짓에 해당된다고 볼 수 있다.&lt;/p&gt;&lt;p&gt;이해를 위해 &lt;code&gt;if (a &amp;gt; 5) return true&lt;/code&gt;라는 코드를 보면
 &lt;code&gt;a &amp;gt; 5&lt;/code&gt;는 a의 값이 5보다 큰 지 확인하고
 그 값이 참이면 참을, 거짓이면 거짓을 반환하라는 의미이다.
@@ -51,14 +51,14 @@
 실행할지 말지에 대해 결정하게 되는 것이다.
 그리고 해당 코드가 실행되는 과정에서
 변수 a에 담긴 값과 5라는 리터럴은 해당 위치에서 호출되었지만
-컴퓨터의 메모리에서 사라지지 않으며 이후 다른 코드들에서 그대로 쓸 수 있다.&lt;/p&gt;&lt;h2&gt;Boolean Algebra&lt;/h2&gt;&lt;p&gt;그동안 참 혹은 거짓의 값이라고 말한 데이터는
+컴퓨터의 메모리에서 사라지지 않으며 이후 다른 코드들에서 그대로 쓸 수 있다.&lt;/p&gt;&lt;h2&gt;불리언 연산&lt;/h2&gt;&lt;p&gt;그동안 참 혹은 거짓의 값이라고 말한 데이터는
 각종 프로그래밍 언어들에서 boolean이라는 자료형으로 불린다.
 해당 명칭은 영국의 수학자 George Boole에 이름에서 나온 것이며
 그는 불리언 대수(Boolean algebra)라는 4가지 연산 규칙을 고안한 사람이다.&lt;/p&gt;&lt;p&gt;그는 NOT, AND, OR, XOR라는 불리언 연산자를 제안하였는데
 바로 이 연산자들이 논리연산, 회로의 뼈대라고 볼 수 있다.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;NOT : 논리적 반대를 의미한다. 유일하게 단일 비트에 대해 적용된다.&lt;ul&gt;&lt;li&gt;이해: 비트의 값이 거짓인 경우 참을, 참인 경우 거짓을 출력&lt;/li&gt;&lt;li&gt;본질: 입력의 상태를 반대로 반전시킨 결과를 출력&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;li&gt;AND : 둘 이상의 비트에 대해 적용되지만 프로그래밍 문법에서는 두 개의 입력값만을 받는다.&lt;ul&gt;&lt;li&gt;이해: 2비트 연산의 경우 a AND b에서 a와 b가 모두 참일 때만 참을, 그 외에는 거짓을 출력&lt;/li&gt;&lt;li&gt;본질: 입력된 모든 비트가 참일 때만 참을 출력&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;li&gt;OR : 둘 이상의 비트에 대해 적용되지만 프로그래밍 문법에서는 두 개의 입력값만을 받는다.&lt;ul&gt;&lt;li&gt;이해: 2비트 연산의 경우 a OR b에서 a와 b가 모두 거짓일 때만 거짓을, 그 외에는 참을 출력&lt;/li&gt;&lt;li&gt;본질: 입력된 모든 비트 중 하나만이라도 참이면 참을 출력&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;li&gt;XOR : 배타적 OR(exclusive OR)의 줄임말이다. NOT, AND, OR 연산의 조합으로 구현될 수 있다.&lt;ul&gt;&lt;li&gt;첫번째 비트와 두번째 비트가 서로 다른 경우에 참. 같은 경우 거짓을 출력&lt;/li&gt;&lt;li&gt;구현 예시: (a XOR b) == (a OR b) AND (NOT(a AND b))&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;사실 XOR 외에는 전부 일반적인 프로그래밍 언어들에 기초 문법으로
 존재하는 기능들이기 때문에 개념을 이해하는 데 어려움은 없을 것이다.
 그런데 앞서 언급했듯이 컴퓨터는 이처럼 프로그래밍 문법으로 명시적으로
-작성하지 않은 코드에 대해서도 논리 연산을 적용하여 실행한다.
+작성하지 않은 코드에 대해서도 논리연산을 적용하여 실행한다.
 그리고 위의 불리언 연산자들은 바로 이러한 연산을 이해하기 위한 핵심이라고 볼 수 있다.&lt;/p&gt;&lt;h3&gt;예제: 컴퓨터의 사칙연산&lt;/h3&gt;&lt;p&gt;누구나 쉽게 이해할 수 있도록 사칙연산 중에서도 덧셈을 예제로 준비해보았다.&lt;/p&gt;&lt;p&gt;&lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position:relative;display:block;margin-left:auto;margin-right:auto;max-width:590px&quot;&gt;
       &lt;a class=&quot;gatsby-resp-image-link&quot; href=&quot;/static/b9e4c95e61067a2b1f51bb8a3875789d/d93d9/decimal-add.png&quot; style=&quot;display:block&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;
     &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom:22.2972972972973%;position:relative;bottom:0;left:0;background-image:url(&amp;#x27;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAECAYAAACOXx+WAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAA10lEQVQY012P22qDQBRF/f+f6ZO0tGkriUovJioZDY29QB7siLQGxwvFqas4LRK64TzsxWafcyz+5Ps+WZZxqpXrceMGjOM4M/tqySYWsz82X1xcu8RRaLzVdR1KKYQQpGlq4MTatiWKYm69NVNd3/e0TYPjr4m2O5PTeuCQl6zuQ7L9k1lsSSnJ85wkScxM5UVRMPFNGHJmL6hrRVmWSPnO+cJl6d3RKMWx+mS7e8a+dAgeH6iqCot/On1vGDR+IND6e2bJ/mAuHMdfVnzUOF7A2+uLyf0Amc0pBQ+aEJcAAAAASUVORK5CYII=&amp;#x27;);background-size:cover;display:block&quot;&gt;&lt;/span&gt;
@@ -93,26 +93,26 @@
 놀랍게도 뇌가 없는 고철 덩어리들은 그 &lt;em&gt;그냥 더하는 행위&lt;/em&gt;를 할 줄을 모른다.
 즉, 인간의 지능으로 수행할 수 있는 작업들을 어떻게 해야
 고철 덩어리들이 그럴듯하게 모방할 수 있을지에 대해 고민한 결과가 바로
-2진법 체계와 논리 연산에 기반을 둔 컴퓨터라고 볼 수 있다.&lt;/p&gt;&lt;p&gt;그리고 이처럼 기계만의 방식으로 각종 작업을 수행하기 위해 사용되는 도구가 바로
-컴퓨터의 구성요소인 &lt;strong&gt;회로&lt;/strong&gt; 혹은 &lt;strong&gt;게이트&lt;/strong&gt;라고 볼 수 있다.&lt;/p&gt;&lt;h2&gt;게이트와 회로&lt;/h2&gt;&lt;p&gt;회로(circuit)라는 단어를 들으면 뭔지도 잘 모르겠지만
+2진법 체계와 논리연산에 기반을 둔 컴퓨터라고 볼 수 있다.&lt;/p&gt;&lt;p&gt;그리고 이처럼 기계만의 방식으로 각종 작업을 수행하기 위해 사용되는 도구가 바로
+컴퓨터의 구성요소인 &lt;strong&gt;회로&lt;/strong&gt; 및 &lt;strong&gt;게이트&lt;/strong&gt;라고 볼 수 있다.&lt;/p&gt;&lt;h2&gt;논리연산의 물리적 구현&lt;/h2&gt;&lt;p&gt;회로(circuit)라는 단어를 들으면 뭔지도 잘 모르겠지만
 일단 머리가 갑자기 지끈거리는 것이 정상적인 반응일 것이다.
 만일 그렇다면 지금 본인이 있는 방의 전등을 한 번 껐다 켜보자.
 그대는 스위치에 물리적인 조작을 가함으로써 회로를 조작한 것이다.
 물론 현대 사회의 컴퓨터는 그대가 조작한 스위치에 비해 훨씬 복잡한 구조를 지니고 있다.
-해당 게시물에서는 위에서 언급한 내용을 기준으로 이에 대해 아주 가볍게만 다루고자 한다.&lt;/p&gt;&lt;p&gt;앞서 우리는 덧셈 작업을 컴퓨터가 어떻게 수행하는지에 대해 이야기하였다.
-그렇다면 &lt;code&gt;3 + 4&lt;/code&gt;이라는 덧셈 작업에서 가장 필요한 것은 무엇일까?
-그렇다. 3과 4라는 값을 저장하고 활용할 수 있는 것이다.
-인간의 뇌는 작업기억에 이러한 정보들을 실시간으로 관리하고 적절하게 활용할 수 있다.
-그렇다면 컴퓨터는 이러한 정보를 어떻게 저장하고 활용할 수 있을까?&lt;/p&gt;&lt;h3&gt;게이트와 플립플롭 회로&lt;/h3&gt;&lt;p&gt;&lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position:relative;display:block;margin-left:auto;margin-right:auto;max-width:590px&quot;&gt;
+해당 게시물에서는 위에서 언급한 내용을 중심으로 이에 대해 아주 가볍게만 다루고자 한다.&lt;/p&gt;&lt;p&gt;앞서 우리는 컴퓨터가 덧셈 작업을 수행하기 위해 XOR 연산과 AND 연산을
+활용한다는 점에 대해 이야기하였다.
+그렇다면 컴퓨터는 어떠한 물리적 장치를 사용하여 이러한 연산을 수행할 수 있을까?&lt;/p&gt;&lt;p&gt;또한 예를 들어 계산기에 &lt;code&gt;3 + 4&lt;/code&gt;라는 내용을 입력했을 때
+우리가 &lt;code&gt;=&lt;/code&gt;를 눌러 실제로 연산을 실행하기 전까지
+계산기는 어떻게 3과 4라는 값을 기억할 수 있을까?
+그리고 계산이 끝나고 화면에 출력되는 &lt;code&gt;7&lt;/code&gt;이라는 값은 어떻게 그대로 유지될 수 있을까?&lt;/p&gt;&lt;h3&gt;게이트와 플립플롭&lt;/h3&gt;&lt;p&gt;&lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position:relative;display:block;margin-left:auto;margin-right:auto;max-width:590px&quot;&gt;
       &lt;a class=&quot;gatsby-resp-image-link&quot; href=&quot;/static/5ae9e4bc74b9997000840acee978d0ac/63a68/logic-gate.png&quot; style=&quot;display:block&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;
     &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom:51.35135135135135%;position:relative;bottom:0;left:0;background-image:url(&amp;#x27;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAKCAYAAAC0VX7mAAAACXBIWXMAAA7DAAAOwwHHb6hkAAABV0lEQVQoz3VSXW+CQBDk//8l+1RN6kMLmgpaEoFDqEbxW0FBmGbWHAVtNyF73M3Nzc6uUVUVGN9xhP5bH6ZlIc8L2eOZPmeejB2Y1gDN0BiNM/Qi8D10u68YDIdIswzX67UG3S+WsEefeP8w5Z/neZ4/kRtclGUpG0mSYLvdYrVaYb/f43g84nK5IE3T+lIYhoKLokjy6XQSnMYYTbmWZcHzPCFlLJdLzOdzbDabmtA0TcxmM6zXa8GRlLjD4XAn1FIZ5/NZPhLwy7KsJirLO4ZKbrebEO12uwdbql8PWcpkMoYKFZqPNCsIlYJt2wiC4M/GiELtn22P0Hnp4Mt1/+0gy+32enDGzhNhqylN2QyW2vTt0RY2ik2hh1qQzq2m0GillGR6NJ1OEcdxa4SokiUTx0ngRBCjBbQUFkUhl3m4WCxECdVyX2N835cuu64rj1Ix51F7+AN7BgIfT1w+mwAAAABJRU5ErkJggg==&amp;#x27;);background-size:cover;display:block&quot;&gt;&lt;/span&gt;
   &lt;img class=&quot;gatsby-resp-image-image&quot; alt=&quot;논리 게이트&quot; title=&quot;논리 게이트&quot; src=&quot;/static/5ae9e4bc74b9997000840acee978d0ac/fcda8/logic-gate.png&quot; srcSet=&quot;/static/5ae9e4bc74b9997000840acee978d0ac/12f09/logic-gate.png 148w,/static/5ae9e4bc74b9997000840acee978d0ac/e4a3f/logic-gate.png 295w,/static/5ae9e4bc74b9997000840acee978d0ac/fcda8/logic-gate.png 590w,/static/5ae9e4bc74b9997000840acee978d0ac/63a68/logic-gate.png 629w&quot; sizes=&quot;(max-width: 590px) 100vw, 590px&quot; style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;/&gt;
   &lt;/a&gt;
     &lt;/span&gt;&lt;/p&gt;&lt;p&gt;논리 게이트(logic gate)란 입력 값들에 대해
 일정한 불리언 연산을 수행한 결과를 출력하는 장치라고 볼 수 있다.
-다양한 기술을 이용하여 구현될 수 있으며,
-일반적으로 현대식 컴퓨터 내부 사용되는 게이트는
-전압 수준에 따라 1 혹은 0을 나타내는 전자회로들로 구성된다.
+릴리에, 진공관, 트랜지스터, 집적회로 등 다양한 기술을 이용하여 구현될 수 있으며,
+기본적으로 전압 수준에 따라 1 혹은 0을 나타내는 전자회로로 구성된다.
 그리고 이러한 게이트가 기본 단위로 모여
 더욱 구체적인 기능을 하는 회로를 구성하게 된다.
 그러한 회로 중 하나가 바로 컴퓨터 메모리의 기본 단위가 되는
@@ -122,18 +122,36 @@
   &lt;img class=&quot;gatsby-resp-image-image&quot; alt=&quot;플립플롭&quot; title=&quot;플립플롭&quot; src=&quot;/static/5e44e90a71d57e2ba0dad4abd8ce1870/fcda8/flip-flop-example.png&quot; srcSet=&quot;/static/5e44e90a71d57e2ba0dad4abd8ce1870/12f09/flip-flop-example.png 148w,/static/5e44e90a71d57e2ba0dad4abd8ce1870/e4a3f/flip-flop-example.png 295w,/static/5e44e90a71d57e2ba0dad4abd8ce1870/fcda8/flip-flop-example.png 590w,/static/5e44e90a71d57e2ba0dad4abd8ce1870/efc66/flip-flop-example.png 885w,/static/5e44e90a71d57e2ba0dad4abd8ce1870/bb3ba/flip-flop-example.png 1121w&quot; sizes=&quot;(max-width: 590px) 100vw, 590px&quot; style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;/&gt;
   &lt;/a&gt;
     &lt;/span&gt;&lt;/p&gt;&lt;p&gt;해당 플립플롭에서 두 입력값이 모두 0일 때 출력값은 0으로 유지된다.
-위쪽의 입력값이 순간적으로 1로 변하면 출력값은 1로 변하게 되는데, 이때 변한 출력값은
-입력값이 다시 0으로 되돌아가더라도 그대로 유지된다는 특성을 띤다.
-바로 이러한 성질을 활용하면 특정 위치에 물리적으로 존재하는 논리회로는
-비트 단위로 데이터를 저장하고 있을 뿐만 아니라
-외부 조작을 통해 그 값을 수정할 수 있게 된다.&lt;/p&gt;&lt;p&gt;그리고 실제 컴퓨터에 들어가는 칩(chip) 하나 하나는
-초고밀도 집적회로(VLSI) 기술을 통해
-수백만 개의 플립플롭과 제어회로로 구성된다.&lt;/p&gt;&lt;h2&gt;맺으며&lt;/h2&gt;&lt;p&gt;해당 게시글은 최대한 다양한 주제를 겉핥기식으로 다루고 있다.
+위쪽의 입력값이 순간적으로 1로 변하면 출력값은 1로 변하게 되는데,
+이때 변한 출력값은 입력값이 다시 0으로 되돌아가더라도 그대로 유지된다는 특성을 띤다.
+즉, 입력값 중 하나가 순간적으로 &lt;code&gt;0-&amp;gt;1-&amp;gt;0&lt;/code&gt;로 깜빡임으로써 &lt;em&gt;디폴트 출력값&lt;/em&gt;이 &lt;code&gt;0-&amp;gt;1&lt;/code&gt;로 변했다는 것이다.&lt;/p&gt;&lt;p&gt;바로 이러한 성질을 활용함으로써 우리는 비트 단위의 데이터를
+회로 구조상 특정 물리적인 위치에 &lt;em&gt;얼려놓을&lt;/em&gt; 수 있게 된다.
+그리고 이처럼 저장해놓은 데이터를 우리는 보다 복잡한 연산의 입력값으로 사용하고,
+해당 연산의 출력값을 다시 다른 위치에 저장해놓을 수 있다.
+이는 마치 인간의 뇌의 작업기억(working memory)에서 각종 정보를 실시간으로 관리하고
+별도의 작업에 활용하는 것과 마찬가지이다.&lt;/p&gt;&lt;h3&gt;가산기&lt;/h3&gt;&lt;p&gt;그렇다면 플립플롭 회로와 같은 방식으로 저장된 데이터를 활용하여
+실제로 어떻게 덧셈 연산을 수행할 수 있을까?
+아래는 반가산기(half adder)와 전가산기(full adder)의 기본 구조다.
+이때 출력값의 Carry는 올림 여부를, Sum은 특정 자릿수에 실제로 저장하는 값을 의미한다.&lt;/p&gt;&lt;p&gt;&lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position:relative;display:block;margin-left:auto;margin-right:auto;max-width:590px&quot;&gt;
+      &lt;a class=&quot;gatsby-resp-image-link&quot; href=&quot;/static/21c0cedd0264d1e5073835cf35a8b19e/33e10/adders.png&quot; style=&quot;display:block&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;
+    &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom:35.810810810810814%;position:relative;bottom:0;left:0;background-image:url(&amp;#x27;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAHCAYAAAAIy204AAAACXBIWXMAAA7DAAAOwwHHb6hkAAAA9UlEQVQoz4VRy26EMBDj//9re15uIBAIOBDCM7zfrjxqqu4etpZGIYnHYwcHH3Df90sR13Vh33dM04TzPGVv7wiHGxKO48CyLOi6DsMwvJDYpJRCmqZwXRdxHMP3fTRNgzAMUSglPeSJoDEGfd/j6/EQQtu2KIpCGqwwzyjkPl1EUYQgCJDnufTSCN2S6/yNmGUZkiRBVVWytySLcRxlYF3XMrAsS8zzLAl/I9MmD+nA8zwpxitLLQIW27YhS1MZxiKHDhld6wK9MSIskWmZgnay+bnku1rwm4601rIyCbnrusoddeQN8Q9sZK5Mwrfmj2NR7B3fZssbqHDSYj4AAAAASUVORK5CYII=&amp;#x27;);background-size:cover;display:block&quot;&gt;&lt;/span&gt;
+  &lt;img class=&quot;gatsby-resp-image-image&quot; alt=&quot;반가산기와 전가산기&quot; title=&quot;반가산기와 전가산기&quot; src=&quot;/static/21c0cedd0264d1e5073835cf35a8b19e/fcda8/adders.png&quot; srcSet=&quot;/static/21c0cedd0264d1e5073835cf35a8b19e/12f09/adders.png 148w,/static/21c0cedd0264d1e5073835cf35a8b19e/e4a3f/adders.png 295w,/static/21c0cedd0264d1e5073835cf35a8b19e/fcda8/adders.png 590w,/static/21c0cedd0264d1e5073835cf35a8b19e/33e10/adders.png 844w&quot; sizes=&quot;(max-width: 590px) 100vw, 590px&quot; style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;/&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;&lt;p&gt;좌측의 반가산기의 구조는 이해하기 쉬울 것이다.
+각 자릿수의 입력값 두 개를 받아
+AND 연산 결과로 올림 여부를 결정하고,
+XOR 연산 결과를 해당 자릿수의 값으로 저장한다는
+위에서 설명한 불리언 연산을 통해 덧셈 작업의 핵심 원리에 정확히 대응된다.
+그런데 반가산기는 오직 2&lt;sup&gt;0&lt;/sup&gt; 자리에서의 연산에만 사용이 가능하다.
+2&lt;sup&gt;1&lt;/sup&gt; 자리부터는 바로 아래 자릿수에서 올림 여부가 결정되었는지를 고려해야 하기 때문이다.
+즉, 2&lt;sup&gt;1&lt;/sup&gt; 자리부터는 각 자릿수의 입력값 두 개만이 아니라 올림 여부까지 포함하여
+총 3가지의 입력값을 받아 처리해야 하며, 우측의 전가산기를 통해 이러한 연산을 처리할 수 있게 된다.&lt;/p&gt;&lt;p&gt;실제 컴퓨터에 들어가는 칩(chip) 하나 하나는
+초고밀도 집적회로(VLSI) 기술을 통해 이처럼 다양하고 세부적인 구성을 띤 수백만 개의 회로로 구성된다.&lt;/p&gt;&lt;h2&gt;맺으며&lt;/h2&gt;&lt;p&gt;해당 게시글은 최대한 다양한 주제를 겉핥기식으로 다루고 있다.
 그러나 전달하고자 하는 핵심은 간단하다.
 컴퓨터와 프로그래밍 언어는 전부 인간이 특정한 의도를 지니고 만들어낸 것이며,
-컴퓨터는 복잡하지만 체계적으로 설계된 물리적인 도구라는 것이다.&lt;/p&gt;&lt;p&gt;그리고 논리연산의 결과와 비트에 담기는 데이터가 참/거짓,
-On/Off, 1/0 등 두 가지로 구분된다는 점은
-우연의 일치가 아니라 바로 이러한 컴퓨터의 구조에 대해
+컴퓨터는 복잡하지만 체계적으로 설계된 &lt;strong&gt;물리적인 도구&lt;/strong&gt;라는 것이다.&lt;/p&gt;&lt;p&gt;그리고 논리연산의 결과와 비트에 담기는 데이터가 참/거짓 혹은
+1/0와 같이 두 가지 값으로 구분된다는 점은
+우연의 일치가 아니라 바로 컴퓨터의 구조에 대해
 옅볼 수 있는 중요한 힌트라고 볼 수 있다.&lt;/p&gt;&lt;p&gt;보다 체계적이고 깊이 있는 지식을 원한다면 컴퓨터 구조에 관한
 서적을 찾아보는 것을 권장한다.&lt;/p&gt;&lt;hr/&gt;&lt;div&gt;참고문서&lt;/div&gt;&lt;ul&gt;&lt;li&gt;컴퓨터 과학 총론: &lt;a href=&quot;https://www.kyobobook.co.kr/product/detailViewKor.laf?barcode=9788993712629&quot;&gt;링크&lt;/a&gt;&lt;/li&gt;&lt;li&gt;한 권으로 읽는 컴퓨터 구조와 프로그래밍: &lt;a href=&quot;https://www.kyobobook.co.kr/product/detailViewKor.laf?barcode=9791189909284&quot;&gt;링크&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[개발 블로그를 시작하며]]></title><description><![CDATA[블로그 버전 1의 개발을 완료하였다. 10일 정도 작업을 하였고 현재 도메인을 구글과 네이버에 각각 등록한 상황이다. 수정 및 추가하고 싶은 기능들이 아직도 꾸준히 생겨나고 있으나 이대로는 끝이 없을 듯 하여 일단 나의 첫 글을 남기고자 한다.]]></description><link>https://bugoverdose.github.io/essay/starting-a-dev-blog/</link><guid isPermaLink="false">https://bugoverdose.github.io/essay/starting-a-dev-blog/</guid><pubDate>Wed, 05 Jan 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;지난 해 12월 23일에 깃헙에 저장소를 생성한 이후 올해 1월 4일을 기준으로
 블로그 v1.0.0을 완료하였다.
