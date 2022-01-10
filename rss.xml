@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[RSS Feed | bugoverdose]]></title><description><![CDATA[공부하고 경험한 내용을 깔끔하게 설명하는 것을 목표로 하는 개발 블로그입니다. 컴퓨터 구조, 네트워크, 웹 개발, 백엔드 개발 등 다양한 주제를 포괄적으로 다룹니다.]]></description><link>https://bugoverdose.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Mon, 10 Jan 2022 12:23:29 GMT</lastBuildDate><item><title><![CDATA[아날로그에서 디지털로: 회로의 기초]]></title><description><![CDATA[아날로그(analog)와 디지털(digital)의 차이는 정확히 어디에 있을까? 결론부터 말하자면 아날로그와 디지털은 다루는 데이터의 성격에 대한 이야기이다. 간단히 말해 아날로그는 연속적인 데이터를, 디지털은 이산적인 데이터를 다룬다는 의미다.]]></description><link>https://bugoverdose.github.io/computer-science/analog-and-digital/</link><guid isPermaLink="false">https://bugoverdose.github.io/computer-science/analog-and-digital/</guid><pubDate>Mon, 10 Jan 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;아날로그(analog)와 디지털(digital)의 차이는 정확히 어디에 있을까?
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[RSS Feed | bugoverdose]]></title><description><![CDATA[공부하고 경험한 내용을 깔끔하게 설명하는 것을 목표로 하는 개발 블로그입니다. 컴퓨터 구조, 네트워크, 웹 개발, 백엔드 개발 등 다양한 주제를 포괄적으로 다룹니다.]]></description><link>https://bugoverdose.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Mon, 10 Jan 2022 12:33:27 GMT</lastBuildDate><item><title><![CDATA[아날로그에서 디지털로: 회로의 기초]]></title><description><![CDATA[아날로그(analog)와 디지털(digital)의 차이는 정확히 어디에 있을까? 결론부터 말하자면 아날로그와 디지털은 다루는 데이터의 성격에 대한 이야기이다. 간단히 말해 아날로그는 연속적인 데이터를, 디지털은 이산적인 데이터를 다룬다는 의미다.]]></description><link>https://bugoverdose.github.io/computer-science/analog-and-digital/</link><guid isPermaLink="false">https://bugoverdose.github.io/computer-science/analog-and-digital/</guid><pubDate>Mon, 10 Jan 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;아날로그(analog)와 디지털(digital)의 차이는 정확히 어디에 있을까?
 일반적으로 우리는 오래된 기술을 의미하기 위해 아날로그라는 표현을,
 동작하는 데 전기를 필요로 하는 기계에 대해서는 디지털이라는 표현을 사용한다.
 현실에서 이러한 용법은 틀리지 않는 경우가 일반적이지만,
@@ -79,8 +79,7 @@
 안정성이 떨어진다고 볼 수 있다.&lt;/p&gt;&lt;p&gt;뿐만 아니라 두 가지 종류의 데이터만으로도
 비트 단위에 대해 논리연산을 조합함으로써
 보다 복잡한 연산을 구현해내는 것이 충분히 가능하다.
-그리고 &lt;div to=&quot;/computer-science/bit-and-logic-operation&quot;&gt;지난 게시글&lt;/div&gt;에서
-중점적으로 다룬 주제가 바로 이 내용이다.&lt;/p&gt;&lt;h2&gt;잡음내성과 글리치&lt;/h2&gt;&lt;p&gt;아날로그에서 디지털로 넘어온 것도,
+이에 대해서는 &lt;strong&gt;&lt;div to=&quot;/computer-science/bit-and-logic-operation&quot;&gt;지난 게시글&lt;/div&gt;&lt;/strong&gt;에서 다루었다.&lt;/p&gt;&lt;h2&gt;잡음내성과 글리치&lt;/h2&gt;&lt;p&gt;아날로그에서 디지털로 넘어온 것도,
 이산적인 데이터 중에서도 오직 0과 1만을 사용하는 것도
 전부 &lt;strong&gt;안정성&lt;/strong&gt;을 추구하기 때문이었다.
 그러나 이것만으로는 안정성이 충분히 확보되었다고 보기 어렵다.
