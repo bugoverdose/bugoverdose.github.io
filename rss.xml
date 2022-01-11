@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[RSS Feed | bugoverdose]]></title><description><![CDATA[공부하고 경험한 내용을 깔끔하게 설명하는 것을 목표로 하는 개발 블로그입니다. 컴퓨터 구조, 네트워크, 웹 개발, 백엔드 개발 등 다양한 주제를 포괄적으로 다룹니다.]]></description><link>https://bugoverdose.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Mon, 10 Jan 2022 12:33:27 GMT</lastBuildDate><item><title><![CDATA[아날로그에서 디지털로: 회로의 기초]]></title><description><![CDATA[아날로그(analog)와 디지털(digital)의 차이는 정확히 어디에 있을까? 결론부터 말하자면 아날로그와 디지털은 다루는 데이터의 성격에 대한 이야기이다. 간단히 말해 아날로그는 연속적인 데이터를, 디지털은 이산적인 데이터를 다룬다는 의미다.]]></description><link>https://bugoverdose.github.io/computer-science/analog-and-digital/</link><guid isPermaLink="false">https://bugoverdose.github.io/computer-science/analog-and-digital/</guid><pubDate>Mon, 10 Jan 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;아날로그(analog)와 디지털(digital)의 차이는 정확히 어디에 있을까?
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[RSS Feed | bugoverdose]]></title><description><![CDATA[공부하고 경험한 내용을 깔끔하게 설명하는 것을 목표로 하는 개발 블로그입니다. 컴퓨터 구조, 네트워크, 웹 개발, 백엔드 개발 등 다양한 주제를 포괄적으로 다룹니다.]]></description><link>https://bugoverdose.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Tue, 11 Jan 2022 13:07:44 GMT</lastBuildDate><item><title><![CDATA[아날로그에서 디지털로: 회로의 기초]]></title><description><![CDATA[회로란 안정성을 위해 현실에 존재하는 아날로그적인 자극을 디지털적인 동작으로 바꿔주는 도구라고 볼 수 있다. 이산적인 데이터를 일관된 논리에 따라 적절하게 활용하면 매번 동일한 입력값에 대해 동일한 출력값을 안정적으로 도출해낼 수 있게 된다.]]></description><link>https://bugoverdose.github.io/computer-science/analog-and-digital/</link><guid isPermaLink="false">https://bugoverdose.github.io/computer-science/analog-and-digital/</guid><pubDate>Mon, 10 Jan 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;아날로그(analog)와 디지털(digital)의 차이는 정확히 어디에 있을까?
 일반적으로 우리는 오래된 기술을 의미하기 위해 아날로그라는 표현을,
 동작하는 데 전기를 필요로 하는 기계에 대해서는 디지털이라는 표현을 사용한다.
 현실에서 이러한 용법은 틀리지 않는 경우가 일반적이지만,
@@ -14,26 +14,27 @@
 이는 자의 0cm와 1cm 사이에 소수 값들이 무한하게 존재하고 있기 때문이다.
 그리고 세상의 존재하는 모든 물건들의 높이, 넓이 등은 0.00001cm보다도 더
 작은 단위로 측정될 수 있는데,
-바로 이러한 측면에서 &lt;strong&gt;길이란 연속적인 데이터&lt;/strong&gt;라고 볼 수 있다.&lt;/p&gt;&lt;p&gt;그렇다면 이산적인 데이터란 무엇일까?
+바로 이러한 측면에서 길이란 &lt;strong&gt;연속적인 데이터&lt;/strong&gt;라고 볼 수 있다.
+현실에 존재하는 모든 물질이 지닌 길이, 부피, 무게와 같은 성질들은
+이처럼 연속적인 데이터로 표현될 수 있다.&lt;/p&gt;&lt;p&gt;그렇다면 이산적인 데이터란 무엇일까?
 간단히 말해 &lt;strong&gt;정수만을 다룬다&lt;/strong&gt;는 의미이다.
-0과 1 사이에 다른 정수가 존재하지 않는다는 것이 바로 이산적인 데이터의 핵심이다.
+0과 1 사이에 다른 값이 존재하지 않는다고 간주하는 것이 바로 이산적인 데이터의 핵심이다.
 그렇다. 연속적인 데이터에 비해 이산적인 데이터는
 &lt;strong&gt;다루는 값의 범위가 실수에서 정수로 줄어든 것에 불과하다&lt;/strong&gt;는 것이다.&lt;/p&gt;&lt;p&gt;&lt;em&gt;엥? 범위가 줄어들었다면 정확도가 떨어지지 않나?&lt;/em&gt;라는 의문이 드는 것이 정상일 것이다.
 실제로 1.5cm를 1cm나 2cm로 표현하는 것을 정확하다고 보기는 어렵다.
 그러나 디지털은 단순히 아날로그적인 방식으로 도출한 결과물을 그대로 반올림하는 것을 의미하지 않는다.&lt;/p&gt;&lt;p&gt;아날로그란 현실에 존재하는 연속적인 데이터를
-최대한 있는 그대로 나타내는 것이라 볼 수 있다.
+있는 그대로 나타내는 것이라 볼 수 있다.
 다만, 이처럼 연속적인 값을 그대로 측정할 경우
 누가 언제 측정하였느냐에 따라 매번 결과가 달라질 수 있다는 문제점을 내포하고 있다.
 이 때문에 디지털은 0과 1 사이에 존재하는 무한한 값을 완전히 버림으로써
 안정성을 추구한다고 볼 수 있다.
 즉, 디지털이란 &lt;strong&gt;내부적으로 이산적인 데이터를 활용하여&lt;/strong&gt;
-물리적인 현실을 나타내는 데이터를
-&lt;strong&gt;안정적이고 일관되게 도출&lt;/strong&gt;해내는 것을 의미한다.&lt;/p&gt;&lt;h2&gt;회로의 필요성&lt;/h2&gt;&lt;p&gt;이산적인 데이터가 안정적이라는 것은 알겠다.
+물리적인 현실을 나타내는 데이터를 &lt;strong&gt;안정적이고 일관되게 도출&lt;/strong&gt;해내는 것을 의미한다.&lt;/p&gt;&lt;h2&gt;회로의 필요성&lt;/h2&gt;&lt;p&gt;이산적인 데이터가 안정적이라는 것은 알겠다.
 그런데 한 가지 문제가 있다.
 숫자라는 것은 추상화된 개념일 뿐이며,
 물리적인 실체를 지닌 도구를 만들려면 물리적인 대상과 현상을 활용해야 한다는 점이다.
 그리고 현실에 존재하는 모든 물리적인 실체는
-(양자역학의 세계로 들어가지 않는 한) 아날로그, 연속적이라는 특성을 지닌다.&lt;/p&gt;&lt;p&gt;그리고 바로 여기서 회로가 등장한다.
+(양자역학의 세계로 들어가지 않는 한) 아날로그, 연속적이라는 특성을 지닌다.&lt;/p&gt;&lt;p&gt;바로 이 지점에서 회로가 등장한다.
 회로란 전류가 흐르는 길 혹은 그러한 구조를 포괄적으로 지칭한다.
 컴퓨터 자체를 하나의 회로라고 정의하는 경우도 있으며,
 컴퓨터를 구성하는 개별 부품의 가장 작은 구성 단위를 회로라고 부르기도 한다.&lt;/p&gt;&lt;p&gt;그러나 회로가 지니는 의미는 본질적으로 간단하다.
@@ -124,7 +125,7 @@
 연속적인 데이터를 이산적인 데이터로 변환하여 사용하는 것을 의미한다.&lt;/p&gt;&lt;p&gt;회로란 전기가 지닌 아날로그적인 성질을 활용하여
 0과 1이라는 이산적인 데이터를 만들어내는 대표적인 디지털 도구라고 볼 수 있다.
 특히 회로는 실수 대신 정수를, 정수 중에서도 0과 1만을 사용하는 등
-경우의 수를 최소화함으로써 안정성을 극대화시켰다고 볼 수 있다.&lt;/p&gt;&lt;hr/&gt;&lt;div&gt;&lt;/div&gt;&lt;ul&gt;&lt;li&gt;컴퓨터 과학 총론: &lt;a href=&quot;https://www.kyobobook.co.kr/product/detailViewKor.laf?barcode=9788993712629&quot;&gt;링크&lt;/a&gt;&lt;/li&gt;&lt;li&gt;한 권으로 읽는 컴퓨터 구조와 프로그래밍: &lt;a href=&quot;https://www.kyobobook.co.kr/product/detailViewKor.laf?barcode=9791189909284&quot;&gt;링크&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[컴퓨터는 어떻게 사고하는가: 비트와 논리연산에 대하여]]></title><description><![CDATA[컴퓨터가 사칙연산을 어떻게 처리하는지 알아봅니다. 논리연산이라는 개념에서 출발하여 차근차근 컴퓨터의 하드웨어에 접근해봅니다. 기계어, 비트, 불리언 연산, 게이트, 플립플롭 등의 개념을 통해 컴퓨터의 구조와 동작방식을 가볍게 다뤄봅니다.]]></description><link>https://bugoverdose.github.io/computer-science/bit-and-logic-operation/</link><guid isPermaLink="false">https://bugoverdose.github.io/computer-science/bit-and-logic-operation/</guid><pubDate>Thu, 06 Jan 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;논리연산(logic operation)이란 기본적으로 불리언 값,
+경우의 수를 최소화함으로써 안정성을 극대화시켰다고 볼 수 있다.&lt;/p&gt;&lt;hr/&gt;&lt;div&gt;&lt;/div&gt;&lt;ul&gt;&lt;li&gt;컴퓨터 과학 총론: &lt;a href=&quot;https://www.kyobobook.co.kr/product/detailViewKor.laf?barcode=9788993712629&quot;&gt;링크&lt;/a&gt;&lt;/li&gt;&lt;li&gt;한 권으로 읽는 컴퓨터 구조와 프로그래밍: &lt;a href=&quot;https://www.kyobobook.co.kr/product/detailViewKor.laf?barcode=9791189909284&quot;&gt;링크&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[컴퓨터는 어떻게 사고하는가: 비트와 논리연산]]></title><description><![CDATA[컴퓨터가 사칙연산을 어떻게 처리하는지 알아봅니다. 논리연산이라는 개념에서 출발하여 차근차근 컴퓨터의 하드웨어에 접근해봅니다. 기계어, 비트, 불리언 연산, 게이트, 플립플롭 등의 개념을 통해 컴퓨터의 구조와 동작방식을 가볍게 다뤄봅니다.]]></description><link>https://bugoverdose.github.io/computer-science/bit-and-logic-operation/</link><guid isPermaLink="false">https://bugoverdose.github.io/computer-science/bit-and-logic-operation/</guid><pubDate>Thu, 06 Jan 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;논리연산(logic operation)이란 기본적으로 불리언 값,
 즉 참 혹은 거짓 중 하나의 값을 반환하는 연산을 의미한다.
 예를 들어 자바스크립트 및 JSX 문법을 기준으로
 &lt;code&gt;if (a &amp;gt; 5) return true&lt;/code&gt;의 &lt;code&gt;a &amp;gt; 5&lt;/code&gt; 부분,
