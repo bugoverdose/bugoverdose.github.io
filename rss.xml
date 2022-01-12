@@ -1,4 +1,231 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[RSS Feed | bugoverdose]]></title><description><![CDATA[공부하고 경험한 내용을 깔끔하게 설명하는 것을 목표로 하는 개발 블로그입니다. 컴퓨터 구조, 네트워크, 웹 개발, 백엔드 개발 등 다양한 주제를 포괄적으로 다룹니다.]]></description><link>https://bugoverdose.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Wed, 12 Jan 2022 12:20:55 GMT</lastBuildDate><item><title><![CDATA[아날로그에서 디지털로: 회로의 기초]]></title><description><![CDATA[회로란 안정성을 위해 현실에 존재하는 아날로그적인 자극을 디지털적인 동작으로 바꿔주는 도구라고 볼 수 있다. 이산적인 데이터를 일관된 논리에 따라 적절하게 활용하면 매번 동일한 입력값에 대해 동일한 출력값을 안정적으로 도출해낼 수 있게 된다.]]></description><link>https://bugoverdose.github.io/computer-science/analog-and-digital/</link><guid isPermaLink="false">https://bugoverdose.github.io/computer-science/analog-and-digital/</guid><pubDate>Mon, 10 Jan 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;아날로그(analog)와 디지털(digital)의 차이는 정확히 어디에 있을까?
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[RSS Feed | bugoverdose]]></title><description><![CDATA[공부하고 경험한 내용을 깔끔하게 설명하는 것을 목표로 하는 개발 블로그입니다. 컴퓨터 구조, 네트워크, 웹 개발, 백엔드 개발 등 다양한 주제를 포괄적으로 다룹니다.]]></description><link>https://bugoverdose.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Wed, 12 Jan 2022 15:55:12 GMT</lastBuildDate><item><title><![CDATA[메모리 회로의 핵심: 플립플롭의 이해]]></title><description><![CDATA[오늘은 입력값으로부터 0과 1이라는 출력값을 만들어내고, 외부로부터의 입력이 사라지더라도 그 출력값을 그대로 유지하는 구조의 회로에 대해 이야기해보고자 한다. 다양한 구조의 래치를 차근차근 살펴보며 최종적으로 D 플립플롭을 자세히 이해해보자.]]></description><link>https://bugoverdose.github.io/computer-science/latch-and-flip-flop/</link><guid isPermaLink="false">https://bugoverdose.github.io/computer-science/latch-and-flip-flop/</guid><pubDate>Thu, 13 Jan 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;&lt;strong&gt;&lt;div to=&quot;/computer-science/analog-and-digital&quot;&gt;지난 게시글&lt;/div&gt;&lt;/strong&gt;에서
+우리는 안정성을 위해 입력되는 자극을
+0과 1이라는 데이터로 간주하여 연산에 사용하는 것이
+회로의 기본 원리라고 이야기하였다.
+또한 &lt;strong&gt;&lt;div to=&quot;/computer-science/bit-and-logic-operation&quot;&gt;그 이전 게시글&lt;/div&gt;&lt;/strong&gt;에서는
+이러한 0과 1이라는 데이터를 적절히 조합함으로써
+보다 복잡한 데이터를 표현하고 다양한 연산을 수행할 수 있음을 설명하였다.
+그러나 실제로 연산을 수행하기 위해서는
+여전히 풀어야 할 과제가 존재한다.&lt;/p&gt;&lt;h2&gt;메모리의 필요성&lt;/h2&gt;&lt;p&gt;회로를 구성하는 개별 부품이 0 혹은 1이라는 출력값을 꾸준히 내기 위해서는
+그에 해당되는 입력이 각 부품에 꾸준히 들어와야 한다.
+그렇다면 예를 들어 &lt;code&gt;5+1&lt;/code&gt;라는 연산을 회로가 어떻게 처리할 수 있을까?
+기본적으로 &lt;code&gt;5&lt;/code&gt;, &lt;code&gt;+&lt;/code&gt;, &lt;code&gt;1&lt;/code&gt;에 해당되는 데이터를
+3가지 입력 장치를 통해 &lt;em&gt;동시에&lt;/em&gt; 생성하고 연산의 결과가 나올 때까지
+입력을 유지하는 방법을 생각해볼 수 있다.&lt;/p&gt;&lt;p&gt;단순히 두 수를 더하는 상황에서는 이 방법을 오답이라고 보기는 힘들다.
+그러나 예를 들어 &lt;code&gt;5-1&lt;/code&gt;라는 연산을 수행하려는 경우에는 어떠할까?
+덧셈과 달리 뺄셈과 나눗셈은 두 피연산자의 &lt;em&gt;순서&lt;/em&gt;가 굉장히 중요하다.
+&lt;code&gt;5-1&lt;/code&gt;과 &lt;code&gt;1-5&lt;/code&gt;는 서로 다른 결과이니 말이다.
+위와 같은 방법을 고수하고 싶다면 예를 들어
+&lt;code&gt;5&lt;/code&gt;라는 데이터를 &lt;code&gt;좌측 5&lt;/code&gt;, &lt;code&gt;우측 5&lt;/code&gt;라는 두 가지로 구분하는 방법을 생각해볼 수 있다.
+즉, &lt;code&gt;5-1&lt;/code&gt;라는 연산을 위해 &lt;code&gt;좌측 5&lt;/code&gt;, &lt;code&gt;-&lt;/code&gt;, &lt;code&gt;우측 1&lt;/code&gt;라는 데이터를
+&lt;em&gt;동시에&lt;/em&gt; 3가지 입력 장치를 통해 회로에 생성한다는 것이다.
+뭔가 찝찝하지만 이 방법을 도입한다고 해보자.
+그렇다면 &lt;code&gt;5-4+1&lt;/code&gt;라는 연산은 어떻게 수행될 수 있을까?
+여전히 &lt;code&gt;첫번째 5&lt;/code&gt;, &lt;code&gt;첫번째 -&lt;/code&gt;, &lt;code&gt;두번째 4&lt;/code&gt;, &lt;code&gt;두번째 +&lt;/code&gt;, &lt;code&gt;세번째 1&lt;/code&gt;이라는
+데이터를 생성하기 위해 5가지 입력장치를 &lt;em&gt;동시에&lt;/em&gt; 사용해야 한다고 생각하는가?
+딱 보아도 범용성이 떨어진다는 점을 느낄 수 있을 것이다.&lt;/p&gt;&lt;p&gt;실제 계산기의 경우 &lt;code&gt;5-1&lt;/code&gt;이라는 연산을 위해
+&lt;code&gt;5&lt;/code&gt;, &lt;code&gt;-&lt;/code&gt;, &lt;code&gt;1&lt;/code&gt;라는 데이터를 &lt;em&gt;순차적으로&lt;/em&gt; 입력한다.
+즉, &lt;code&gt;5&lt;/code&gt;, &lt;code&gt;-&lt;/code&gt;, &lt;code&gt;1&lt;/code&gt;라는 버튼을 단 한번만 눌러도
+회로 내에 각각에 대응되는 데이터가 순차적으로 생성되며,
+이렇게 &lt;strong&gt;생성된 데이터가 회로 내에 유지된다&lt;/strong&gt;는 것이다.&lt;/p&gt;&lt;p&gt;오늘은 입력값으로부터 0과 1이라는 출력값을 만들어내고,
+외부로부터의 입력이 사라지더라도
+그 출력값을 그대로 유지하는 구조의 회로에 대해 이야기해보고자 한다.&lt;/p&gt;&lt;h2&gt;래치&lt;/h2&gt;&lt;p&gt;&lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position:relative;display:block;margin-left:auto;margin-right:auto;max-width:299px&quot;&gt;
+      &lt;a class=&quot;gatsby-resp-image-link&quot; href=&quot;/static/9c4c401041cbe1d47f69c5670e1f7987/aeb78/or-gate-latch.png&quot; style=&quot;display:block&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;
+    &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom:54.72972972972974%;position:relative;bottom:0;left:0;background-image:url(&amp;#x27;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAALCAYAAAB/Ca1DAAAACXBIWXMAAA7DAAAOwwHHb6hkAAABY0lEQVQoz31SyarCQBCcb/dD/AoPHlTEDXHFuIseIihJXBNU3OtRDR1G5aWgmWEyXVNdFQMA7/dbirhcLjgcDjgejz8VhqEU91EUxT26EsY+eDweyGazGAwGGA6HH9XtdtHpdGR1HAeZTEaIEwmpjg232w2r1Qq+78PzPGy3W3xjOp1it9slE57PZ1HX6/WQy+Uwn88xHo/RbrdRLpflQQXv7fd72JaxfkauVCpoNpuo1+sfithcKBRi0n6//6FQOYzNTtB013VRrVZxv9/l/Pl8yjcS8EFiNptJMDZ43+AfMACSqwKqJxqNhqhPpVJIp9PiLy3K5/OYTCYwr9dLQlAlbOS+1WqJpwTvKOjlZrORKdbrNa7XK06nk/xq7DVBEKBUKsklmk9varUaisXij2qeL5dLJMFwbr6iStVwklMxVTIQKlssFrFiLTuDOGWFBjMajYSApEycvukvouPbQdoK/wCMl0GS/TtwWQAAAABJRU5ErkJggg==&amp;#x27;);background-size:cover;display:block&quot;&gt;&lt;/span&gt;
+  &lt;img class=&quot;gatsby-resp-image-image&quot; alt=&quot;OR 게이트 래치&quot; title=&quot;OR 게이트 래치&quot; src=&quot;/static/9c4c401041cbe1d47f69c5670e1f7987/aeb78/or-gate-latch.png&quot; srcSet=&quot;/static/9c4c401041cbe1d47f69c5670e1f7987/12f09/or-gate-latch.png 148w,/static/9c4c401041cbe1d47f69c5670e1f7987/e4a3f/or-gate-latch.png 295w,/static/9c4c401041cbe1d47f69c5670e1f7987/aeb78/or-gate-latch.png 299w&quot; sizes=&quot;(max-width: 299px) 100vw, 299px&quot; style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;/&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;&lt;p&gt;위와 같은 구조의 회로를 한번 보자.
+초기 상태로 in에는 0이라는 값이 입력되며 이 때문에
+OR 게이트의 출력값은 0이 된다고 가정하자(&lt;code&gt;0 OR 0 = 0&lt;/code&gt;).
+이후 in에 1이라는 값이 입력되는 경우 OR 게이트의 출력값은 무조건 1이 되며,
+out에는 1이라는 값이 출력된다.
+그런데 이때 OR 게이트의 출력값인 1은 그대로 OR 게이트 자신의
+입력값으로 들어오게 되며,
+OR 게이트는 1과 1을 입력값으로 받아들이게 된다(&lt;code&gt;1 OR 1 = 1&lt;/code&gt;).
+이렇게 출력값을 자신의 입력값으로 사용하는 순환구조를
+피드백(feedback)이라고 한다.
+그리고 이러한 피드백으로 인해 in의 입력값이 다시 0으로 변하더라도
+OR 게이트의 출력값은 여전히 1로 유지될 수 있다(&lt;code&gt;0 OR 1 = 1&lt;/code&gt;).&lt;/p&gt;&lt;p&gt;이처럼 입력값을 외부로부터 꾸준히 입력받지 않더라도,
+특정한 출력값을 유지할 수 있는 구조의 회로가 바로 &lt;strong&gt;래치(latch)&lt;/strong&gt;의 특성이다.
+그러나 위와 같은 OR 게이트 래치로는
+출력값을 1로 변경하고 이를 유지시키는 것은 가능하지만,
+다시 출력값을 0으로 되돌리는 것은 불가능하다.
+자유자재로 1로 값을 설정(set)하고 0으로 값을 리셋(reset)하기 위해서는
+피드백 과정에 간섭할 수 있는 수단을 추가해야 한다.&lt;/p&gt;&lt;p&gt;&lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position:relative;display:block;margin-left:auto;margin-right:auto;max-width:590px&quot;&gt;
+      &lt;a class=&quot;gatsby-resp-image-link&quot; href=&quot;/static/ce0eb5c7816f92b4addf0c24a6ac907c/d0c0e/and-or-gate-latch.png&quot; style=&quot;display:block&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;
+    &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom:30.405405405405407%;position:relative;bottom:0;left:0;background-image:url(&amp;#x27;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAGCAYAAADDl76dAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAA2ElEQVQY03VQ1wrEMAzL//9c6UOfukv33pvqkCHlODiDSSLbiiz1PA+YDH3X767rUFWVZF3XKMsSRVHIyTfxLMvQNM07r35JdIERRRHCMESapkiSBOd5Cn7fN6ZpwnVdkqy/hJpk33d4nveSHschCnTzPM/ywbIsCIJAlFEtcW6iQ+mVWOSwZVnwfR+GYcBxHBn8JuQZxzGGYRDcdV2Ypom+7yUVG9Z1FU9s2xZ/WKCScRxFTZ7nklTStq1g7N+2Tch5pwXc8l2Z/mhz/wW9o09UR0/5+W98AOYGy9zyC5/xAAAAAElFTkSuQmCC&amp;#x27;);background-size:cover;display:block&quot;&gt;&lt;/span&gt;
+  &lt;img class=&quot;gatsby-resp-image-image&quot; alt=&quot;AND-OR 게이트 래치&quot; title=&quot;AND-OR 게이트 래치&quot; src=&quot;/static/ce0eb5c7816f92b4addf0c24a6ac907c/fcda8/and-or-gate-latch.png&quot; srcSet=&quot;/static/ce0eb5c7816f92b4addf0c24a6ac907c/12f09/and-or-gate-latch.png 148w,/static/ce0eb5c7816f92b4addf0c24a6ac907c/e4a3f/and-or-gate-latch.png 295w,/static/ce0eb5c7816f92b4addf0c24a6ac907c/fcda8/and-or-gate-latch.png 590w,/static/ce0eb5c7816f92b4addf0c24a6ac907c/d0c0e/and-or-gate-latch.png 715w&quot; sizes=&quot;(max-width: 590px) 100vw, 590px&quot; style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;/&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;&lt;p&gt;위는 기존 구성에서 AND 게이트와 NOT 게이트(혹은 인버터)를 추가한 결과이다.
+reset에 0이라는 값이 들어오는 동안 set의 입력값을 0에서 1로 변경하면
+출력값은 0에서 1로 변하며, AND 게이트 역시 1을 출력함으로써(&lt;code&gt;1 AND 1 = 1&lt;/code&gt;)
+OR 게이트에는 1이라는 값이 그대로 들어오게 된다.
+그리고 set의 값이 다시 0으로 돌아가더라도
+AND 게이트와 OR 게이트는 여전히 1을 출력하기 때문에(&lt;code&gt;1 AND 1 = 1&lt;/code&gt;; &lt;code&gt;1 OR 0 = 1&lt;/code&gt;)
+out은 여전히 1로 유지된다.
+이는 in이 set이라는 표현으로 변경되었을 뿐 이전과 동일한 논리라고 볼 수 있다.
+다만, reset의 값이 1로 변할 경우 &lt;div&gt;reset&lt;/div&gt;의 값은 0이 되며,
+AND 게이트와 OR 게이트는 0을 출력하도록 변하기 때문에(&lt;code&gt;1 AND 0 = 0&lt;/code&gt;; &lt;code&gt;0 OR 0 = 0&lt;/code&gt;)
+최종적으로 out은 0이라는 값을 출력하게 된다.
+이후 reset의 값이 0으로 돌아가더라도 피드백으로 인하여&lt;br/&gt;
+AND 게이트와 OR 게이트는 0을 여전히 출력하게 된다(&lt;code&gt;0 AND 1 = 0&lt;/code&gt;; &lt;code&gt;0 OR 0 = 0&lt;/code&gt;).&lt;/p&gt;&lt;h2&gt;S-R 래치&lt;/h2&gt;&lt;p&gt;기본적으로 위와 같은 방식으로 우리는
+회로 내에 비트 단위로 데이터를 자유롭게 저장할 수 있다.
+그리고 이러한 논리는 다양한 방식으로 구현될 수 있는데,
+그 중 가장 보편적으로 사용되는 방법이 바로 &lt;strong&gt;S-R 래치(set-reset latch)&lt;/strong&gt;라는 구조다.&lt;/p&gt;&lt;p&gt;&lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position:relative;display:block;margin-left:auto;margin-right:auto;max-width:372px&quot;&gt;
+      &lt;a class=&quot;gatsby-resp-image-link&quot; href=&quot;/static/7b643fcaceb7129332dd47c0b700ef88/98b6e/s-r-latch.png&quot; style=&quot;display:block&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;
+    &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom:83.1081081081081%;position:relative;bottom:0;left:0;background-image:url(&amp;#x27;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAARCAYAAADdRIy+AAAACXBIWXMAAA7DAAAOwwHHb6hkAAAB+ElEQVQ4y3VUR8/qMBDM//8Z3BAXTnQBB4QA0Xvvoogqep+nWWnz8oWw0mISx+PZmbUNAPh8PnCK5XKJZrOJTqcjud1uzTldYx2Zhr44HA5YLBa43W643+94PB7I5XLYbDbY7XYy1ut1lEolE/T9fuP1eplgAsiXjEqlgmg0in6/j2q1inK5jEQi8cV6Mpmg1WrhV5gMyYhpjVqtJiyYBNLNw+EwstmsMI7H4yIF5+fzOQy7htb/ZM1nbkQNdS4UCgkgK3G5XDgej8J6NBr9Z8hRGVCzfD6PTCbzVdJsNhPmGr1e72/J1gcFHI/HKBaLkjSLSVPoOLXVYKlqEteKKVZAZXu9XtFoNMQkn88nbLvdLlarFS6Xi2kcwbSVTJftJdl7cr/fi17BYFAyEAhgOBxKezmtcWRI+tSGQOl0WjSjg2x06svS6TCrYDU/GaqGdIsfJ5NJWdhutwWEwHSbQYbcoFAo/CFjWNEVkFqlUilhaA8CDgaDL5dNU5zOMSfP57OYoX1IlhqRSETYshu8Xq85T20NdfV0OklaN2DZfKaz1uPm9/ulA6ivx+ORO4DMeVoEkKW53W7EYjEph0BkQA3tsV6v5QT9PMv84Y1BkTk+n08pl89kwIZmr9Hd6XQqm/MbXfd12/y6CxkE0PuQJVMjp3vQ2jb/AC91CV/1QJ8QAAAAAElFTkSuQmCC&amp;#x27;);background-size:cover;display:block&quot;&gt;&lt;/span&gt;
+  &lt;img class=&quot;gatsby-resp-image-image&quot; alt=&quot;S-R 래치&quot; title=&quot;S-R 래치&quot; src=&quot;/static/7b643fcaceb7129332dd47c0b700ef88/98b6e/s-r-latch.png&quot; srcSet=&quot;/static/7b643fcaceb7129332dd47c0b700ef88/12f09/s-r-latch.png 148w,/static/7b643fcaceb7129332dd47c0b700ef88/e4a3f/s-r-latch.png 295w,/static/7b643fcaceb7129332dd47c0b700ef88/98b6e/s-r-latch.png 372w&quot; sizes=&quot;(max-width: 372px) 100vw, 372px&quot; style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;/&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;&lt;p&gt;해당 회로에서 사용되는 NAND 게이트&lt;div num=&quot;1&quot;&gt;&lt;/div&gt;의 경우
+두 가지 입력값이 모두 1인 경우에만 출력값이 0이 되며,
+그 외에는 출력값이 1이 된다.
+처음 보면 낯설 수도 있겠지만 기본적인 원리는 앞서 다룬 래치와 크게 다르지 않다.&lt;/p&gt;&lt;p&gt;입력값 set과 reset이 각각 1과 0일 때, &lt;div&gt;set&lt;/div&gt;과 &lt;div&gt;reset&lt;/div&gt;은
+각각 0과 1이 된다.
+S 게이트는 입력값 중 하나가 0이므로 무조건 출력값이 1이 되는데(&lt;code&gt;0 NAND ? = NOT (0 AND ?) = NOT 0 = 1&lt;/code&gt;),
+이에 따라 출력값 Q는 1의 값을 지니게 된다.
+한편 R 게이트의 경우 입력값으로 1과 1이 들어오게 되므로 출력값이 0이 되고, &lt;div&gt;Q&lt;/div&gt;의 값은 0이 된다.
+그리고 S 게이트의 또 다른 입력값(&lt;div&gt;set&lt;/div&gt; 이외의 값)으로는 0이 들어오게 되면서
+결과적으로 S 게이트는 &lt;code&gt;0 NAND 0 = 1&lt;/code&gt;, R 게이트는 &lt;code&gt;1 NAND 1 = 0&lt;/code&gt;의 값을 출력하게 된다.&lt;/p&gt;&lt;p&gt;이후 set의 값이 0으로 돌아가게 되면 &lt;div&gt;set&lt;/div&gt;의 값은 1로 변한다.
+이에 따라 S 게이트의 입력값은 0과 0에서 1과 0로 변하게 되지만
+그 출력값은 여전히 1로 유지되기 때문에(&lt;code&gt;1 NAND 0 = 1&lt;/code&gt;)
+Q와 &lt;div&gt;Q&lt;/div&gt;의 값은 그대로 1과 0으로 유지됨을 알 수 있다.&lt;/p&gt;&lt;p&gt;그리고 S-R 래치는 기본적으로 대칭적인 설계를 지니고 있다.
+때문에 set과 reset에 0과 1을 넣었을 때 위와 동일한 방식으로 동작하여
+Q와 &lt;div&gt;Q&lt;/div&gt;이 0과 1이라는 값을 출력할 것임을 쉽게 예상할 수 있을 것이다.&lt;/p&gt;&lt;p&gt;결과적으로 S-R 래치는 대부분의 경우 set과 reset이 모두 0인 상태로 존재하며,
+이전 입력값에 따라 정해진 Q와 &lt;div&gt;Q&lt;/div&gt;의 값을 그대로 출력값으로 유지하게 된다.
+비트 단위로 데이터를 저장하는 것이 핵심 기능인 회로에 부합한다고 볼 수 있다.&lt;/p&gt;&lt;p&gt;한편 set과 reset이 모두 1인 경우에는 어떠할까?
+이 경우 &lt;div&gt;set&lt;/div&gt;과 &lt;div&gt;reset&lt;/div&gt;은 0과 0라는 입력값으로 회로에 들어오게 된다.
+NAND의 입력값에 0이 존재하므로 출력값은 무조건 1이 되며,
+이에 따라 Q와 &lt;div&gt;Q&lt;/div&gt; 모두 1이라는 값을 지니게 되는데, &lt;div&gt;Q&lt;/div&gt;은
+Q를 반전시킨 값을 지녀야 하므로 논리적으로 옳지 않은 결과라고 볼 수 있다.
+애초에 set과 reset이 1이라는 뜻은 데이터를 1로 설정하면서 동시에 0으로 초기화하라는
+모순되는 지시를 넣은 것으로 볼 수 있다. 때문에 S-R 래치를 사용할 때
+이러한 입력값이 존재할 수 없도록 유의해야 한다.&lt;/p&gt;&lt;h2&gt;안정성 문제&lt;/h2&gt;&lt;p&gt;비트 단위에서 생각했을 때 위와 같은 구조는 논리적으로 틀리지 않았다.
+그런데 한 가지 고려해야 할 점은 회로란 철저히
+물리적인 특성을 지닌 기계라는 점이다.&lt;/p&gt;&lt;h3&gt;데이터 변화 시점&lt;/h3&gt;&lt;p&gt;우선 현재 회로에서는 1이라는 데이터를 저장할 때에만 set에 1이라는 값이 들어오고,
+0으로 데이터를 되돌릴 때에만 reset에 1이라는 값이 들어오는 것을 가정하고 있다.
+그렇다면 혹시라도 데이터를 변경할 생각이 없음에도
+순간적으로 set이나 reset에 1이라는 입력값이 들어온다면 어떻게 될까?
+래치는 이를 문제라고 인식하지 못하고 당연히 1이나 0으로 출력값을 설정할 것이다.&lt;/p&gt;&lt;p&gt;이러한 가능성을 최소화하기 위해서는
+저장하려는 데이터에 대한 입력값만이 아니라,
+해당 정보를 사용하여 실제로 &lt;strong&gt;회로에 데이터를 저장하라고 명령을 내리는 입력값&lt;/strong&gt;도
+함께 받아들이는 것이 가장 확실한 안전장치라고 볼 수 있다.
+즉, 회로의 출력값을 변경하라는 명령이 들어오지 않는 동안에는
+저장하려는 입력값이 0이 되든 1이 되든 회로에 아무런 영향도 미치지 못하게 하는 것이다.&lt;/p&gt;&lt;h3&gt;전파지연&lt;/h3&gt;&lt;p&gt;한편 입력값들에 부합하는 연산 결과가
+게이트들을 지나 출력값으로 나올 때까지는 당연히 시간이 걸리며,
+우리는 이를 &lt;strong&gt;전파지연(propagation delay)&lt;/strong&gt;이라고 부른다.&lt;/p&gt;&lt;p&gt;&lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position:relative;display:block;margin-left:auto;margin-right:auto;max-width:590px&quot;&gt;
+      &lt;a class=&quot;gatsby-resp-image-link&quot; href=&quot;/static/76fc055ece1232dbfcb614cee4de492f/18c13/propagation-delay.png&quot; style=&quot;display:block&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;
+    &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom:31.756756756756754%;position:relative;bottom:0;left:0;background-image:url(&amp;#x27;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAGCAYAAADDl76dAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAA+klEQVQY022QSWvDQAyF/f//RkNj55zk7nMcu2BIfUiNwfuO992vSGAT2gjEY+aNPkkjrOuKd0nRdR3iOIbruqx5niPLMlY627a936Vpyir8hbxG27YwTRNhFP3z5nmGZVnwfZ/BlGEYQqiqCmVZgpS6bAbBmqbBsiyIogiGYcDzPJ52gziOg2ma9iZUz0B6QCuQUkEQBDuwrmuodxUn6YS+7znJK4oC4lGErusMo3OSJBCogDoRhC5fgzyaSpZlHD4OuF6ucGyHPQKLn0dIooTL+cwTE0PAm9j+cxgGjOPIUyu3G+6Kgp/nk1ejRl+aBk1V8f148Oq07S8El8L2WsvHjgAAAABJRU5ErkJggg==&amp;#x27;);background-size:cover;display:block&quot;&gt;&lt;/span&gt;
+  &lt;img class=&quot;gatsby-resp-image-image&quot; alt=&quot;전파지연&quot; title=&quot;전파지연&quot; src=&quot;/static/76fc055ece1232dbfcb614cee4de492f/fcda8/propagation-delay.png&quot; srcSet=&quot;/static/76fc055ece1232dbfcb614cee4de492f/12f09/propagation-delay.png 148w,/static/76fc055ece1232dbfcb614cee4de492f/e4a3f/propagation-delay.png 295w,/static/76fc055ece1232dbfcb614cee4de492f/fcda8/propagation-delay.png 590w,/static/76fc055ece1232dbfcb614cee4de492f/efc66/propagation-delay.png 885w,/static/76fc055ece1232dbfcb614cee4de492f/18c13/propagation-delay.png 1005w&quot; sizes=&quot;(max-width: 590px) 100vw, 590px&quot; style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;/&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;&lt;p&gt;위의 그림을 보면 알 수 있겠지만
+B라는 입력값이 변화했을 때 NOT 게이트의 출력값인 C가 변하는 데에는 시간이 걸리며,
+다시 C를 입력값으로 받아 생성되는 D라는 출력값이 변하는 데에도 시간이 걸린다.
+문제는 이 시간이 확실하게 고정된 값이 아니라 회로의 구성 등을 토대로
+계산된 통계적인 예측값이라는 점이다.
+이로 인해 회로에 입력값이 변경되었을 때
+위의 회색 구간처럼 실제 출력값을 &lt;strong&gt;예측할 수 없는 구간&lt;/strong&gt;이 생겨나게 된다.&lt;/p&gt;&lt;p&gt;이러한 구간이 구체적으로 어떠한 문제를 발생시킬 수 있을까?
+예를 들어 메모리에 &lt;code&gt;1&lt;/code&gt;과 &lt;code&gt;1&lt;/code&gt;을 저장하고
+해당 비트 데이터에 대해 덧셈 연산을 수행하도록 지시를 내린다고 생각해보자.
+만일 두 비트 데이터 중 하나가 아직 &lt;code&gt;0&lt;/code&gt;에서 &lt;code&gt;1&lt;/code&gt;로 변하기 전에
+연산이 실행된다면 &lt;code&gt;1 + 1 = 2&lt;/code&gt; 대신 &lt;code&gt;1 + 0 = 1&lt;/code&gt;이라는 결과가 출력될 것이다.&lt;/p&gt;&lt;p&gt;때문에 회로가 안정적으로 동작하기 위해서는
+하나의 작업을 수행했을 때마다 가급적 최악의 경우를 가정하고
+&lt;strong&gt;예상되는 지연 시간의 최댓값만큼 다음 연산의 수행을 지연&lt;/strong&gt;해야 한다.&lt;/p&gt;&lt;p&gt;바로 이러한 두 가지 목적을 달성하기 위해 일반적인 메모리 회로에서는
+&lt;strong&gt;클록(clock)&lt;/strong&gt;이라는 개념을 활용한다.&lt;/p&gt;&lt;h2&gt;클록&lt;/h2&gt;&lt;p&gt;클록이란 무엇인가.
+이름만 보면 회로 내에서 시계와 같은 기능을 하는 부품이라고 생각할 수 있겠지만
+정확히는 &lt;strong&gt;시간의 경과를 알려주는 데이터 입력값&lt;/strong&gt; 자체를 의미한다.&lt;/p&gt;&lt;p&gt;&lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position:relative;display:block;margin-left:auto;margin-right:auto;max-width:359px&quot;&gt;
+      &lt;a class=&quot;gatsby-resp-image-link&quot; href=&quot;/static/701fcfc84d754e0048fda11b68711098/f5eb6/oscillator.png&quot; style=&quot;display:block&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;
+    &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom:44.5945945945946%;position:relative;bottom:0;left:0;background-image:url(&amp;#x27;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAJCAYAAAAywQxIAAAACXBIWXMAAA7DAAAOwwHHb6hkAAABUElEQVQoz41SXYuCUBD1//+D/kMvPUYQRZqoUKlRlIRlVg+aGaFlX2c5A1d2oWV3YJj7Mffcc2ZG2263mE6nWCwWmM1mmM/ndeR5WZagvd9v/Me0yWSCNE1xPp9RVRWKohC/3+8IggD7/V4SX69XDcr4m2tkFscx2u02brdb/Zi22+1qQGV/MRVAPiSb0WgkTJUlSYIsy2TNz/I8l/X1epU9P6YaRnWmeZ6H8XgsLGm2bcMwDERRBF3XZU1Wz+ezBhwMBjBNU950u11sNhvZU412PB7R7/exWq0keTgcotlswnEcdDodKQVZXC4XqTVBSMJ1Xfmc+16vJ40UyUoa0ZnErn8ySucd88j0dDphvV7j8XggDMO6/poqfqvVwuFw+NFFyqR/bwTrxWmg845AHC0y5JkAUo4CUx3+NBK8Wy6X8H1fZpSR82pZFhqNhij9AlUVpVknaddWAAAAAElFTkSuQmCC&amp;#x27;);background-size:cover;display:block&quot;&gt;&lt;/span&gt;
+  &lt;img class=&quot;gatsby-resp-image-image&quot; alt=&quot;발진자&quot; title=&quot;발진자&quot; src=&quot;/static/701fcfc84d754e0048fda11b68711098/f5eb6/oscillator.png&quot; srcSet=&quot;/static/701fcfc84d754e0048fda11b68711098/12f09/oscillator.png 148w,/static/701fcfc84d754e0048fda11b68711098/e4a3f/oscillator.png 295w,/static/701fcfc84d754e0048fda11b68711098/f5eb6/oscillator.png 359w&quot; sizes=&quot;(max-width: 359px) 100vw, 359px&quot; style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;/&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;&lt;p&gt;주기적으로 0과 1 사이의 출력을 오가는 회로 내의 부품을 발진자(oscillator)라고 하는데,
+이러한 부품의 출력값을
+&lt;strong&gt;입력값으로 받음으로써 주기적으로 값이 1이 되었을 때에만 특정 작업을 반복하여 수행하도록 설정&lt;/strong&gt;할 수 있다.
+그리고 이렇게 사용되는 입력값이 바로 클록(clock)이다.
+물론 위와 같이 NOT 게이트를 사용하는 경우 다시 전파 지연이라는 문제로 인해
+0이 되고 1이 되는 시점이 불확실해진다.
+때문에 실제로는 크리스탈과 같이 별도의 부품을 활용하여
+안정적이고 적은 비용으로 발전기를 만들어내고, 이를 통해 클록이라는 자극을 구현한다.&lt;/p&gt;&lt;p&gt;우리는 이제 이 클록을 래치의 입력값으로 받아 적절하게 사용함으로써
+위에서 이야기한 문제점들을 해결할 수 있다.
+드디어 우리는 이 게시물의 핵심인 D 플립플롭에 대해 이야기할 준비가 끝났다.&lt;/p&gt;&lt;h2&gt;플립플롭&lt;/h2&gt;&lt;p&gt;&lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position:relative;display:block;margin-left:auto;margin-right:auto;max-width:590px&quot;&gt;
+      &lt;a class=&quot;gatsby-resp-image-link&quot; href=&quot;/static/828c51e178ab2af439055368e686c483/1cfc2/d-flip-flop.png&quot; style=&quot;display:block&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;
+    &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom:72.97297297297297%;position:relative;bottom:0;left:0;background-image:url(&amp;#x27;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAPCAYAAADkmO9VAAAACXBIWXMAAA7DAAAOwwHHb6hkAAABaklEQVQ4y5WU2YrCQBRE/f8fUxREVHxwiQtuiUvivlvDudAhE3vCeKFJTNrqU3W7U1Km3u93Op7Ppy6XizabjbbbrT1zc4qqlBekbrebwjDUfD7XarXS/X5Xv9/X4XD4tfC/Bc/ns06nkxaLhdbrtR6PhwaDgZbL5YdgXtgriNX9fq8kSVSpVFStVk0Ycl882d+FhNPpVKPRyOwPh8OUMo5j+f6XEubxIYQOKoSpTqejcrlslNfrVd1u195z7yXM4tME8pvNZnalIVAiCh0L8ozBbvgQdEKv18u6ikir1TLLkBIBxTvyrNfrtgNcpoWWEcVGFEXq9XrWHAbFAlBjdTwe25X52QZ5LbMylM1m06xikeZgmXts4iAIAh2Px78tZzPEXq1Ws65CDFGj0Uj3psvOa9l3/Kjdbmd5ITSZTNKO++YW7kNyoaByew8y7H99UvI5ug632237SHx9lt1EcuNLQ2ch9G0Rn+APpO+L3dioMPgAAAAASUVORK5CYII=&amp;#x27;);background-size:cover;display:block&quot;&gt;&lt;/span&gt;
+  &lt;img class=&quot;gatsby-resp-image-image&quot; alt=&quot;D 플립플롭&quot; title=&quot;D 플립플롭&quot; src=&quot;/static/828c51e178ab2af439055368e686c483/fcda8/d-flip-flop.png&quot; srcSet=&quot;/static/828c51e178ab2af439055368e686c483/12f09/d-flip-flop.png 148w,/static/828c51e178ab2af439055368e686c483/e4a3f/d-flip-flop.png 295w,/static/828c51e178ab2af439055368e686c483/fcda8/d-flip-flop.png 590w,/static/828c51e178ab2af439055368e686c483/efc66/d-flip-flop.png 885w,/static/828c51e178ab2af439055368e686c483/1cfc2/d-flip-flop.png 900w&quot; sizes=&quot;(max-width: 590px) 100vw, 590px&quot; style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;/&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;&lt;p&gt;핵심만 말하자면 플립플롭은 비트 단위로 데이터를 저장하는 회로 구조이다.
+그 중에서 특히 D 플립플롭이 메모리 회로를 구성하기 위해 흔하게 사용되며
+위와 같은 구조를 지닌다.
+그러나 엄밀히 말하자면 플립플롭이란
+&lt;strong&gt;에지에 의해 데이터 변화가 촉발되는 래치(edge-triggered latch)&lt;/strong&gt;이며,
+D 플립플롭은 &lt;strong&gt;양의 에지에 의해 변화가 촉발되는(positive edge-triggered) 플립플롭&lt;/strong&gt;을
+의미한다.
+대체 이게 무슨 의미일까?
+위의 구조를 한 번 자세히 들여다봐보자.&lt;/p&gt;&lt;p&gt;우선 D 플립플롭의 우측 부분만 보았을 때 위에서 다룬
+S-R 래치와 동일함을 알 수 있다.
+Q와 &lt;div&gt;Q&lt;/div&gt;는 플립플롭의 최종적인 출력값으로 사용되며,
+clock과 D라는 입력값을 토대로
+정해지는 &lt;div&gt;S&lt;/div&gt;와 &lt;div&gt;R&lt;/div&gt;라는 데이터는
+S-R 래치의 두 입력값 &lt;div&gt;set&lt;/div&gt;와 &lt;div&gt;reset&lt;/div&gt;에 대응된다.
+그렇다면 clock과 D라는 입력값의 변화와 그 조합에 따라 S와 R의 값이
+어떻게 정해지는지만 파악하면 이 회로를 완전히 파악할 수 있다.&lt;/p&gt;&lt;h3&gt;클록이 변할 때 D의 값이 저장된다&lt;/h3&gt;&lt;p&gt;&lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position:relative;display:block;margin-left:auto;margin-right:auto;max-width:590px&quot;&gt;
+      &lt;a class=&quot;gatsby-resp-image-link&quot; href=&quot;/static/67b2e6e9336cfced888421b1b4cc68ee/2d2d6/edge-triggering-process.png&quot; style=&quot;display:block&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;
+    &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom:41.21621621621622%;position:relative;bottom:0;left:0;background-image:url(&amp;#x27;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAICAYAAAD5nd/tAAAACXBIWXMAAA7DAAAOwwHHb6hkAAABEklEQVQoz1WSV47DMAxEff/r+TPuDe69NwaPgYBdAkJEajgzZGy97yvzPP87x3HIuq4yjqNM0yQmqBVFIfu+a/2+b8nzXO/LsmhuPc+jyefzEd/3leS6LgWa3ASNVVVJEATSNI0SIEBeluWPECCu6rqWLMskjmN1CIBmiE2A6/teiTFA3rat1hCHw8INjSjyCBnEphFVE+AMFueM7nme1oZhEKa1aEjTVA93CMMwVBBi5AAJHDAeuwTLqmzbVnGwHB0ZdkZjTNQB4pL9cEz8dYSB8zzFdV29d10n27b9CHGAMg+oE0mSqFPzLxuXCDqOo3iCCdh7FEUqqIQw08gvqlgnh5wGE3xi7BkM74gYHFNS/wK26GSsLNOFcgAAAABJRU5ErkJggg==&amp;#x27;);background-size:cover;display:block&quot;&gt;&lt;/span&gt;
+  &lt;img class=&quot;gatsby-resp-image-image&quot; alt=&quot;에지에 따른 변화&quot; title=&quot;에지에 따른 변화&quot; src=&quot;/static/67b2e6e9336cfced888421b1b4cc68ee/fcda8/edge-triggering-process.png&quot; srcSet=&quot;/static/67b2e6e9336cfced888421b1b4cc68ee/12f09/edge-triggering-process.png 148w,/static/67b2e6e9336cfced888421b1b4cc68ee/e4a3f/edge-triggering-process.png 295w,/static/67b2e6e9336cfced888421b1b4cc68ee/fcda8/edge-triggering-process.png 590w,/static/67b2e6e9336cfced888421b1b4cc68ee/efc66/edge-triggering-process.png 885w,/static/67b2e6e9336cfced888421b1b4cc68ee/c83ae/edge-triggering-process.png 1180w,/static/67b2e6e9336cfced888421b1b4cc68ee/2d2d6/edge-triggering-process.png 1205w&quot; sizes=&quot;(max-width: 590px) 100vw, 590px&quot; style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;/&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;&lt;p&gt;위의 회로도를 한번 봐보자. 굵은 색은 1에 해당되는 값의 전파가 흐르고 있음을 의미한다.&lt;/p&gt;&lt;p&gt;좌측의 두 회로도를 보면 D의 값이 1로 고정되었을 때
+clock이 0에서 1로 변하자 S의 값이 0에서 1로 변함을 알 수 있다(&lt;div&gt;S&lt;/div&gt;은 1에서 0으로 변화).
+이는 플립플롭의 출력값이 1로 설정되었음을 의미한다.&lt;/p&gt;&lt;p&gt;우측의 두 회로도의 경우 D의 값이 0으로 고정되었을 때
+clock이 0에서 1로 변하자 R의 값이 0에서 1로 변함을 알 수 있다(&lt;div&gt;R&lt;/div&gt;은 1에서 0으로 변화).
+이는 출력하는 값이 0으로 설정되었음을 의미한다.&lt;/p&gt;&lt;p&gt;그렇다. &lt;strong&gt;D라는 입력값은 회로에 저장하고 싶은 데이터를 의미한다.&lt;/strong&gt;
+그리고 클록이 0에서 1로 변하는 순간이 바로 이 D라는 입력값을 회로에 저장하라는 신호이다.
+이러한 신호를 우리는 &lt;strong&gt;에지(edge)&lt;/strong&gt;라고 부르며,
+이것이 바로 위에서 우리가 희망하던 &lt;strong&gt;회로에 데이터를 저장하라고 명령을 내리는 입력값&lt;/strong&gt;이라고 볼 수 있다.&lt;/p&gt;&lt;p&gt;이제야 우리는 위에서 언급한 &lt;strong&gt;에지에 의해 데이터 변화가 촉발&lt;/strong&gt;된다는
+플립플롭의 정의를 이해할 수 있게 되었다.
+특히 D 플립플롭은 &lt;em&gt;양의 에지&lt;/em&gt;에 의해 변화가 촉발된다고 하였는데,
+그 의미가 바로 클록이 0에서 1로 변화할 때 D의 값을 저장한다는 의미이다.
+만약 클록이 1에서 0으로 변할 때 변화가 촉발될 경우
+&lt;em&gt;음의 에지&lt;/em&gt;에 의해 변화가 촉발(negative edge-triggered)된다고 정의되었을 것이다.&lt;/p&gt;&lt;h3&gt;클록이 일정할 때 D는 영향력이 없다&lt;/h3&gt;&lt;p&gt;이번에는 클록이 고정되어있을 때 D의 변화가 출력값에 미치는 영향에 대해 알아보자.&lt;/p&gt;&lt;p&gt;&lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position:relative;display:block;margin-left:auto;margin-right:auto;max-width:590px&quot;&gt;
+      &lt;a class=&quot;gatsby-resp-image-link&quot; href=&quot;/static/545905e6ff2ef894d2f911879ce9b420/2e694/d-powerless.png&quot; style=&quot;display:block&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;
+    &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom:34.45945945945946%;position:relative;bottom:0;left:0;background-image:url(&amp;#x27;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAHCAYAAAAIy204AAAACXBIWXMAAA7DAAAOwwHHb6hkAAAA8klEQVQoz02Rh6oFMQhE8//fuLCV7Y3t3csZyOMJkmTUcTRu2zZb19Xu+zaMc5omYdd16Zzn2Y7jUPx9X72XZbF935XPyZuYa9vW0jQVgFFY17UwiMdx1J087Hkea5rGsiyzvu/tPE8rikKOAEe3siwFYCgisaoqy/PchmGwrussSRKR4cQgBUcIdxwxDjJIkIuhKIqivzWEYagGfiUUEfcr8MTf9+nt6AaAEowRIGFEdsNoqGd8mlIYx7FU0hycOE2lECLGYXRvYBSRzF6IQ+CnIB4EgXaNct+Uu4P1/y9j/udRC86ewPxY1HiMnZKLE/8Bwa0ZZ+gBQkcAAAAASUVORK5CYII=&amp;#x27;);background-size:cover;display:block&quot;&gt;&lt;/span&gt;
+  &lt;img class=&quot;gatsby-resp-image-image&quot; alt=&quot;D의 무력함&quot; title=&quot;D의 무력함&quot; src=&quot;/static/545905e6ff2ef894d2f911879ce9b420/fcda8/d-powerless.png&quot; srcSet=&quot;/static/545905e6ff2ef894d2f911879ce9b420/12f09/d-powerless.png 148w,/static/545905e6ff2ef894d2f911879ce9b420/e4a3f/d-powerless.png 295w,/static/545905e6ff2ef894d2f911879ce9b420/fcda8/d-powerless.png 590w,/static/545905e6ff2ef894d2f911879ce9b420/efc66/d-powerless.png 885w,/static/545905e6ff2ef894d2f911879ce9b420/2e694/d-powerless.png 1048w&quot; sizes=&quot;(max-width: 590px) 100vw, 590px&quot; style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;/&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;&lt;p&gt;좌측의 회로도는 클록이 0으로 고정된 경우를 나타낸다.
+이때 클록의 값은 각각 &lt;div&gt;S&lt;/div&gt;와 &lt;div&gt;R&lt;/div&gt;의 값을 결정하는
+두 NAND 게이트의 입력값으로 사용된다는 점에 유의하자.
+NAND 게이트는 입력값이 모두 1인 경우에만 0을 출력하기 때문에
+클록값이 0이라면 D의 값이 어떻든지와는 무관하게
+언제나 1이라는 값을 일관되게 출력할 것임을 쉽게 예상할 수 있다.&lt;/p&gt;&lt;p&gt;중앙에 있는 두 회로도의 경우 클록이 1이고, &lt;div&gt;S&lt;/div&gt;와 &lt;div&gt;R&lt;/div&gt;의 값이
+1과 0일 때 D가 변화하는 경우를 다루고 있다.
+이 경우 &lt;div&gt;S&lt;/div&gt;와 &lt;div&gt;R&lt;/div&gt;의 값은 그대로 1과 0으로 유지된다.
+이는 D가 0인 상태로 클록이 1이 되었을 때 촉발된 &lt;em&gt;데이터를 0으로 설정하라&lt;/em&gt;는 지시는
+이후 D의 값이 변화하더라도 그대로 수행될 것임을 알 수 있다.&lt;/p&gt;&lt;p&gt;마지막으로 우측에 있는 두 회로도의 경우 클록이 1이고, &lt;div&gt;S&lt;/div&gt;와 &lt;div&gt;R&lt;/div&gt;의 값이
+0과 1일 때 D가 변화하는 경우를 다루고 있다.
+이 경우에도 마찬가지로 &lt;div&gt;S&lt;/div&gt;와 &lt;div&gt;R&lt;/div&gt;의 값은 그대로 0과 1으로 유지된다.&lt;/p&gt;&lt;p&gt;이를 통해 우리는 클록이 0에서 1로 변하는 시점(에지)에서의 D의 값만이
+회로에 변화를 일으킬 뿐,
+&lt;strong&gt;D의 변화 자체는 아무런 영향도 미치지 못함&lt;/strong&gt;을 알 수 있다.
+이는 클록이 0과 1 사이를 오가는 주기를 적절하게 설정함으로써
+회로에 변화가 일어나는 시점을 온전히 통제할 수 있음을 의미한다.
+이에 따라 우리는 위에서 이야기한 &lt;strong&gt;예상되는 지연 시간의 최댓값만큼 다음 연산의 수행을 지연&lt;/strong&gt;한다는
+목적을 이룰 수 있게 되었다.&lt;/p&gt;&lt;h3&gt;셋업타임과 홀드타임은 필요하다&lt;/h3&gt;&lt;p&gt;다만, 오해하면 안 되는 점이 한 가지 있다.
+바로 클록 에지가 발생하는 시점에는 D의 값이 마음대로 변해서는 안 된다는 점이다.
+클록의 값이 0에서 1로 변화하는 시점에 D의 값이 안정적으로 유지되어야만
+의도한 방식으로 회로의 출력값을 변화시킬 수 있다.&lt;/p&gt;&lt;p&gt;&lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position:relative;display:block;margin-left:auto;margin-right:auto;max-width:590px&quot;&gt;
+      &lt;a class=&quot;gatsby-resp-image-link&quot; href=&quot;/static/a506178f665aa746ffad61322470e3b4/42d54/setup-and-hold-time.png&quot; style=&quot;display:block&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;
+    &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom:22.972972972972975%;position:relative;bottom:0;left:0;background-image:url(&amp;#x27;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAFCAYAAABFA8wzAAAACXBIWXMAAA7DAAAOwwHHb6hkAAABCklEQVQY0z2O3Y6CMBSEef/3WUlW/EGglcINSAGlXtkCATQahdvZ9CTrxZeZ007OHOf5fOKmNbqug9aaMG1Lc9u2X/q+pzfLvzem/Wa7vscwDHCyLEMQRYhFgt+1h7W3QRCGEGmKIIyQJCmiiCEWAr5/wG7vI2QMe/+AleviZ+Vis93RDsaPcGzb6/XC5/Mh5nnGsiyk7/cbyzzjfr/DGIPH44FpmjCOI8ZhIG//LNbbXU5+OlHrMRaIGMfa86h5s92CxzH4MaZrpCxRFBJpkiLPTzifL8jyHIxzMMYhRIJClnC0NqiqGup6RaMUBau6JrWzUlfySik0jUJVVaSXpiEvyxJSShRSUuYPU81h1Q+xWNYAAAAASUVORK5CYII=&amp;#x27;);background-size:cover;display:block&quot;&gt;&lt;/span&gt;
+  &lt;img class=&quot;gatsby-resp-image-image&quot; alt=&quot;셋업타임과 홀드타임&quot; title=&quot;셋업타임과 홀드타임&quot; src=&quot;/static/a506178f665aa746ffad61322470e3b4/fcda8/setup-and-hold-time.png&quot; srcSet=&quot;/static/a506178f665aa746ffad61322470e3b4/12f09/setup-and-hold-time.png 148w,/static/a506178f665aa746ffad61322470e3b4/e4a3f/setup-and-hold-time.png 295w,/static/a506178f665aa746ffad61322470e3b4/fcda8/setup-and-hold-time.png 590w,/static/a506178f665aa746ffad61322470e3b4/42d54/setup-and-hold-time.png 858w&quot; sizes=&quot;(max-width: 590px) 100vw, 590px&quot; style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;/&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;&lt;p&gt;위의 그림을 통해 이에 대해 자세히 알 수 있다.
+CK의 값이 0에서 1로 변화하는 시점을 기준으로 그 직전과 직후에 D의 값이
+안정적으로 유지되어야만 하는 기간을 각각 셋업타임과 홀드타임이라고 불린다.
+이 기간 동안 D 값이 유지되어야 이를 제대로 사용하여 NAND 게이트들이 동작할 수 있다.
+그리고 NAND 게이트들의 출력값이 변하고 Q와 &lt;div&gt;Q&lt;/div&gt;의 값이
+최종적으로 결정될 때까지의 기간이 바로 그동안 지겹도록 이야기한 전파 지연의 기간이다.&lt;/p&gt;&lt;hr/&gt;&lt;div&gt;참고문서&lt;/div&gt;&lt;ul&gt;&lt;li&gt;컴퓨터 과학 총론: &lt;a href=&quot;https://www.kyobobook.co.kr/product/detailViewKor.laf?barcode=9788993712629&quot;&gt;링크&lt;/a&gt;&lt;/li&gt;&lt;li&gt;한 권으로 읽는 컴퓨터 구조와 프로그래밍: &lt;a href=&quot;https://www.kyobobook.co.kr/product/detailViewKor.laf?barcode=9791189909284&quot;&gt;링크&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;div&gt;&lt;div num=&quot;1&quot;&gt;&lt;p&gt;NAND 게이트의 경우 이전 게시글들에서 설명하지 않은 개념이지만
+그 명칭이나 회로도만 보더라도 그 기능을 어느 정도 유추할 수 있을 것이다.
+NOT 게이트의 세모 부분은 입력값을 그대로 반환한다는 의미이며,
+출력부의 작은 동그라미는 출력값을 반전시킨다는 의미이다.
+그리고 NAND 게이트는 기본적으로 AND 게이트의 출력부에
+바로 이 동그라미가 추가된 구조라고 볼 수 있다.
+때문에 NAND 게이트는 일반적인 &lt;strong&gt;AND 연산을 수행한 이후,&lt;/strong&gt;
+&lt;strong&gt;그 결과에 대해 NOT 연산을 수행한다&lt;/strong&gt;는 의미를 지닌다.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;</content:encoded></item><item><title><![CDATA[아날로그에서 디지털로: 회로의 기초]]></title><description><![CDATA[회로란 안정성을 위해 현실에 존재하는 아날로그적인 자극을 디지털적인 동작으로 바꿔주는 도구라고 볼 수 있다. 이산적인 데이터를 일관된 논리에 따라 적절하게 활용하면 매번 동일한 입력값에 대해 동일한 출력값을 안정적으로 도출해낼 수 있게 된다.]]></description><link>https://bugoverdose.github.io/computer-science/analog-and-digital/</link><guid isPermaLink="false">https://bugoverdose.github.io/computer-science/analog-and-digital/</guid><pubDate>Mon, 10 Jan 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;아날로그(analog)와 디지털(digital)의 차이는 정확히 어디에 있을까?
 일반적으로 우리는 오래된 기술을 의미하기 위해 아날로그라는 표현을,
 동작하는 데 전기를 필요로 하는 기계에 대해서는 디지털이라는 표현을 사용한다.
 현실에서 이러한 용법은 틀리지 않는 경우가 일반적이지만,
@@ -125,7 +352,7 @@
 연속적인 데이터를 이산적인 데이터로 변환하여 사용하는 것을 의미한다.&lt;/p&gt;&lt;p&gt;회로란 전기가 지닌 아날로그적인 성질을 활용하여
 0과 1이라는 이산적인 데이터를 만들어내는 대표적인 디지털 도구라고 볼 수 있다.
 특히 회로는 실수 대신 정수를, 정수 중에서도 0과 1만을 사용하는 등
-경우의 수를 최소화함으로써 안정성을 극대화시켰다고 볼 수 있다.&lt;/p&gt;&lt;hr/&gt;&lt;div&gt;&lt;/div&gt;&lt;ul&gt;&lt;li&gt;컴퓨터 과학 총론: &lt;a href=&quot;https://www.kyobobook.co.kr/product/detailViewKor.laf?barcode=9788993712629&quot;&gt;링크&lt;/a&gt;&lt;/li&gt;&lt;li&gt;한 권으로 읽는 컴퓨터 구조와 프로그래밍: &lt;a href=&quot;https://www.kyobobook.co.kr/product/detailViewKor.laf?barcode=9791189909284&quot;&gt;링크&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[컴퓨터는 어떻게 사고하는가: 비트와 논리연산]]></title><description><![CDATA[컴퓨터가 사칙연산을 어떻게 처리하는지 알아봅니다. 논리연산이라는 개념에서 출발하여 차근차근 컴퓨터의 하드웨어에 접근해봅니다. 기계어, 비트, 불리언 연산, 게이트, 플립플롭 등의 개념을 통해 컴퓨터의 구조와 동작방식을 가볍게 다뤄봅니다.]]></description><link>https://bugoverdose.github.io/computer-science/bit-and-logic-operation/</link><guid isPermaLink="false">https://bugoverdose.github.io/computer-science/bit-and-logic-operation/</guid><pubDate>Thu, 06 Jan 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;논리연산(logic operation)이란 기본적으로 불리언 값,
+경우의 수를 최소화함으로써 안정성을 극대화시켰다고 볼 수 있다.&lt;/p&gt;&lt;hr/&gt;&lt;div&gt;&lt;/div&gt;&lt;ul&gt;&lt;li&gt;컴퓨터 과학 총론: &lt;a href=&quot;https://www.kyobobook.co.kr/product/detailViewKor.laf?barcode=9788993712629&quot;&gt;링크&lt;/a&gt;&lt;/li&gt;&lt;li&gt;한 권으로 읽는 컴퓨터 구조와 프로그래밍: &lt;a href=&quot;https://www.kyobobook.co.kr/product/detailViewKor.laf?barcode=9791189909284&quot;&gt;링크&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[컴퓨터는 어떻게 사고하는가: 비트와 논리연산]]></title><description><![CDATA[논리 게이트란 입력 값들에 대해 일정한 불리언 연산을 수행한 결과를 출력하는 장치라고 볼 수 있다. 기본적으로 AND, OR, XOR, NOT 연산을 수행하며, 이러한 게이트가 기본 단위로 모여 더욱 복잡한 기능을 수행하는 회로를 구성하게 된다.]]></description><link>https://bugoverdose.github.io/computer-science/bit-and-logic-operation/</link><guid isPermaLink="false">https://bugoverdose.github.io/computer-science/bit-and-logic-operation/</guid><pubDate>Thu, 06 Jan 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;논리연산(logic operation)이란 기본적으로 불리언 값,
 즉 참 혹은 거짓 중 하나의 값을 반환하는 연산을 의미한다.
 예를 들어 자바스크립트 및 JSX 문법을 기준으로
 &lt;code&gt;if (a &amp;gt; 5) return true&lt;/code&gt;의 &lt;code&gt;a &amp;gt; 5&lt;/code&gt; 부분,
@@ -241,7 +468,7 @@
 릴레이, 진공관, 트랜지스터, 집적회로 등 다양한 기술을 이용하여 구현될 수 있으며,
 기본적으로 전압 수준에 따라 1 혹은 0을 나타내는 전자회로로 구성된다.
 그리고 이러한 게이트가 기본 단위로 모여
-더욱 구체적인 기능을 하는 회로를 구성하게 된다.
+더욱 구체적이고 복잡한 기능을 수행하는 회로를 구성하게 된다.
 그러한 회로 중 하나가 바로 컴퓨터 메모리의 기본 단위가 되는
 플립플롭(flip-flop) 회로다.&lt;/p&gt;&lt;p&gt;플립플롭 회로는 다양한 구조를 띠지만 기본 원리는 자체는 간단하다.&lt;/p&gt;&lt;ol&gt;&lt;li&gt;출력 값으로 0 혹은 1의 값을 꾸준히 유지한다.&lt;/li&gt;&lt;li&gt;특정 위치에 특정한 입력값이 &lt;strong&gt;순간적으로&lt;/strong&gt; 들어오는 경우 출력값은 변화한다.&lt;/li&gt;&lt;li&gt;입력값이 다시 기존으로 돌아가더라도 &lt;strong&gt;변화한 출력값은 그대로 유지된다.&lt;/strong&gt;&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;이해를 위해 매우 간략화된 플립플롭 구조를 한번 살펴보자.&lt;div num=&quot;1&quot;&gt;&lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position:relative;display:block;margin-left:auto;margin-right:auto;max-width:590px&quot;&gt;
       &lt;a class=&quot;gatsby-resp-image-link&quot; href=&quot;/static/5e44e90a71d57e2ba0dad4abd8ce1870/bb3ba/flip-flop-example.png&quot; style=&quot;display:block&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;
@@ -285,7 +512,7 @@ XOR 연산 결과를 해당 자릿수의 값으로 저장한다는
 사실 엄밀히 말하자면 위는 플립플롭보다는 래치(latch)에 해당된다고 볼 수 있다.
 플립플롭은 래치의 한 종류라고 볼 수 있는데,
 메모리 회로에 대해 본격적으로 다루기
-시작하는 &lt;strong&gt;&lt;div to=&quot;/computer-science/flip-flop-and-register&quot;&gt;이 게시글&lt;/div&gt;&lt;/strong&gt;에서
+시작하는 &lt;strong&gt;&lt;div to=&quot;/computer-science/latch-and-flip-flop&quot;&gt;이 게시글&lt;/div&gt;&lt;/strong&gt;에서
 이러한 구조들에 대해 자세히 이야기한다.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;</content:encoded></item><item><title><![CDATA[개발 블로그를 시작하며]]></title><description><![CDATA[블로그 버전 1의 개발을 완료하였다. 10일 정도 작업을 하였고 현재 도메인을 구글과 네이버에 각각 등록한 상황이다. 수정 및 추가하고 싶은 기능들이 아직도 꾸준히 생겨나고 있으나 이대로는 끝이 없을 듯 하여 일단 나의 첫 글을 남기고자 한다.]]></description><link>https://bugoverdose.github.io/essay/starting-a-dev-blog/</link><guid isPermaLink="false">https://bugoverdose.github.io/essay/starting-a-dev-blog/</guid><pubDate>Wed, 05 Jan 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;지난 해 12월 23일에 깃헙에 저장소를 생성한 이후 올해 1월 4일을 기준으로
 블로그 v1.0.0을 완료하였다.
 실질적으로 약 10일 정도 작업을 하였고,
