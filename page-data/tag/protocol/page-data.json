@@ -1,5 +1,0 @@
-{
-    "componentChunkName": "component---src-templates-tag-js",
-    "path": "/tag/protocol",
-    "result": {"data":{"allMdx":{"nodes":[],"pageInfo":{"currentPage":1,"hasNextPage":false,"hasPreviousPage":false,"pageCount":0,"totalCount":0}}},"pageContext":{"slug":"protocol","ko":"프로토콜","skip":0}},
-    "staticQueryHashes": ["1903006949","2117259235"]}
