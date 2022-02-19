@@ -1,13 +1,318 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[RSS Feed | bugoverdose]]></title><description><![CDATA[공부하고 경험한 내용을 깔끔하게 설명하는 것을 목표로 하는 개발 블로그입니다. 컴퓨터과학, 웹 개발 등 다양한 주제를 포괄적으로 다룹니다.]]></description><link>https://bugoverdose.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Wed, 16 Feb 2022 17:09:02 GMT</lastBuildDate><item><title><![CDATA[클래스와 프로토타입에 담긴 철학]]></title><description><![CDATA[우테코 강의 중 클래스라는 개념이 플라톤의 이데아 개념에 기반을 두고 있다는 내용이 나왔다. 다만, 코치님이 이 부분에 대해 너무 가볍게 다룬 것 같아 정말 마음이 아팠다. 그런 의미에서 그 분이 쏘아올린 작은 공을 살짝 리시브해보고자 한다.]]></description><link>https://bugoverdose.github.io/computer-science/class-vs-prototype-philosophy/</link><guid isPermaLink="false">https://bugoverdose.github.io/computer-science/class-vs-prototype-philosophy/</guid><pubDate>Thu, 17 Feb 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;우테코 강의 중 클래스라는 개념이 플라톤의 이데아 개념에 기반을 두고 있다는 내용이 나왔다.
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[RSS Feed | bugoverdose]]></title><description><![CDATA[공부하고 경험한 내용을 깔끔하게 설명하는 것을 목표로 하는 개발 블로그입니다. 컴퓨터과학, 웹 개발 등 다양한 주제를 포괄적으로 다룹니다.]]></description><link>https://bugoverdose.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Sat, 19 Feb 2022 18:08:08 GMT</lastBuildDate><item><title><![CDATA[[Git] 저장소, 브랜치, 커밋에 대한 고찰]]></title><description><![CDATA[로컬저장소와 원격저장소는 어떠한 관계에 있는가? 서로 다른 브랜치가 동기화되기 위한 조건은 무엇인가? 동기화 없이 원격저장소의 브랜치를 조회할 수는 없는가? 브랜치를 rebase로 통합하게 되면 동일한 커밋이 그대로 브랜치에 추가되는 것이 맞는가?]]></description><link>https://bugoverdose.github.io/development/git-commit-branch-repository/</link><guid isPermaLink="false">https://bugoverdose.github.io/development/git-commit-branch-repository/</guid><pubDate>Sat, 19 Feb 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;지난 몇 년 간 git 명령어들을 꾸준히 사용해왔는데,
+한 번도 각잡고 하루종일 git에 대해서만 생각해본 적이 없었다는 점을 깨달았다.
+실로 수치스러운 일이 아닐 수 없다.&lt;/p&gt;&lt;p&gt;그러한 의미에서 우선 모든 작업의 기초가 되는 &lt;strong&gt;저장소&lt;/strong&gt;, &lt;strong&gt;브랜치&lt;/strong&gt;, &lt;strong&gt;커밋&lt;/strong&gt; 에 대해
+그동안 배웠고, 경험으로 깨달았고, 개인적인 실험을 통해 입증한 정보를 정리해보고자 한다.&lt;/p&gt;&lt;h2&gt;저장소&lt;/h2&gt;&lt;p&gt;일단 저장소와 브랜치에 대해 이해하기 위해 최소한의 실험 환경을 만들어보자.
+우선 깃헙에서 아래와 같이 두 개의 저장소를 만들어보자.&lt;/p&gt;&lt;p&gt;&lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position:relative;display:block;margin-left:auto;margin-right:auto;max-width:590px&quot;&gt;
+      &lt;a class=&quot;gatsby-resp-image-link&quot; href=&quot;/static/033802814352026301490d44848b2671/133ae/create-empty-repo-on-github.png&quot; style=&quot;display:block&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;
+    &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom:85.13513513513513%;position:relative;bottom:0;left:0;background-image:url(&amp;#x27;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAARCAYAAADdRIy+AAAACXBIWXMAABYlAAAWJQFJUiTwAAACAUlEQVQ4y51UTY/TMBTMn+bGmQMnOHLkr3BAaKVFAoG47apt0sRJnE9/O+mg99JGVbvtIiyN7Drx+M2bSZNClNCjwmkcDgeUVYVsn0OIEkPX8/48z/zsHmgkahyxz/Z43uyQ5QLGOpS1xDbL+bc2Di5EuDBhtBphCrg1iDRp244roUpFWaKqJepaoqpq3i/P5kIIyKaBlA3KtkbWF8j7EmlXoNWLkoRe2u5SiLKCbFr4EFjeRJgI0xXiFSLvc4XWBRjnWZKxHsYF2P8AnXM+IgkhwhiLtuv4lrW61zBdg84m46i4+eSq1hpKa2hjoLXhtVIaxtp1zc+1WV29HEmnDFQnkGY5H6AeOu8XUCuc4znGyCRUxSlCLxJaZ2FVg1EtN1vrGNQGnq3lfe/DGo17SPKC5BYcGVrv0oxjQX0KISDEyHiNaCWkr4Ji8/S8wWa745z1wwjq7TCO6PqB1/MNiVeSyQiqbr/PURSCD5NUddYCYwyUcWj1DOPnu9LZZZKaZhkTUFDt0YjVGB9g/IQQD2ultwnVQiiqCrJt2FWq6uQwXaJdxOAOmOYT2R3J0QTIQkKKBm3ZwtPXYu3R7fPZYrATlLv/r5P8kU94yH7icf8L39IfyPsKMRxln+fRe5ZtPeVwkX4JJvzw/TPefv2Idw+f8ObLezyK34ss/Jurl5L/AuZTKAB0OKEoAAAAAElFTkSuQmCC&amp;#x27;);background-size:cover;display:block&quot;&gt;&lt;/span&gt;
+  &lt;img class=&quot;gatsby-resp-image-image&quot; alt=&quot;깃헙에 빈 저장소 생성&quot; title=&quot;깃헙에 빈 저장소 생성&quot; src=&quot;/static/033802814352026301490d44848b2671/fcda8/create-empty-repo-on-github.png&quot; srcSet=&quot;/static/033802814352026301490d44848b2671/12f09/create-empty-repo-on-github.png 148w,/static/033802814352026301490d44848b2671/e4a3f/create-empty-repo-on-github.png 295w,/static/033802814352026301490d44848b2671/fcda8/create-empty-repo-on-github.png 590w,/static/033802814352026301490d44848b2671/efc66/create-empty-repo-on-github.png 885w,/static/033802814352026301490d44848b2671/c83ae/create-empty-repo-on-github.png 1180w,/static/033802814352026301490d44848b2671/133ae/create-empty-repo-on-github.png 1424w&quot; sizes=&quot;(max-width: 590px) 100vw, 590px&quot; style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;/&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position:relative;display:block;margin-left:auto;margin-right:auto;max-width:590px&quot;&gt;
+      &lt;a class=&quot;gatsby-resp-image-link&quot; href=&quot;/static/5ccc51c9ad4a5dc8eff92c02ddcad720/8b640/create-repo-with-commit-on-github.png&quot; style=&quot;display:block&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;
+    &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom:87.83783783783784%;position:relative;bottom:0;left:0;background-image:url(&amp;#x27;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAASCAYAAABb0P4QAAAACXBIWXMAABYlAAAWJQFJUiTwAAACMklEQVQ4y41UTZOUMBTkv+/dm179AVrlxYt68bgevHhcS3eGbxggAfIFJLSVN4Azu8xqqrpeCKTp914nwakoMY4jtDGY5xld1+PxcEScpMiyHMMwwM0znHNws8Ot4ff6EWRZit+HCI/HCA1v0TCOME4JxzhFkhXohALve3DRwlqLiTBhXGCdBeYzaVCWJaqqAicyhrZtCf6ZMQbOOZqGoa5rWmeMo+EMaVsg704UhZFnlZgRRHGCojyhqhmk0nBuhrVuH87dfDdZd1aohxFmtFBmhNQDlB4orvNL7K1dvvPEQS8EpeqLvxZ3D08bcAvBqWqQpBkYbyGlIgghKXa9gFJ6m/v1ru8xTfaqs5cj6OoQSRLjdKpJpdYaWhuoNSoNs1jqGvtKg3GQROIJjBmuQD8whuCWDe4FEOHhGJGJwzDCMYwQRvGVOkWdd/+s3aYwTnN463iiqqoh1VJHKQm9kBjH6SrFl0aQlxUdsSwvyLQ+vZXQp03lUApMWnBlN0IiJzP/xXL0cjweQlI3TROlSykbQ0RSGwjjoMf1HD+306XqIM8L5EWJNMshhNgasarTZoAczoSU9o1LYathkmeI0hRhkqDhHN7ohMV3fi6FABcGdT9hmM5HzLr9egaYgHkAhAakBrquoxvHG92b2UfedmCco207ut7aXiJhEyl/2v3gw88v+PjrK949fMa37Ad94PaMSxuxra+1fObDu/s3ePX9Le7uX+P9w6eF0P2H5/Zt8wft/3YaIyXyRgAAAABJRU5ErkJggg==&amp;#x27;);background-size:cover;display:block&quot;&gt;&lt;/span&gt;
+  &lt;img class=&quot;gatsby-resp-image-image&quot; alt=&quot;깃헙에 커밋이 있는 저장소 생성&quot; title=&quot;깃헙에 커밋이 있는 저장소 생성&quot; src=&quot;/static/5ccc51c9ad4a5dc8eff92c02ddcad720/fcda8/create-repo-with-commit-on-github.png&quot; srcSet=&quot;/static/5ccc51c9ad4a5dc8eff92c02ddcad720/12f09/create-repo-with-commit-on-github.png 148w,/static/5ccc51c9ad4a5dc8eff92c02ddcad720/e4a3f/create-repo-with-commit-on-github.png 295w,/static/5ccc51c9ad4a5dc8eff92c02ddcad720/fcda8/create-repo-with-commit-on-github.png 590w,/static/5ccc51c9ad4a5dc8eff92c02ddcad720/efc66/create-repo-with-commit-on-github.png 885w,/static/5ccc51c9ad4a5dc8eff92c02ddcad720/c83ae/create-repo-with-commit-on-github.png 1180w,/static/5ccc51c9ad4a5dc8eff92c02ddcad720/8b640/create-repo-with-commit-on-github.png 1454w&quot; sizes=&quot;(max-width: 590px) 100vw, 590px&quot; style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;/&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;&lt;p&gt;하나는 완전히 비어있는 저장소로,
+다른 하나는 master 브랜치에 커밋이 하나 존재하는 상태의 저장소로 생성하였다.&lt;/p&gt;&lt;p&gt;해당 저장소들은 브랜치 단위로 커밋 내역을 관리하고, tag 정보를 관리하는 등
+일반적인 깃 저장소가 수행하는 기본적인 정보와 기능 외에도
+깃헙에서 제공하는 수많은 기능들을 수행할 수 있다.
+&lt;code&gt;github action&lt;/code&gt; 등 깃헙에서 제공하는 수많은 기능들을 수행하며,
+환경변수, 저장소의 공개/비공개 여부 등 수많은 정보가 각 깃헙 저장소 단위로 관리된다.&lt;/p&gt;&lt;p&gt;한편 로컬에도 저장소도 하나 만들어보자.
+저장소는 개별 프로젝트에 대해 하나씩만 설정될 수 있으므로 우선
+&lt;code&gt;local-repo&lt;/code&gt;라는 프로젝트 폴더를 만들고, 그 내부에서 &lt;code&gt;git init&lt;/code&gt;을 통해 저장소를 생성해보자.&lt;/p&gt;&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;shell&quot;&gt;&lt;pre style=&quot;counter-reset:linenumber NaN&quot; class=&quot;language-shell line-numbers&quot;&gt;&lt;code class=&quot;language-shell&quot;&gt;&lt;span class=&quot;command-line-prompt&quot;&gt;&lt;span data-user=&quot;jeong&quot; data-host=&quot;localhost&quot;&gt;&lt;/span&gt;&lt;span data-user=&quot;jeong&quot; data-host=&quot;localhost&quot;&gt;&lt;/span&gt;&lt;span data-user=&quot;jeong&quot; data-host=&quot;localhost&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;mkdir&lt;/span&gt; local-repo
+&lt;span class=&quot;token builtin class-name&quot;&gt;cd&lt;/span&gt; local-repo
+&lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; init&lt;/code&gt;&lt;span aria-hidden=&quot;true&quot; class=&quot;line-numbers-rows&quot; style=&quot;white-space:normal;width:auto;left:0&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;CLI로 &lt;code&gt;git init&lt;/code&gt; 명령어을 실행하면 &lt;code&gt;.git&lt;/code&gt;라는 폴더가 현재 경로에 (즉,현재 프로젝트 내부에) 생성되는데,
+&lt;strong&gt;이 .git 폴더가 바로 깃 저장소의 본체라고 볼 수 있다.&lt;/strong&gt;
+이제 해당 프로젝트 내부에서 일어나는 모든 git 관련 명령어들은
+이 &lt;code&gt;.git&lt;/code&gt;에 담긴 정보들을 활용하여 일어나게 된다.&lt;/p&gt;&lt;h3&gt;하나의 프로젝트에 복수의 저장소가 공존할 수 없다.&lt;/h3&gt;&lt;p&gt;당연한 이야기겠지만 이미 하나의 저장소가 등록된 프로젝트 내부에
+또 다른 저장소가 등록될 수는 없다.
+물론 &lt;code&gt;git init&lt;/code&gt; 명령어를 다시 한 번 실행하는 것은 가능하다.
+그러나 &lt;code&gt;.git (2)&lt;/code&gt; 같은 폴더가 별도로 생성되지 않으며,
+브랜치와 커밋 내역 등 기존의 &lt;code&gt;.git&lt;/code&gt;에 담겨있던 정보가 제거되지도 않는다.&lt;div num=&quot;1&quot;&gt;&lt;/div&gt;&lt;/p&gt;&lt;p&gt;다만, 프로젝트(A) 내부에서 &lt;code&gt;.gitignore&lt;/code&gt; 파일에 특정한 폴더를 추가하고,
+해당 폴더(B) 내부에서 &lt;code&gt;git init&lt;/code&gt;을 실행하는 것은 가능하다.
+이는 해당 폴더(B)가 프로젝트(A)의 &lt;code&gt;.git&lt;/code&gt; 사각지대에 위치하기 때문에 가능한 일이다.
+이제 &lt;code&gt;cd&lt;/code&gt; 명령어로 해당 폴더(B) 내부 경로로 들어가 git 명령어를 실행하게 되면
+프로젝트(B)의 &lt;code&gt;.git&lt;/code&gt; 정보를 활용하여 작업이 수행된다.&lt;/p&gt;&lt;p&gt;실제로 해당 블로그도 개발 초기에는 &lt;code&gt;gatsby build&lt;/code&gt; 명령어를 실행하면
+생성되는 빌드 결과물이 모이는 &lt;code&gt;public&lt;/code&gt; 내부에 별도로 깃 저장소를 만들고
+&lt;code&gt;bugoverdose.github.io&lt;/code&gt;라는 이름의 원격저장소로 연동해놓았었다.
+현재는 &lt;code&gt;github action&lt;/code&gt;을 통해 CI/CD를 구현하면서 쓸모 없어졌지만,
+생각보다 쓸모가 있는 잔기술이라고 생각한다.&lt;/p&gt;&lt;h3&gt;각 저장소는 서로 독립적으로 존재한다.&lt;/h3&gt;&lt;p&gt;이제 로컬저장소에 원격저장소(remote repository)의 위치를 등록해보자.
+CLI로 &lt;code&gt;git remote add &amp;lt;원격저장소_별칭&amp;gt; &amp;lt;깃헙_저장소_주소&amp;gt;&lt;/code&gt; 명령어를 실행함으로써
+우리는 &lt;code&gt;&amp;lt;원격저장소_별칭&amp;gt;&lt;/code&gt;을 통해 &lt;code&gt;&amp;lt;깃헙_저장소_주소&amp;gt;&lt;/code&gt;에 위치하는
+원격저장소에 접근할 수 있게 되었다.
+일반적으로 &lt;code&gt;origin&lt;/code&gt;이라는 이름으로 저장소를 부르는 것이 관행이지만,
+자유롭게 다른 이름도 지정할 수 있다.
+한편 &lt;code&gt;&amp;lt;깃헙_저장소_주소&amp;gt;&lt;/code&gt;의 구조를 보면 끝에 &lt;code&gt;.git&lt;/code&gt;이 존재한다는 점에서
+저장소의 본체는 이 &lt;code&gt;.git&lt;/code&gt; 폴더라는 점을 다시 한 번 느낄 수 있다.
+(물론 이 .git 부분을 생략해도 동일하게 원격저장소에 접근할 수 있지만 말이다)&lt;/p&gt;&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;shell&quot;&gt;&lt;pre style=&quot;counter-reset:linenumber NaN&quot; class=&quot;language-shell line-numbers&quot;&gt;&lt;code class=&quot;language-shell&quot;&gt;&lt;span class=&quot;command-line-prompt&quot;&gt;&lt;span data-user=&quot;jeong&quot; data-host=&quot;localhost&quot;&gt;&lt;/span&gt;&lt;span data-user=&quot;jeong&quot; data-host=&quot;localhost&quot;&gt;&lt;/span&gt;&lt;span data-user=&quot;jeong&quot; data-host=&quot;localhost&quot;&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; remote &lt;span class=&quot;token function&quot;&gt;add&lt;/span&gt; origin https://github.com/bugoverdose/git-test-repo.git
+&lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; remote &lt;span class=&quot;token function&quot;&gt;add&lt;/span&gt; another https://github.com/bugoverdose/git-test-another-repo.git
+&lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; remote -v
+another	https://github.com/bugoverdose/git-test-another-repo.git &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;fetch&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+another	https://github.com/bugoverdose/git-test-another-repo.git &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;push&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+origin	https://github.com/bugoverdose/git-test-repo.git &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;fetch&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+origin	https://github.com/bugoverdose/git-test-repo.git &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;push&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;span aria-hidden=&quot;true&quot; class=&quot;line-numbers-rows&quot; style=&quot;white-space:normal;width:auto;left:0&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;다만, 이렇게 원격저장소의 위치를 등록하는 것만으로는 저장소들 사이에 아무런 정보도 오가지 않는다.
+실제로 아래와 같이 존재하지 않는 주소를 원격저장소로 등록하는 것도 가능하다.
+이는 해당 위치의 원격저장소의 존재 여부조차도 체크되지 않고 있음을 보여준다.
+(아래와 같은 명령어를 실행했다면 &lt;code&gt;git remote remove &amp;lt;이름&amp;gt;&lt;/code&gt;을 통해
+이 잘못된 원격저장소 정보를 지워놓자)&lt;/p&gt;&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;shell&quot;&gt;&lt;pre style=&quot;counter-reset:linenumber NaN&quot; class=&quot;language-shell line-numbers&quot;&gt;&lt;code class=&quot;language-shell&quot;&gt;&lt;span class=&quot;command-line-prompt&quot;&gt;&lt;span data-user=&quot;jeong&quot; data-host=&quot;localhost&quot;&gt;&lt;/span&gt;&lt;span data-user=&quot;jeong&quot; data-host=&quot;localhost&quot;&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span data-user=&quot;jeong&quot; data-host=&quot;localhost&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; remote &lt;span class=&quot;token function&quot;&gt;add&lt;/span&gt; non-existing-repo https://non-existing-repo
+&lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; remote -v
+another	https://github.com/bugoverdose/git-test-another-repo.git &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;fetch&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+another	https://github.com/bugoverdose/git-test-another-repo.git &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;push&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+non-existing-repo	https://non-existing-repo &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;fetch&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+non-existing-repo	https://non-existing-repo &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;push&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+origin	https://github.com/bugoverdose/git-test-repo.git &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;fetch&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+origin	https://github.com/bugoverdose/git-test-repo.git &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;push&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; remote remove non-existing-repo&lt;/code&gt;&lt;span aria-hidden=&quot;true&quot; class=&quot;line-numbers-rows&quot; style=&quot;white-space:normal;width:auto;left:0&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;만약 로컬저장소와 원격저장소 사이에 정보를 전달하고 싶다면
+브랜치, 태그 등 전달하고 싶은 정보를 개별적으로 선택하여 push, pull, fetch 등의 명령어를 실행해야 한다.
+이때 중요한 점은 아무리 모든 브랜치의 정보를 완벽하게
+동기화하였더라도 &lt;strong&gt;로컬저장소와 원격저장소는 서로 엄연히 별개의 독립된 존재라는 것이다.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;잘 이해하기 힘들다면 자바를 기준으로 생각해보자.
+&lt;code&gt;new Class()&lt;/code&gt; 명령어를 통해
+완전히 속성이 동일한 인스턴스를 두 개 생성하였더라도,
+그 둘은 heap 영역에 서로 별개로 존재하는 인스턴스이며, 서로 별개의 메모리주소 값을 지닌다.
+프로그램이 실행되는 과정에서 두 인스턴스의 속성들이 서로 같은 값을 지닐 때도 있고
+달라질 때도 있겠지만 이들이 하나의 인스턴스가 될 일은 절대로 없다.&lt;/p&gt;&lt;p&gt;로컬저장소가 존재하는 폴더명과 두 원격저장소의 이름을 전혀 다르게 지은 것도
+이처럼 모든 저장소들이 서로 독립적이라는 점을 좀 더 쉽게 이해할 수 있도록 하기 위함이었다.&lt;/p&gt;&lt;h3&gt;저장소들 사이에는 상하관계가 성립한다.&lt;/h3&gt;&lt;p&gt;어느 집단이든 기강이 해이해지지 않기 위해서는 위/아래에 대한 기준이 명확해야 하는 법,
+이는 저장소들의 세계에서도 마찬가지이다.&lt;/p&gt;&lt;p&gt;두 저장소 사이에서 push/pull 등의 방식으로 정보를 교환하는 경우
+기본적으로 어느 쪽이 &amp;#x27;upstream&amp;#x27;인지를 명시해야 한다.
+upstream이란 두 저장소 중 어떤 것이 원본, 즉 웃어른인지에 대한 이야기이다.
+예를 들어 깃헙에서 특정 저장소를 &amp;#x27;fork&amp;#x27;한 경우
+fork당한 저장소(A)는 fork해간 저장소(B)에게 있어 upstream으로 설정된다.
+그리고 fork해간 저장소(B)를 대상으로 로컬에서 &lt;code&gt;git clone&lt;/code&gt; 명령어를 실행하는 경우,
+로컬 머신에 클론된 로컬저장소(C)는 자동으로 원본저장소(B)를 upstream으로 설정한다.&lt;/p&gt;&lt;p&gt;그리고 이 위계질서는 각 저장소 사이에 약간의 차이가 있거나 의견이 충돌하는 경우,
+누가 옳으며 어느 쪽이 져줘야 하는지에 대한 기준을 정할 때 활용된다.
+이에 대해서는 아래에서 브랜치에 대해 설명하면서 다시 알아보자.&lt;/p&gt;&lt;h2&gt;브랜치&lt;/h2&gt;&lt;p&gt;모든 저장소는 다양한 브랜치(branch)로 구성되며,
+각 브랜치는 기본적으로 [1] 브랜치명과 [2] 커밋 내역으로 구성된다.&lt;/p&gt;&lt;p&gt;브랜치명의 경우 &lt;code&gt;master&lt;/code&gt;, &lt;code&gt;develop&lt;/code&gt;, &lt;code&gt;deploy&lt;/code&gt;, &lt;code&gt;feat/기능_내용&lt;/code&gt;,
+&lt;code&gt;hotfix/핫픽스_내용&lt;/code&gt;, &lt;code&gt;test/테스트_내용&lt;/code&gt; 등의 이름이 주로 사용된다.
+당연한 이야기겠지만 각 브랜치는 고유한 이름을 지녀야 하므로
+하나의 저장소 내에 동일한 이름을 공유하는 복수의 브랜치는 존재할 수는 없다.&lt;/p&gt;&lt;p&gt;기본적으로 &lt;strong&gt;각 브랜치는 자신이 속한 특정 저장소에 종속되어 존재&lt;/strong&gt;하지만,
+&lt;strong&gt;세상에 존재하는 모든 브랜치는 서로 별개이며 독립되어 존재&lt;/strong&gt;한다.
+즉, 대응되는 두 브랜치의 커밋 내역을 서로 동기화시키더라도
+이 둘은 위에서 설명한 저장소들 사이의 관계와 마찬가지로
+마치 속성들의 값만이 일치하는 별개의 인스턴스와 같은 관계로 볼 수 있다.&lt;/p&gt;&lt;p&gt;그리고 이처럼 모든 브랜치는 서로 별개이기 때문에
+upstream 저장소에 존재하는 브랜치들의 종류 및 개수와
+downstream 저장소에 존재하는 브랜치들의 종류가 굳이 서로 일치할 필요도 없다.
+어느 저장소에서든 새로운 브랜치를 생성할 수 있으며,
+이를 다른 저장소로 push하거나 pull해오든,
+아니면 굳이 동기화시키지 않을 수 있다는 것이다.&lt;/p&gt;&lt;p&gt;다만, 우리가 일반적으로 깃과 깃헙을 사용하는 가장 큰 이유는
+로컬저장소와 원격저장소의 브랜치들을 서로 동기화시키고 싶기 때문이다.
+그러한 맥락에서 해당 글에서는 브랜치 동기화 기능에 초점을 맞추어 설명을 해보고자 한다.&lt;/p&gt;&lt;h3&gt;커밋 이력 공유하는 두 브랜치는 동기화될 수 있다.&lt;/h3&gt;&lt;p&gt;사실 엄밀히 말하자면 &lt;strong&gt;서로 커밋 이력을 일부분이라도 공유하는 브랜치끼리는 자유롭게 서로 동기화를 시도할 수 있다.&lt;/strong&gt;
+이는 로컬저장소의 브랜치들 사이에서 CLI를 통해 수행될 수도,
+하나의 원격저장소 내의 브랜치들 사이 혹은 서로 다른 원격저장소들 사이의 특정 브랜치들 사이의 PR을 통해서 수행될 수도,
+github action을 통해 외부 서버(runner)와 원격저장소 사이에서 수행될 수도,
+로컬저장소와 원격저장소의 브랜치들 사이에서 수행될 수도 있는 브랜치의 핵심 특성이다.&lt;/p&gt;&lt;p&gt;예를 들어 &lt;strong&gt;로컬저장소에서 특정 브랜치(A)에 위치한 상태에서&lt;/strong&gt;
+특정 원격저장소의 특정 브랜치(B)에 대해 pull을 실행한다면 기본적으로 두 브랜치(A-B) 사이의 동기화가 시도된다.
+이는 굳이 두 저장소의 브랜치명이 일치하지 않더라도 수행될 수 있는 기능이다.
+&lt;strong&gt;다만, 혹시 현재 위치한 브랜치와는 무관하게 자동으로 동일한 이름의 브랜치들 사이에서 동기화가 일어날 것이라 생각하고 작업한다면 끔찍한 시간을 겪게 될 것이라 생각한다.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;한편 로컬저장소에서 특정 브랜치(A)를 원격저장소의 특정 브랜치(B)에 대해 push하는 경우에도 두 브랜치(A-B) 사이에 동기화가 시도된다.
+물론 일반적으로 push 명령어를 사용하는 경우, 원격저장소에 존재하는 동명의 브랜치로 push하는 것이 기본 동작이다.
+그러나 만일 두 브랜치의 이름이 서로 다른 경우
+&lt;code&gt;git push origin 로컬_브랜치명:원격_브랜치명&lt;/code&gt;과 같이 원격저장소의 대상 브랜치를 명시하여 동기화시킬 수도 있다.&lt;/p&gt;&lt;h3&gt;저장소와 브랜치의 초기 상태는 다양할 수 있다.&lt;/h3&gt;&lt;p&gt;위에서 생성한 저장소 중
+깃헙의 &lt;code&gt;git-test-repo&lt;/code&gt;는 현재 아무런 브랜치도 없는 아주 클-린한 상태이다.
+로컬저장소(&lt;code&gt;local-repo&lt;/code&gt; 프로젝트)의 경우 &lt;code&gt;git init&lt;/code&gt;의 실행과 함께
+디폴트 브랜치로 &lt;code&gt;master&lt;/code&gt;라는 브랜치가 생성되었지만 아무런 커밋도 없는 상태이다.&lt;div num=&quot;2&quot;&gt;&lt;/div&gt;
+그에 반해 깃헙의 &lt;code&gt;git-test-another-repo&lt;/code&gt;는
+현재 &lt;code&gt;master&lt;/code&gt; 브랜치가 생성되었으며
+해당 브랜치 내부에 READ.md 파일을 생성하는 커밋이 하나 생성되었다.&lt;div num=&quot;3&quot;&gt;&lt;/div&gt;&lt;/p&gt;&lt;p&gt;이는 하나의 저장소에 브랜치가 아예 없을 수도 있으며,
+깃 설정과 원격저장소 생성 방식에 따라 다양한 방식으로 브랜치 정보가 설정될 수 있음을 보여준다.&lt;/p&gt;&lt;p&gt;한편 특정 브랜치로부터 &lt;code&gt;git checkout &amp;lt;새로운_브랜치명&amp;gt;&lt;/code&gt; 명령어를 실행하는 경우,
+이전에 존재했던 브랜치의 모든 커밋 이력을 복제한 상태로 브랜치가 생성된다.&lt;/p&gt;&lt;p&gt;그러면 이제 본격적으로 로컬저장소에 커밋을 하나 만들고 원격저장소 중 하나에 브랜치를 push해보자.&lt;/p&gt;&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;shell&quot;&gt;&lt;pre style=&quot;counter-reset:linenumber NaN&quot; class=&quot;language-shell line-numbers&quot;&gt;&lt;code class=&quot;language-shell&quot;&gt;&lt;span class=&quot;command-line-prompt&quot;&gt;&lt;span data-user=&quot;jeong&quot; data-host=&quot;localhost&quot;&gt;&lt;/span&gt;&lt;span data-user=&quot;jeong&quot; data-host=&quot;localhost&quot;&gt;&lt;/span&gt;&lt;span data-user=&quot;jeong&quot; data-host=&quot;localhost&quot;&gt;&lt;/span&gt;&lt;span data-user=&quot;jeong&quot; data-host=&quot;localhost&quot;&gt;&lt;/span&gt;&lt;span data-user=&quot;jeong&quot; data-host=&quot;localhost&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; checkout master
+&lt;span class=&quot;token builtin class-name&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&amp;quot;This is master branch&amp;quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; README.md
+&lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;add&lt;/span&gt; &lt;span class=&quot;token builtin class-name&quot;&gt;.&lt;/span&gt;
+&lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; commit -m &lt;span class=&quot;token string&quot;&gt;&amp;quot;커밋1&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; push -u origin master&lt;/code&gt;&lt;span aria-hidden=&quot;true&quot; class=&quot;line-numbers-rows&quot; style=&quot;white-space:normal;width:auto;left:0&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;순서대로 설명하자면 우선 &lt;code&gt;master&lt;/code&gt; 브랜치에서 README.md를 생성하여 간단한 내용을 추가하고 &amp;#x27;커밋1&amp;#x27;이라는 메시지의 커밋을 남겼다.
+(&lt;code&gt;git checkout master&lt;/code&gt;는 필요 없지만 현재 브랜치 위치를 명시하기 위해 추가하였다.)
+그리고 이렇게 1개의 커밋이 있는 &lt;code&gt;master&lt;/code&gt; 브랜치를
+아직 아무런 브랜치가 없는 원격저장소 &lt;code&gt;origin&lt;/code&gt;(&lt;code&gt;git-test-repo&lt;/code&gt;)로 push를 하였다.&lt;div num=&quot;4&quot;&gt;&lt;/div&gt;&lt;/p&gt;&lt;h3&gt;일반적인 브랜치 동기화 흐름&lt;/h3&gt;&lt;p&gt;그러면 이제 본격적으로 로컬에서 브랜치에 커밋을 더 만들고 push를 통해 원격저장소(&lt;code&gt;origin&lt;/code&gt;)의 브랜치에 동기화시켜보자.&lt;/p&gt;&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;shell&quot;&gt;&lt;pre style=&quot;counter-reset:linenumber NaN&quot; class=&quot;language-shell line-numbers&quot;&gt;&lt;code class=&quot;language-shell&quot;&gt;&lt;span class=&quot;command-line-prompt&quot;&gt;&lt;span data-user=&quot;jeong&quot; data-host=&quot;localhost&quot;&gt;&lt;/span&gt;&lt;span data-user=&quot;jeong&quot; data-host=&quot;localhost&quot;&gt;&lt;/span&gt;&lt;span data-user=&quot;jeong&quot; data-host=&quot;localhost&quot;&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span data-user=&quot;jeong&quot; data-host=&quot;localhost&quot;&gt;&lt;/span&gt;&lt;span data-user=&quot;jeong&quot; data-host=&quot;localhost&quot;&gt;&lt;/span&gt;&lt;span data-user=&quot;jeong&quot; data-host=&quot;localhost&quot;&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span data-user=&quot;jeong&quot; data-host=&quot;localhost&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token builtin class-name&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&amp;quot;content for second commit&amp;quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; README.md
+&lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;add&lt;/span&gt; &lt;span class=&quot;token builtin class-name&quot;&gt;.&lt;/span&gt;
+&lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; commit -m &lt;span class=&quot;token string&quot;&gt;&amp;quot;커밋2&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;master 874d0b3&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; 커밋2
+&lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;file&lt;/span&gt; changed, &lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt; insertion&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;+&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token builtin class-name&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&amp;quot;content for third commit&amp;quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; README.md
+&lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;add&lt;/span&gt; &lt;span class=&quot;token builtin class-name&quot;&gt;.&lt;/span&gt;
+&lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; commit -m &lt;span class=&quot;token string&quot;&gt;&amp;quot;커밋3&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;master 36903ef&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; 커밋3
+&lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;file&lt;/span&gt; changed, &lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt; insertion&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;+&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; push origin master&lt;/code&gt;&lt;span aria-hidden=&quot;true&quot; class=&quot;line-numbers-rows&quot; style=&quot;white-space:normal;width:auto;left:0&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;git push origin master&lt;/code&gt; 명령어가 실행되었을 때 실행되는 로직은 다음과 같다.&lt;/p&gt;&lt;ol&gt;&lt;li&gt;현재 로컬 머신에 있는 계정 정보를 활용하여 &lt;code&gt;origin&lt;/code&gt;로의 접근을 시도한다. (PAT 등 인증을 통한 권한 필요)&lt;/li&gt;&lt;li&gt;현재 로컬저장소의 &lt;code&gt;master&lt;/code&gt; 브랜치의 커밋 정보와 &lt;code&gt;origin/master&lt;/code&gt;의 커밋 정보를 비교한다. (별도의 원격브랜치를 설정하지 않았으므로 동명의 브랜치가 대상이 됨)&lt;/li&gt;&lt;li&gt;커밋 이력에 있어 &lt;code&gt;origin/master&lt;/code&gt;의 마지막 커밋이 로컬저장소의 &lt;code&gt;master&lt;/code&gt; 브랜치에 존재하고 있으며, 해당 커밋까지의 커밋 내역이 서로 일치함을 확인한다.&lt;/li&gt;&lt;li&gt;마지막 공통 커밋을 이후로 로컬저장소의 &lt;code&gt;master&lt;/code&gt; 브랜치에는 그 이후로 2개의 커밋이 추가되었다는 점을 파악한다.&lt;/li&gt;&lt;li&gt;&lt;code&gt;origin/master&lt;/code&gt;의 커믹 이력을 로컬저장소의 &lt;code&gt;master&lt;/code&gt;에 맞추어 업데이트한다.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;그렇다면 이번에는 반대로 &lt;code&gt;origin/master&lt;/code&gt;의 커밋 이력이 로컬저장소의 &lt;code&gt;master&lt;/code&gt;보다 앞서는 상황에서
+이를 pull하여 로컬저장소를 업데이트해보자.
+&lt;code&gt;git reset&lt;/code&gt; 명령어를 사용하면 최근 커밋들을 순서대로 지울 수 있다.&lt;/p&gt;&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;shell&quot;&gt;&lt;pre style=&quot;counter-reset:linenumber NaN&quot; class=&quot;language-shell line-numbers&quot;&gt;&lt;code class=&quot;language-shell&quot;&gt;&lt;span class=&quot;command-line-prompt&quot;&gt;&lt;span data-user=&quot;jeong&quot; data-host=&quot;localhost&quot;&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span data-user=&quot;jeong&quot; data-host=&quot;localhost&quot;&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span data-user=&quot;jeong&quot; data-host=&quot;localhost&quot;&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; checkout master
+
+&lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; reset --hard HEAD^^
+HEAD is now at &lt;span class=&quot;token number&quot;&gt;8590808&lt;/span&gt; 커밋1
+
+&lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; pull origin master
+From https://github.com/bugoverdose/git-test-repo
+ * branch            master     -&lt;span class=&quot;token operator&quot;&gt;&amp;gt;&lt;/span&gt; FETCH_HEAD
+Updating &lt;span class=&quot;token number&quot;&gt;8590808&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;..&lt;/span&gt;ff85c48
+Fast-forward
+ README.md &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;2&lt;/span&gt; ++
+ &lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;file&lt;/span&gt; changed, &lt;span class=&quot;token number&quot;&gt;2&lt;/span&gt; insertions&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;+&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;span aria-hidden=&quot;true&quot; class=&quot;line-numbers-rows&quot; style=&quot;white-space:normal;width:auto;left:0&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;master&lt;/code&gt; 브랜치에서 &lt;code&gt;git pull origin master&lt;/code&gt; 명령어가 실행되었을 때 실행되는 로직은 다음과 같다.&lt;/p&gt;&lt;ol&gt;&lt;li&gt;현재 로컬 머신에 있는 계정 정보를 활용하여 &lt;code&gt;origin&lt;/code&gt;로의 접근을 시도한다. (PAT 등 인증을 통한 권한 필요)&lt;/li&gt;&lt;li&gt;현재 로컬저장소에서 현재 위치한 브랜치(&lt;code&gt;master&lt;/code&gt;)의 커밋 정보와 &lt;code&gt;origin/master&lt;/code&gt;의 커밋 정보를 비교한다.&lt;/li&gt;&lt;li&gt;커밋 이력에 있어 첫번째 커밋까지는 일치하지만, &lt;code&gt;origin/master&lt;/code&gt; 브랜치에 그 이후로 2개의 커밋이 추가되었다는 점을 파악한다.&lt;/li&gt;&lt;li&gt;서로 충돌하는 커밋 이력이 없으므로 로컬저장소의 &lt;code&gt;master&lt;/code&gt;의 커믹 이력을 &lt;code&gt;origin/master&lt;/code&gt;에 맞추어 업데이트한다.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;사실 여기까지는 누구나 무의식적으로, 그리고 기계적으로 해온 작업일 것이다.
+그렇다면 조건을 다르게 하여 시도해보자.&lt;/p&gt;&lt;h3&gt;커밋 이력이 전혀 다른 브랜치와의 동기화 시도&lt;/h3&gt;&lt;p&gt;앞서 깃헙에 만들어놓았던 또 다른 원격저장소(&lt;code&gt;another&lt;/code&gt;)가 기억나는가?
+이 저장소의 경우 &lt;code&gt;master&lt;/code&gt;라는 이름의 브랜치가 존재하지만, 로컬저장소와 &lt;code&gt;origin&lt;/code&gt;의 &lt;code&gt;master&lt;/code&gt;와는
+전혀 다른 커밋 이력으로 구성되어있다.
+그렇다면 해당 브랜치(&lt;code&gt;another/master&lt;/code&gt;)와 로컬저장소의 &lt;code&gt;master&lt;/code&gt; 브랜치를 동기화시키고자 하면 어떠한 일이 일어날까?&lt;/p&gt;&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;shell&quot;&gt;&lt;pre style=&quot;counter-reset:linenumber NaN&quot; class=&quot;language-shell line-numbers&quot;&gt;&lt;code class=&quot;language-shell&quot;&gt;&lt;span class=&quot;command-line-prompt&quot;&gt;&lt;span data-user=&quot;jeong&quot; data-host=&quot;localhost&quot;&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span data-user=&quot;jeong&quot; data-host=&quot;localhost&quot;&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; push another master
+To https://github.com/bugoverdose/git-test-another-repo.git
+ &lt;span class=&quot;token operator&quot;&gt;!&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;rejected&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;        master -&lt;span class=&quot;token operator&quot;&gt;&amp;gt;&lt;/span&gt; master &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;non-fast-forward&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+error: failed to push some refs to &lt;span class=&quot;token string&quot;&gt;&amp;#x27;https://github.com/bugoverdose/git-test-another-repo.git&amp;#x27;&lt;/span&gt;
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. Integrate the remote changes &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;e.g.
+hint: &lt;span class=&quot;token string&quot;&gt;&amp;#x27;git pull ...&amp;#x27;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; before pushing again.
+hint: See the &lt;span class=&quot;token string&quot;&gt;&amp;#x27;Note about fast-forwards&amp;#x27;&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&amp;#x27;git push --help&amp;#x27;&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;for&lt;/span&gt; details.
+
+&lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; pull another master
+From https://github.com/bugoverdose/git-test-another-repo
+ * branch            master     -&lt;span class=&quot;token operator&quot;&gt;&amp;gt;&lt;/span&gt; FETCH_HEAD
+fatal: refusing to merge unrelated histories&lt;/code&gt;&lt;span aria-hidden=&quot;true&quot; class=&quot;line-numbers-rows&quot; style=&quot;white-space:normal;width:auto;left:0&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;보면 알겠지만 push와 pull 작업 모두 실패하였다. 그런데 엄밀히 말하자면 두 작업이 실패한 이유에는 차이가 다소 존재한다.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;p&gt;push의 실패 과정&lt;/p&gt;&lt;ol&gt;&lt;li&gt;현재 로컬 머신에 있는 계정 정보를 활용하여 &lt;code&gt;another&lt;/code&gt;로의 접근을 시도한다. (PAT 등 인증을 통한 권한 필요)&lt;/li&gt;&lt;li&gt;현재 로컬저장소의 &lt;code&gt;master&lt;/code&gt; 브랜치의 커밋 정보와 &lt;code&gt;another/master&lt;/code&gt;의 커밋 정보를 비교한다. (디폴트로 동명의 브랜치로 push)&lt;/li&gt;&lt;li&gt;커밋 이력에 있어 &lt;strong&gt;&lt;code&gt;another/master&lt;/code&gt;의 마지막 커밋이 로컬저장소의 &lt;code&gt;master&lt;/code&gt; 브랜치에 없음을 파악하고 깃헙에서 push 작업의 실행을 거절한다.&lt;/strong&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;위의 에러메시지에서도 나오지만 기본적으로 downstream의 커밋 이력을 upstream으로 push하고 싶다면
+우선적으로 upstream의 커밋이력을 downstream의 커밋이력에 동기화시켜놓아야 한다.
+바로 이것이 앞서 언급한 저장소 간의 상하질서에 대한 이야기이다.
+두 브랜치의 커밋 이력에 차이가 조금이라도 존재하면 기본적으로 아래쪽 입장의 저장소가 upstream에 맞춰주어야만 한다.
+때문에 일반적으로 upstream 브랜치를 로컬로 pull해오고
+충돌이 일어나면 이를 로컬에서 해결한 다음에 push를 해줘야 한다.&lt;/p&gt;&lt;p&gt;물론 &lt;code&gt;git push&lt;/code&gt; 명령어를 수행할 때 &lt;code&gt;--force&lt;/code&gt; 옵션을 추가하는 경우,
+&lt;code&gt;another/master&lt;/code&gt;의 커밋 이력이 일방적으로 로컬저장소의 &lt;code&gt;master&lt;/code&gt; 브랜치의 커밋이력으로 덮어써지게 된다.
+간단히 말해 이는 일종의 하극상이라고 볼 수 있다.
+만일 원격저장소와 로컬저장소 사이에 그다지 유의미한 차이가 없거나,
+오히려 원격저장소의 커밋이력에 문제가 있다면 &lt;code&gt;--force&lt;/code&gt; 옵션을 사용하여
+이처럼 건전한 쿠테타를 일으키는 것도 때로는 필요한 방법일지도 모른다.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;p&gt;pull의 실패 과정&lt;/p&gt;&lt;ol&gt;&lt;li&gt;현재 로컬 머신에 있는 계정 정보를 활용하여 &lt;code&gt;another&lt;/code&gt;로의 접근을 시도한다. (PAT 등 인증을 통한 권한 필요)&lt;/li&gt;&lt;li&gt;현재 로컬저장소에서 현재 위치한 브랜치(&lt;code&gt;master&lt;/code&gt;)의 커밋 정보와 &lt;code&gt;another/master&lt;/code&gt;의 커밋 정보를 비교한다.&lt;/li&gt;&lt;li&gt;커밋 이력을 자동으로 업데이트할 수 없음을 파악하고 로컬저장소 내에서 merge/rebase 등의 작업 중 하나를 자동으로 시도한다.&lt;/li&gt;&lt;li&gt;커밋 이력에 있어 &lt;strong&gt;애초에 서로 공유하는 커밋이 전혀 존재하지 않으므로 merge/rebase 작업이 로컬저장소 내에서 실패한다.&lt;/strong&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;두 브랜치의 커밋 이력에 차이가 있는 경우
+기본적으로 upstream에 맞추어 downstream을 자동으로 업데이트하는 것이 일반적이다.
+이때 충돌이 존재하는 등의 이유로 자동 업데이트가 실패하는 경우,
+upstream 브랜치를 기준으로 downstream에서 merge/rebase 등의 작업을 수행하게 된다.&lt;div num=&quot;5&quot;&gt;&lt;/div&gt;&lt;/p&gt;&lt;p&gt;위의 경우 merge 전략이 자동으로 수행되었다.
+그런데 문제는 아래 merge 전략에 대한 그림을 보면 알겠지만 merge 전략이 수행되기 위한 전제조건이
+&lt;strong&gt;브랜치들 사이에 공유하는 커밋이 존재해야 한다&lt;/strong&gt;는 점이다.
+즉, 위의 pull 작업이 실패한 이유는 merge가 수행되기 위한 전제조건을 충족하지 못하였기 때문이다.&lt;/p&gt;&lt;p&gt;&lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position:relative;display:block;margin-left:auto;margin-right:auto;max-width:590px&quot;&gt;
+      &lt;a class=&quot;gatsby-resp-image-link&quot; href=&quot;/static/58952f08bed555933d0a1bfe49f830cf/167b5/merge-concept.png&quot; style=&quot;display:block&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;
+    &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom:32.43243243243243%;position:relative;bottom:0;left:0;background-image:url(&amp;#x27;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAGCAYAAADDl76dAAAACXBIWXMAABYlAAAWJQFJUiTwAAABQUlEQVQY022QS0sCYRSG/QetS9TEW0mBdCEIF1aEpeR4mVLMFmkSaiVCS3NmHEdNAqXMRZtqUZta9v+e8FPBpMXhPQdenvOeY7JJKotRTdSkt0oqFknFFtUwh+/wnD7gTLaxRZQ/XmdCxy3rOOJ1lk4aOBN1TLOwIcQV0/DKOvaIwka2x07jB1eqjU1ShM8SUbDHNHyZNmtn96ykmkKXkwYm63jT9kUXj6wzF6pRyevc5lTkUo9BScOZ7jB/UMUcVnEldLxJg9V0S0CtEVUsmahIOAQO1RHXCRSfCV494c918Rwb7F322C30CZa7+ItNPLIhzpu+aroE0JfpCNNWtsu58U2g8EhG/2L/ekBK+SRUeaP08kG+38IRNfCmDNxy43+giCuN4or/HCnjeaTmUJXN8ivrN+8sHNbGyaZ+PgP9BTXD85HGn1mbAAAAAElFTkSuQmCC&amp;#x27;);background-size:cover;display:block&quot;&gt;&lt;/span&gt;
+  &lt;img class=&quot;gatsby-resp-image-image&quot; alt=&quot;merge&quot; title=&quot;merge&quot; src=&quot;/static/58952f08bed555933d0a1bfe49f830cf/fcda8/merge-concept.png&quot; srcSet=&quot;/static/58952f08bed555933d0a1bfe49f830cf/12f09/merge-concept.png 148w,/static/58952f08bed555933d0a1bfe49f830cf/e4a3f/merge-concept.png 295w,/static/58952f08bed555933d0a1bfe49f830cf/fcda8/merge-concept.png 590w,/static/58952f08bed555933d0a1bfe49f830cf/167b5/merge-concept.png 776w&quot; sizes=&quot;(max-width: 590px) 100vw, 590px&quot; style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;/&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;&lt;p&gt;그리고 다시 설명하지만
+push든 pull이든 브랜치 간의 의견 차이가 있을 때 무조건 downstream의 브랜치를 수정시키는 동작은
+전부 push/pull을 수행하는 원격브랜치가 upstream으로 설정되어있기 때문이다.&lt;/p&gt;&lt;h3&gt;fetch를 통한 조회 및 브랜치 생성&lt;/h3&gt;&lt;p&gt;그런데 사실 &lt;code&gt;origin/master&lt;/code&gt; 브랜치 혹은 &lt;code&gt;another/master&lt;/code&gt; 브랜치를
+로컬저장소의 &lt;code&gt;master&lt;/code&gt;에 동기화시키는 것만이 아니라,
+단순히 원격저장소의 브랜치를 조회하거나,
+이 정보를 토대로 다른 이름의 브랜치를 로컬에 생성하고 싶은 경우가 있을 수 있다.&lt;/p&gt;&lt;p&gt;그러한 의미에서 이번에는 두 원격저장소의 &lt;code&gt;master&lt;/code&gt; 브랜치를 각각 pull해오는 것이 아니라
+fetch하여 조회하고, 로컬브랜치에서만 사용할 이름을 새로 만들어주자.
+&lt;code&gt;git pull&lt;/code&gt;은 대상 브랜치를 &lt;em&gt;fetch&lt;/em&gt;해오면서 동시에 현재 브랜치에 &lt;em&gt;통합&lt;/em&gt;시키는 명령어지만,
+&lt;code&gt;git fetch&lt;/code&gt;는 말 그대로 원격저장소의 해당 브랜치 정보를 가져오기만 하는 명령어다.&lt;/p&gt;&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;shell&quot;&gt;&lt;pre style=&quot;counter-reset:linenumber NaN&quot; class=&quot;language-shell line-numbers&quot;&gt;&lt;code class=&quot;language-shell&quot;&gt;&lt;span class=&quot;command-line-prompt&quot;&gt;&lt;span data-user=&quot;jeong&quot; data-host=&quot;localhost&quot;&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span data-user=&quot;jeong&quot; data-host=&quot;localhost&quot;&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span data-user=&quot;jeong&quot; data-host=&quot;localhost&quot;&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span data-user=&quot;jeong&quot; data-host=&quot;localhost&quot;&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span data-user=&quot;jeong&quot; data-host=&quot;localhost&quot;&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span data-user=&quot;jeong&quot; data-host=&quot;localhost&quot;&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; fetch origin master
+From https://github.com/bugoverdose/git-test-repo
+ * branch            master     -&lt;span class=&quot;token operator&quot;&gt;&amp;gt;&lt;/span&gt; FETCH_HEAD
+&lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; checkout origin/master
+Note: switching to &lt;span class=&quot;token string&quot;&gt;&amp;#x27;origin/master&amp;#x27;&lt;/span&gt;&lt;span class=&quot;token builtin class-name&quot;&gt;.&lt;/span&gt;
+&lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; switch -c origin-master
+Switched to a new branch &lt;span class=&quot;token string&quot;&gt;&amp;#x27;origin-master&amp;#x27;&lt;/span&gt;
+
+&lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; fetch another master
+From https://github.com/bugoverdose/git-test-another-repo
+ * branch            master     -&lt;span class=&quot;token operator&quot;&gt;&amp;gt;&lt;/span&gt; FETCH_HEAD
+&lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; checkout another/master
+Note: switching to &lt;span class=&quot;token string&quot;&gt;&amp;#x27;another/master&amp;#x27;&lt;/span&gt;&lt;span class=&quot;token builtin class-name&quot;&gt;.&lt;/span&gt;
+&lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; switch -c another-master
+Switched to a new branch &lt;span class=&quot;token string&quot;&gt;&amp;#x27;another-master&amp;#x27;&lt;/span&gt;&lt;/code&gt;&lt;span aria-hidden=&quot;true&quot; class=&quot;line-numbers-rows&quot; style=&quot;white-space:normal;width:auto;left:0&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;git fetch &amp;lt;저장소&amp;gt; &amp;lt;원격_브랜치명&amp;gt;&lt;/code&gt; 명령어를 실행하고
+git branch -l를 실행하는 경우, 딱히 새로운 브랜치가 추가되지 않았음을 확인할 수 있다.
+그러나 &lt;code&gt;git checkout &amp;lt;저장소&amp;gt;/&amp;lt;원격_브랜치명&amp;gt;&lt;/code&gt; 명령어를 실행하는 경우,
+fetch해온 브랜치로 이동하게 된다.
+사실 이 브랜치를 로컬저장소의 다른 브랜치에 대해 merge 및 rebase시키는 등
+이 상태에서도 나름 유용하게 활용될 수 있다.&lt;/p&gt;&lt;p&gt;다만, 해당 브랜치에 위치한 상태에서
+&lt;code&gt;git switch -c &amp;lt;로컬_브랜치명&amp;gt;&lt;/code&gt; 명령어를 실행하는 경우
+&amp;lt;로컬_브랜치명&amp;gt;라는 이름의 브랜치가 새롭게 생성된다.
+이 브랜치는 기본적으로 원격저장소의 본래 브랜치와는 철저히 독립된 존재이다.
+물론 원격저장소에
+&lt;code&gt;git push &amp;lt;저장소&amp;gt; &amp;lt;로컬_브랜치명&amp;gt;:&amp;lt;원격_브랜치명&amp;gt;&lt;/code&gt;를 실행하거나,
+&amp;lt;로컬_브랜치명&amp;gt;에 위치한 상태로 &lt;code&gt;git pull &amp;lt;저장소&amp;gt; &amp;lt;원격_브랜치명&amp;gt;&lt;/code&gt;를 실행하면 동기화가 실행될 것이다.
+그러나 이는 해당 브랜치의 커밋 이력이 fetch해온 원격저장소의 &lt;code&gt;&amp;lt;저장소&amp;gt;/&amp;lt;원격_브랜치명&amp;gt;&lt;/code&gt; 브랜치와 동일하기 때문이지,
+특별하게 설정된 기능이 있어서는 아니다.&lt;/p&gt;&lt;h2&gt;커밋&lt;/h2&gt;&lt;p&gt;기본적으로 하나의 브랜치에는 수많은 커밋이 스택 구조로 쌓여있다고 볼 수 있다.&lt;/p&gt;&lt;p&gt;하나의 커밋(commit)은 정말 다양한 정보로 구성된다.&lt;/p&gt;&lt;ol&gt;&lt;li&gt;현재 브랜치에 등록된 모든 파일들의 최종적인 상태&lt;/li&gt;&lt;li&gt;커밋의 ID(SHA)&lt;/li&gt;&lt;li&gt;커밋 메시지&lt;/li&gt;&lt;li&gt;커밋이 생성된 시점&lt;/li&gt;&lt;li&gt;커밋의 생성자에 대한 정보(이메일과 이름)&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;사실 커밋에 대해 이야기하자면 끝이 없다.
+그러나 우측의 네비게이터 바가 폭발하려고 하니,
+이 중에서도 github이 아닌 git 자체에 초점을 맞추고 몇 가지에 대해서만 추가로 알아보자.&lt;/p&gt;&lt;h3&gt;각 커밋에는 모든 파일들의 현재 상태가 담긴다.&lt;/h3&gt;&lt;p&gt;분명 &lt;code&gt;git add&lt;/code&gt;, &lt;code&gt;git commit&lt;/code&gt; 명령어를 실행할 때 우리 눈에는 변경사항만이 표시된다.
+이전 커밋으로부터의 변경사항 중 일부 파일들 혹은 모든 파일을 선택하여
+&lt;code&gt;staging area&lt;/code&gt;에 올리고 커밋을 하는 과정은 GUI를 쓰든 CLI를 쓰든 일관되게 보이는 작업 과정이다.
+이 때문에 각 커밋에 모든 파일들의 현재 상태가 담긴다는 점은 의외라고 느껴진다.&lt;/p&gt;&lt;p&gt;그러나 각 커밋에 변경사항만을 담을 경우
+모든 파일들의 최종 상태를 도출하기 위한 연산 비용이 엄청나다고 한다.
+그에 반해 코드라는 것의 본질은 특정한 문법에 맞추어 작성한 문자열일 뿐이니
+다양한 알고리즘을 통해 극한으로 압축하면 모든 파일들을 관리하는 것도 불가능하지 않아 보인다.
+또한 브랜치 통합 등의 작업을 수행함에 있어 버그의 가능성을 최소화한다는 측면에서도
+옳은 선택이라고 느껴진다.&lt;/p&gt;&lt;h3&gt;같은 ID의 커밋은 다양한 브랜치에 존재할 수 있다.&lt;/h3&gt;&lt;p&gt;하나의 커밋이 생성될 때마다 각 커밋에 대해 자동으로 고유한 ID가 부여된다.
+이는 SHA1 해쉬라고 하는데 커밋ID의 형태, 길이, 생성방식 등의 정보는 사실 그다지 중요하지 않다.&lt;/p&gt;&lt;p&gt;가장 중요한 점은 동일한 ID의 커밋이 다양한 브랜치에 존재할 수 있다는 점이다.
+예를 들어 &lt;code&gt;test&lt;/code&gt; 브랜치에 있는 상태에서 &lt;code&gt;git checkout -b check-id&lt;/code&gt; 명령어를 실행해
+&lt;code&gt;check-id&lt;/code&gt; 브랜치를 만들어낸 경우, 우리는 두 브랜치의 커밋 내역이 동일하다고 말한다.
+이와 관련하여 아래 예시를 확인해보자.&lt;/p&gt;&lt;p&gt;&lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position:relative;display:block;margin-left:auto;margin-right:auto;max-width:590px&quot;&gt;
+      &lt;a class=&quot;gatsby-resp-image-link&quot; href=&quot;/static/f7c46eca260ea149d81578fcf94c1375/e2d3b/same-commit-id.png&quot; style=&quot;display:block&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;
+    &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom:37.16216216216216%;position:relative;bottom:0;left:0;background-image:url(&amp;#x27;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAHCAYAAAAIy204AAAACXBIWXMAABYlAAAWJQFJUiTwAAABC0lEQVQoz52R2WrDMBBF/f9fV+iWNqUNsVPvsWVpJHmRTrEdCuljBw7Mg7g6M5PowxPF4wP+8wgxEtkrrv0/SMZpRovFWIdYi9YGbQz/rSSEgDZCUdZc8pKqbnHj9Iv/y7Tg10+zM1IUNGmB/s4x2uDHmSTESN8r3o8fPB+OnM4Xmqva6RTixnumBdu2dGWJEk+hRvq8ZLheEX8LFGM4fZ14eX3jnGZY6zac86wTrG9CiHsPLFrRVxWDePJ+ZKhqTNcxzsstUAxNXW/7s87hvMf7ceNu6SFsRwtaIV232fY+bsZuGJiWsAdaEeqqolcKEdkN3W45z/P91ddAMagsZWha0qylv+SIGjbDH3CiHs/PhozDAAAAAElFTkSuQmCC&amp;#x27;);background-size:cover;display:block&quot;&gt;&lt;/span&gt;
+  &lt;img class=&quot;gatsby-resp-image-image&quot; alt=&quot;test&quot; title=&quot;test&quot; src=&quot;/static/f7c46eca260ea149d81578fcf94c1375/fcda8/same-commit-id.png&quot; srcSet=&quot;/static/f7c46eca260ea149d81578fcf94c1375/12f09/same-commit-id.png 148w,/static/f7c46eca260ea149d81578fcf94c1375/e4a3f/same-commit-id.png 295w,/static/f7c46eca260ea149d81578fcf94c1375/fcda8/same-commit-id.png 590w,/static/f7c46eca260ea149d81578fcf94c1375/efc66/same-commit-id.png 885w,/static/f7c46eca260ea149d81578fcf94c1375/c83ae/same-commit-id.png 1180w,/static/f7c46eca260ea149d81578fcf94c1375/e2d3b/same-commit-id.png 1466w&quot; sizes=&quot;(max-width: 590px) 100vw, 590px&quot; style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;/&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position:relative;display:block;margin-left:auto;margin-right:auto;max-width:590px&quot;&gt;
+      &lt;a class=&quot;gatsby-resp-image-link&quot; href=&quot;/static/b3a3c22784c3a9f648589cb64297f775/e405b/same-commit-id2.png&quot; style=&quot;display:block&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;
+    &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom:35.13513513513513%;position:relative;bottom:0;left:0;background-image:url(&amp;#x27;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAHCAYAAAAIy204AAAACXBIWXMAABYlAAAWJQFJUiTwAAABDUlEQVQoz32Q226DMBBE+f8/i9SX5rmNRMBJAIMDxviGOZVJVbVKlZVGq5XXszNTHI4Lb8eWw7uibhK5toxt41Xl9/9QWBeZtGHSC9YF9Gzw3r/89OpYkbaEnjS1EFRVjex7YlyJ60pK6YkopV0/UgVEYxFdoGoC98kTYqTIx4zW1LWgPFcMg8JahzEL3ocf+38B1y7QK4McPUJ6bp0jBP8gnLWmLM98fJ7opNwtZ9IY45P1rC63rDDHMy2efvK0fSYMFHllGAZuTffIMi9993mx+BBxv/CYV+rGIZWhUZ6qdVxbh3UuZwjjfURcbohrS9sr5DDu6O8TxvonLM7v+ZWXmdPF8VFbumHZBXwB7L4fGPaC7LUAAAAASUVORK5CYII=&amp;#x27;);background-size:cover;display:block&quot;&gt;&lt;/span&gt;
+  &lt;img class=&quot;gatsby-resp-image-image&quot; alt=&quot;check-id&quot; title=&quot;check-id&quot; src=&quot;/static/b3a3c22784c3a9f648589cb64297f775/fcda8/same-commit-id2.png&quot; srcSet=&quot;/static/b3a3c22784c3a9f648589cb64297f775/12f09/same-commit-id2.png 148w,/static/b3a3c22784c3a9f648589cb64297f775/e4a3f/same-commit-id2.png 295w,/static/b3a3c22784c3a9f648589cb64297f775/fcda8/same-commit-id2.png 590w,/static/b3a3c22784c3a9f648589cb64297f775/efc66/same-commit-id2.png 885w,/static/b3a3c22784c3a9f648589cb64297f775/c83ae/same-commit-id2.png 1180w,/static/b3a3c22784c3a9f648589cb64297f775/e405b/same-commit-id2.png 1566w&quot; sizes=&quot;(max-width: 590px) 100vw, 590px&quot; style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;/&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;&lt;p&gt;위의 두 브랜치를 보면 구성하는 커밋들의 커밋 ID가 서로 완전히 동일함을 알 수 있다.&lt;/p&gt;&lt;p&gt;또한 중요한 점은 &lt;code&gt;git commit --amend&lt;/code&gt;를 통해 커밋을 수정하는 경우,
+기존 커밋을 제거하고 완전히 새로운 커밋이 생성된다는 점이다.
+물론 하나의 커밋을 구성하는 정보들 중 재활용되는 정보도 많겠지만,
+커밋 ID 자체가 새로 발급된다는 점은 확실해보인다.&lt;/p&gt;&lt;p&gt;아래는 바로 위의 &lt;code&gt;check-id&lt;/code&gt; 브랜치에서 마지막 커밋을 amend하고 force push한 결과이다.&lt;/p&gt;&lt;p&gt;&lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position:relative;display:block;margin-left:auto;margin-right:auto;max-width:590px&quot;&gt;
+      &lt;a class=&quot;gatsby-resp-image-link&quot; href=&quot;/static/c3eb6c9802f64ce8087f4db9d60294c1/5df5d/amend-creates-new-commit.png&quot; style=&quot;display:block&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;
+    &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom:42.567567567567565%;position:relative;bottom:0;left:0;background-image:url(&amp;#x27;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAJCAYAAAAywQxIAAAACXBIWXMAABYlAAAWJQFJUiTwAAABKElEQVQoz5WS2U4DMQxF5///kNJKCNqhC0wymezbgaRUFFArYekq8oPtu2TYjnsOp3dyLlyq1kq9vP/EIOWMUgtaGxatcc5/L62V/9ZgnUcb02GMJZdrplC+Fpcr1JyJYiJKgROSKCUxhK5ymN5OrFYrHlaPHI5H2oHGVC2aEMJf6a2PAbV5RG1f2G22yKdnzDzjY2JoQ957rHUYazHWkVIixEjO+aZXNCU5QWnIXU33UMiZ90kwCcmsFCnnn+HcQLMml0rMlVTOfSmFQUnBer3pko/HUw+ledlY31so1YLShlfhkLrlYPEhMohpwhhzvtjMjqkj3ZHb0KwxziN0RLuID4GYUmM4MY4j4+seIWX/QmpZuvxylfjvaoyM9ewmj9QR5z3hM5QP7du/5MoXY94AAAAASUVORK5CYII=&amp;#x27;);background-size:cover;display:block&quot;&gt;&lt;/span&gt;
+  &lt;img class=&quot;gatsby-resp-image-image&quot; alt=&quot;amend-check-id&quot; title=&quot;amend-check-id&quot; src=&quot;/static/c3eb6c9802f64ce8087f4db9d60294c1/fcda8/amend-creates-new-commit.png&quot; srcSet=&quot;/static/c3eb6c9802f64ce8087f4db9d60294c1/12f09/amend-creates-new-commit.png 148w,/static/c3eb6c9802f64ce8087f4db9d60294c1/e4a3f/amend-creates-new-commit.png 295w,/static/c3eb6c9802f64ce8087f4db9d60294c1/fcda8/amend-creates-new-commit.png 590w,/static/c3eb6c9802f64ce8087f4db9d60294c1/efc66/amend-creates-new-commit.png 885w,/static/c3eb6c9802f64ce8087f4db9d60294c1/c83ae/amend-creates-new-commit.png 1180w,/static/c3eb6c9802f64ce8087f4db9d60294c1/5df5d/amend-creates-new-commit.png 1572w&quot; sizes=&quot;(max-width: 590px) 100vw, 590px&quot; style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;/&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;&lt;h3&gt;브랜치 통합시 다른 브랜치의 정보는 새로 커밋된다.&lt;/h3&gt;&lt;p&gt;커밋 ID라는 개념을 알았으니 마지막으로 한 가지만을 보여주고 이 긴 글을 끝내고자 한다.&lt;/p&gt;&lt;p&gt;두 브랜치를 rebase를 통해 통합하는 경우,
+다른 브랜치로부터 온 커밋들이 그대로 통합된 브랜치에 추가된다고 생각하는 것이 일반적일 것이다.
+그러나 두 브랜치를 통합했을 때 뭔가 커밋들이
+실제로 생성된 시간순으로 나열되지 않는다는 느낌을 받는 경우가 있다.
+매번 어렴풋이 느끼던 점을 이번 기회에 확인해보았다.&lt;/p&gt;&lt;p&gt;그러한 이유에서 한 번 두 브랜치, &lt;code&gt;merge-test&lt;/code&gt;와 &lt;code&gt;test&lt;/code&gt;를 오가며
+순차적으로 커밋을 하나씩 남기고 &lt;code&gt;test&lt;/code&gt; 브랜치를 &lt;code&gt;merge-test&lt;/code&gt; 브랜치로 rebase하여 통합해보았다.
+그 결과, 흥미롭게도 rebase를 실행한 시점에 &lt;code&gt;test&lt;/code&gt; 브랜치의 커밋들이 그대로 재생성된다는 점이 확인되었다.
+분명 커밋의 작성자, 커밋 메시지, 파일들의 내용도 동일하다.
+그러나 아래를 확인해보면 커밋의 생성 시점이 최신으로 갱신되었으며, 새로운 커밋 ID가 발급되었다는 점을 알 수 있다.&lt;/p&gt;&lt;p&gt;&lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position:relative;display:block;margin-left:auto;margin-right:auto;max-width:590px&quot;&gt;
+      &lt;a class=&quot;gatsby-resp-image-link&quot; href=&quot;/static/85cdde89293ebe588054da6692ec98df/098c1/commits-before-rebase.png&quot; style=&quot;display:block&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;
+    &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom:34.45945945945946%;position:relative;bottom:0;left:0;background-image:url(&amp;#x27;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAHCAYAAAAIy204AAAACXBIWXMAABYlAAAWJQFJUiTwAAABJ0lEQVQoz2WQC2/iMBCE8///XXVVpVNLCjmggcRc7Pixa0i+yqEPSkca2SPLszNb2dHTHnuSKLeY5/mbX5o7/ZtVzme8D8SYENHlrjnzE/OdvNM3qKZpZrCO13VDvW7Yt0d8SISFcUku+YzoJzNynkimJ24bfHvA7Xak4T9RM1UZZq2lXm94Xr2yO/QMXYd7fsL+fSSWj3ohJiWKXs98wR2OnOqarnnjsPqH6w1jlKth8J7NpuFlVdN1HXYUtvtAsw34cFkqTx87Ko2K3nUzf1bKUzPxUE+0JpOzUpXn0VmMMaQkiAqjF/ZHZduWRFeD28UXiGSs8xindIMQk6CflVPwmN5gzAk3joQQSCmgGpnnaUlVEk4fCYtpzhkfAkPInEZFVJf9vgO2YB7BBSyxXgAAAABJRU5ErkJggg==&amp;#x27;);background-size:cover;display:block&quot;&gt;&lt;/span&gt;
+  &lt;img class=&quot;gatsby-resp-image-image&quot; alt=&quot;1&quot; title=&quot;1&quot; src=&quot;/static/85cdde89293ebe588054da6692ec98df/fcda8/commits-before-rebase.png&quot; srcSet=&quot;/static/85cdde89293ebe588054da6692ec98df/12f09/commits-before-rebase.png 148w,/static/85cdde89293ebe588054da6692ec98df/e4a3f/commits-before-rebase.png 295w,/static/85cdde89293ebe588054da6692ec98df/fcda8/commits-before-rebase.png 590w,/static/85cdde89293ebe588054da6692ec98df/efc66/commits-before-rebase.png 885w,/static/85cdde89293ebe588054da6692ec98df/c83ae/commits-before-rebase.png 1180w,/static/85cdde89293ebe588054da6692ec98df/098c1/commits-before-rebase.png 1578w&quot; sizes=&quot;(max-width: 590px) 100vw, 590px&quot; style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;/&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position:relative;display:block;margin-left:auto;margin-right:auto;max-width:590px&quot;&gt;
+      &lt;a class=&quot;gatsby-resp-image-link&quot; href=&quot;/static/6b0b638e19282fd5d2a3732985952d15/e2d3b/commits-after-rebase.png&quot; style=&quot;display:block&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;
+    &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom:54.72972972972974%;position:relative;bottom:0;left:0;background-image:url(&amp;#x27;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAALCAYAAAB/Ca1DAAAACXBIWXMAABYlAAAWJQFJUiTwAAABuElEQVQoz52SbW+bMBSF8///3TRNU5oQ2oTyElqwscEv2DyTTZtq26fN0pEtcXl8fc85yEnTdj1126Hnhc+1bdt/6bAYg5BT1rwYrHM45xMxF6T9X9bBe4/S8w4VMitBH50CMUbitn0pBIIxBGtZjc17CJEYNw6pQE2Ssix5Op1p2g4zzyx1xXx7JugpQ/OTYtzPSqJ+fkOVBd2xQJ+P6HHAroFDiBtaKeq6pnqtGUaBtxbbNizVjaDVAxjz8zeMiVSvinu/ULWGpjPo2bGGD+CiNU3TcK1e6fseMRmOV8/3wvE+bb+ZlIDabJyuhlvn+fHiOVcrYrKs67oD34eR46ngeLrwdC45XV64vwn6YUKqhcV6ZuMeWozjbZgYpKF+twyTzT6kbxkohOBSPnN5vlLVLXV7Z8zOK3Ry3q9Y9yXjPFJppnmhEwapLZNOFzsOyZlkSlEUPJ0KikvJy/XGpHTOZUrBn7lMs0xANVua0aIWT4qf8+vushQCMY4451jXkIebspjiE0L4K7y5CT2jF8tdJGAag8X79dMUxb3r6O49QsrcXfoh7aloh+w5ix/nB1BadO5wB/4CscpTNLlh7GAAAAAASUVORK5CYII=&amp;#x27;);background-size:cover;display:block&quot;&gt;&lt;/span&gt;
+  &lt;img class=&quot;gatsby-resp-image-image&quot; alt=&quot;2&quot; title=&quot;2&quot; src=&quot;/static/6b0b638e19282fd5d2a3732985952d15/fcda8/commits-after-rebase.png&quot; srcSet=&quot;/static/6b0b638e19282fd5d2a3732985952d15/12f09/commits-after-rebase.png 148w,/static/6b0b638e19282fd5d2a3732985952d15/e4a3f/commits-after-rebase.png 295w,/static/6b0b638e19282fd5d2a3732985952d15/fcda8/commits-after-rebase.png 590w,/static/6b0b638e19282fd5d2a3732985952d15/efc66/commits-after-rebase.png 885w,/static/6b0b638e19282fd5d2a3732985952d15/c83ae/commits-after-rebase.png 1180w,/static/6b0b638e19282fd5d2a3732985952d15/e2d3b/commits-after-rebase.png 1466w&quot; sizes=&quot;(max-width: 590px) 100vw, 590px&quot; style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;/&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;&lt;h2&gt;맺으며&lt;/h2&gt;&lt;p&gt;사실 아직도 쓰고 싶은 내용은 끝이 없다.
+다만, 상대적으로 중요도가 떨어지거나 중요하더라도 아예 새로운 게시글로 정리하는 것이 맞다고 느껴져 참는 것일 뿐이다.&lt;/p&gt;&lt;p&gt;그 중에서도 merge, rebase, squash 등의 git 기능들이나
+github action을 통한 CI/CD, github.io 도메인의 웹호스팅 등 깃헙의 유용한 기능들은 꼭 한번 다루어보고 싶다.&lt;/p&gt;&lt;p&gt;한편 모든 커밋들은 기본적으로 이메일을 기준으로 관리되고,
+깃헙도 이메일을 기준으로 계정이 관리된다는 점과 관련하여
+만일 깃헙 계정에 등록된 이메일을 변경할 경우 어떠한 일이 일어나는지와 같은
+실용성이 전혀 없는 이야기도 사실 좀 자세히 쓰고 싶었다.
+이왕 여기에 쓴 김에 간략히 정리하자면 다음과 같다.&lt;/p&gt;&lt;ol&gt;&lt;li&gt;특정 커밋을 누가 작성했는지 보여주기 위해 우선 깃헙은 커밋 작성자의 이메일로 인증된 깃헙 계정이 존재하는지 찾는다.&lt;/li&gt;&lt;li&gt;만일 해당 이메일이 인증된 깃헙 계정이 존재하지 않는 경우, 이메일 대신 깃헙 사용자명이 그대로 표시된다.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;그런데 중요한 점은 원래 깃헙 계정 A에 등록되었던 이메일을 다른 깃헙 계정 B에 등록하는 것이 가능하다는 점이다.
+이 경우 &lt;strong&gt;원래는 깃헙 계정 A가 작성한 것으로 보이던 모든 커밋들이 깃헙 계정 B가 작성한 것으로 변경된다.&lt;/strong&gt;&lt;/p&gt;&lt;hr/&gt;&lt;div&gt;참고문서&lt;/div&gt;&lt;div&gt;&lt;div num=&quot;1&quot;&gt;&lt;p&gt;만약 &lt;code&gt;git init&lt;/code&gt;을 실행했던 초기 상태로 되돌리고 싶다면
+&lt;code&gt;rm -rf .git&lt;/code&gt;과 같은 방식으로 기존의 &lt;code&gt;.git&lt;/code&gt; 폴더 자체를 깔끔하게 제거한 이후에
+&lt;code&gt;git init&lt;/code&gt;을 실행해야 한다. 이렇게 하면 모든 git 설정, 브랜치 정보, 커밋 내역이 깔끔하게 제거된다.&lt;/p&gt;&lt;/div&gt;&lt;div num=&quot;2&quot;&gt;&lt;p&gt;로컬에서 &lt;code&gt;git config --global init.defaultBranch &amp;lt;이름&amp;gt;&lt;/code&gt; 명령어를 실행하여
+&lt;code&gt;git init&lt;/code&gt; 명령어를 실행했을 때 생성할 디폴트 브랜치의 이름을 지정할 수 있다.
+이를 지정하지 않은 경우 아마 &lt;code&gt;master&lt;/code&gt; 브랜치가 생성될 것이다.&lt;/p&gt;&lt;/div&gt;&lt;div num=&quot;3&quot;&gt;&lt;p&gt;깃헙 저장소에서 생성되는 디폴트 브랜치의 이름은
+[Settings &amp;gt; Repositories &amp;gt; Repository default branch]에서 설정할 수 있다.
+아마 별도로 설정하지 않은 경우 &lt;code&gt;master&lt;/code&gt; 혹은 &lt;code&gt;main&lt;/code&gt;이라고 되어있을 것이다.
+&lt;code&gt;main&lt;/code&gt;이 디폴트로 설정된 이유는 &lt;code&gt;master&lt;/code&gt;라는 네이밍이 노예와 주인 사이의 관계를 연상시킨다는
+불편러들의 환심을 사기 위한 깃헙의 정책이라고 한다.&lt;/p&gt;&lt;/div&gt;&lt;div num=&quot;4&quot;&gt;&lt;p&gt;이때 &lt;code&gt;-u&lt;/code&gt; 옵션은 &lt;code&gt;--set-upstream&lt;/code&gt; 옵션의 줄임 표현으로,
+현재 push하는 &lt;code&gt;origin&lt;/code&gt;을 로컬저장소 입장에서 upstream으로 사용하도록 설정하는 작업이다.
+사실 이 &lt;code&gt;-u&lt;/code&gt; 옵션이 없다고 딱히 예외가 발생하지 않을 수 있으며,
+push하는 원격저장소가 자동으로 upstream으로 설정되는 것으로 보인다.&lt;/p&gt;&lt;/div&gt;&lt;div num=&quot;5&quot;&gt;&lt;p&gt;pull을 시도했을 때 브랜치에 다소 차이가 존재하는 경우
+merge, rebase, fast-forward 등 어떠한 전략으로 로컬에서 동기화시킬 것인지를
+사전에 선택할 수 있다.
+예를 들어 &lt;code&gt;git config pull.rebase true&lt;/code&gt; 명령어를 사전에 실행해놓은 경우
+rebase를 디폴트 전략으로 사용하도록 설정된다.
+혹은 이러한 설정과는 별개로 &lt;code&gt;git pull&lt;/code&gt; 명령어를 실행할 당시
+&lt;code&gt;--rebase&lt;/code&gt; 등의 옵션을 추가하는 경우 해당 pull을 시도할 때
+rebase 전략을 사용하게 된다.
+이러한 설정을 전혀 수행하지 않은 경우 기본적으로 사용하는 디폴트 전략은 merge다.
+현재 이러한 동기화 전략들과 PR과 관련하여 다른 게시글에서 정리해볼 계획이다.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;</content:encoded></item><item><title><![CDATA[클래스와 프로토타입에 담긴 철학]]></title><description><![CDATA[우테코 강의 중 클래스라는 개념이 플라톤의 이데아 개념에 기반을 두고 있다는 내용이 나왔다. 다만, 코치님이 이 부분에 대해 너무 가볍게 다룬 것 같아 정말 마음이 아팠다. 그런 의미에서 그 분이 쏘아올린 작은 공을 살짝 리시브해보고자 한다.]]></description><link>https://bugoverdose.github.io/computer-science/class-vs-prototype-philosophy/</link><guid isPermaLink="false">https://bugoverdose.github.io/computer-science/class-vs-prototype-philosophy/</guid><pubDate>Thu, 17 Feb 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;우테코 강의 중 클래스라는 개념이 플라톤의 이데아 개념에 기반을 두고 있다는 내용이 나왔다.
 다만, 코치님이 이 부분에 대해 너무 가볍게 다룬 것 같아 정말 마음이 아팠다.
-그런 의미에서 그 분이 쏘아올린 작은 공을 살짝 리시브해보고자 한다.&lt;/p&gt;&lt;p&gt;결론만 간단히 설명하자면 다음과 같다.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;p&gt;자바와 같은 클래스 기반의 OOP는
-플라톤의 세계관과 아리스토텔레스의 분류법에 기반을 두고 있다.&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;p&gt;자바스크립트와 같은 프로토타입 기반의 OOP는
-비트겐슈타인의 가족유사성 이론과 로쉬의 프로토타입 이론에 기반을 두고 있다.&lt;/p&gt;&lt;/li&gt;&lt;/ul&gt;&lt;h2&gt;플라톤의 이데아와 클래스&lt;/h2&gt;&lt;p&gt;플라톤은 우리가 살고 있는 구체적인 현실 세계에 대응되는
+그런 의미에서 그 분이 쏘아올린 작은 공을 살짝 리시브해보고자 한다.&lt;/p&gt;&lt;p&gt;미리 결론만 간략하게 정리하자면 다음과 같다.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;p&gt;자바와 같은 &lt;strong&gt;클래스 기반의 OOP&lt;/strong&gt;는 플라톤의 세계관과 아리스토텔레스의 분류법에 기반을 두고 있다.
+실제로 &lt;em&gt;클래스(class)&lt;/em&gt;라는 용어는 &lt;em&gt;분류(classification)&lt;/em&gt;와 직접적으로 관련된 용어다.&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;p&gt;자바스크립트와 같은 &lt;strong&gt;프로토타입(prototype)&lt;/strong&gt; 기반의 OOP는
+비트겐슈타인의 가족유사성 이론과 &lt;em&gt;로쉬의 프로토타입 이론&lt;/em&gt;에 기반을 두고 있다.&lt;/p&gt;&lt;/li&gt;&lt;/ul&gt;&lt;h2&gt;플라톤의 이데아와 클래스&lt;/h2&gt;&lt;p&gt;플라톤은 우리가 살고 있는 구체적인 현실 세계에 대응되는
 추상적인 본질의 세계, &lt;em&gt;이데아(idea)&lt;/em&gt;가 존재한다고 보았다.
 이 관점의 핵심은 현실 세계에서는 이 본질의 세계에 직접적으로 접근할 수가 없지만,
 현실 세계에 실존하는 모든 구체적인 물질들의 본질은 이 본질의 세계에 존재한다는 것이다.&lt;/p&gt;&lt;p&gt;간단히 말해 현실에 존재하는 모든 새들을 생각해보자.
 참새, 비둘기, 두루미, 펭귄, 타조, 키위 등 현실에 구체적으로 존재하는 모든 새들은
-&lt;em&gt;새&lt;/em&gt;라는 본질을 공유하고 있으며, 그 본질은 이데아에 존재하는 것이다.&lt;/p&gt;&lt;h3&gt;JVM 메모리 구조에 대한 철학적 이해&lt;/h3&gt;&lt;p&gt;그리고 Java 등 대부분의 &lt;strong&gt;클래스 기반 객체지향 언어&lt;/strong&gt;들은 바로 이러한 관점에 기반을 두고 있다.
+&lt;em&gt;새&lt;/em&gt;라는 본질을 공유하고 있으며, 그 본질은 이데아에 존재하는 것이다.&lt;/p&gt;&lt;h3&gt;이데아를 통해 이해한 우주의 생성 원리&lt;/h3&gt;&lt;p&gt;그렇다면 한 번 이데아 개념에 빅뱅 이론을 접목하여 우리가 사는 세상에 대해 해석해보자.&lt;/p&gt;&lt;p&gt;아마도 본질의 세계는 우리가 사는 세계와는 전혀 다른 차원에 존재하며,
+우리 차원의 우주가 탄생하기 전부터 존재했을 것이라고 생각할 수 있다.
+그리고 우리가 사는 차원에 빅뱅이 일어나 우주가 탄생하면서
+다른 차원으로부터 행성의 본질을 토대로 구체적인 행성들이 생겨나고,
+식물의 본질을 토대로 구체적인 식물들이 생겨나고,
+동물의 본질을 토대로 구체적인 동물들이 생겨났을 것이라고 생각할 수 있다.&lt;/p&gt;&lt;p&gt;그리고 우리가 사는 세상에서 새로운 동식물이 생겨나고, 변화하고, 죽어가더라도
+각 동물, 식물의 본질만큼은 본질의 세계에 그대로 존재하고 있을 것이라 생각할 수 있다.
+또한 언젠가 이 본질의 세계 자체가 소멸하게 된다면,
+그것은 아마 우리가 사는 현실 세상이 소멸한 이후일 것이다.
+왜냐면 본질의 세계 없이는 우리가 사는 현실 세상은 성립될 수 없기 때문이다.&lt;/p&gt;&lt;h3&gt;JVM 메모리 구조에 대한 철학적 이해&lt;/h3&gt;&lt;p&gt;Java 등 대부분의 &lt;strong&gt;클래스 기반 객체지향 언어&lt;/strong&gt;들은 바로 이러한 관점에 기반을 두고 있다.
 아래 코드를 함께 봐보자.&lt;/p&gt;&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;java&quot;&gt;&lt;pre style=&quot;counter-reset:linenumber NaN&quot; class=&quot;language-java line-numbers&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Bird&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;token keyword&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;String&lt;/span&gt; name&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
 
@@ -32,23 +337,26 @@ JVM의 &amp;#x27;data 영역&amp;#x27;에 담기게 된다.
 Bird 클래스라는 &lt;strong&gt;본질&lt;/strong&gt;을 토대로 &amp;quot;참새&amp;quot;, &amp;quot;비둘기&amp;quot;와 같은 정보를 지닌
 &lt;em&gt;구체적으로 실존하는 물질&lt;/em&gt;로서 Bird 인스턴스들이 생성된다는 것이다.&lt;/p&gt;&lt;h3&gt;아리스토텔레스의 분류법과 클래스&lt;/h3&gt;&lt;p&gt;이제 플라톤의 철학적 관점이 자바에 반영되었다는 점은 어느 정도 알겠다.
 그런데 대체 클래스(class)라는 키워드는 어디에서 온 것일까?&lt;/p&gt;&lt;p&gt;이는 플라톤의 제자 아리스토텔레스의 &lt;strong&gt;분류(classification) 작업&lt;/strong&gt;과 관련이 있다.
-그는 세상에 존재하는 모든 사물들을 각 사물이 지닌 속성들을 기준으로 분류하였다.&lt;/p&gt;&lt;p&gt;간단히 예를 들자면 살아 움직이는 동물 중에서도
-부리가 있고 날개가 있는 동물들은 기본적으로 &amp;#x27;새&amp;#x27;에 해당된다고 볼 수 있다.
-여기서 나아가 수많은 새들 중에서도 &amp;quot;작고, 날개가 없다&amp;quot;는 속성을 공유하는 개체들을 &amp;quot;키위새&amp;quot;로 분류하고,
-날개는 있지만 &amp;quot;거대하고 뛰어다닌다&amp;quot;는 속성을 공유하는 개체들은 &amp;quot;타조&amp;quot;로 분류를 할 수 있을 것이다.&lt;/p&gt;&lt;p&gt;이처럼 &lt;strong&gt;속성과 할 수 있는 능력을 기반으로 대상을 분류한 것&lt;/strong&gt;이 바로 자바의 &lt;strong&gt;클래스&lt;/strong&gt;라고 볼 수 있다.
-그리고 이러한 구분법에서 흥미로운 점은 타조와 키위새와 같은 클래스(분류)는
-Bird 클래스를 기반으로 생성된다고 볼 수 있다.
-이러한 관계를 우리는 자바의 &lt;strong&gt;상속(inheritance)&lt;/strong&gt; 개념으로 이해할 수 있을 것이다.&lt;/p&gt;&lt;p&gt;이와 관련된 간단한 코드를 함께 봐보자.&lt;/p&gt;&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;java&quot;&gt;&lt;pre style=&quot;counter-reset:linenumber NaN&quot; class=&quot;language-java line-numbers&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Bird&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;token keyword&quot;&gt;boolean&lt;/span&gt; hasBeak&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// 속성: 구체적인 특징&lt;/span&gt;
-    &lt;span class=&quot;token keyword&quot;&gt;boolean&lt;/span&gt; hasWings&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
-
-    &lt;span class=&quot;token keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Bird&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;token keyword&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;hasBeak &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;token keyword&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;hasWings &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+그는 세상에 존재하는 모든 사물들을 각 사물끼리 서로 공유하는 속성들을 기준으로 분류하였다.&lt;/p&gt;&lt;p&gt;간단히 예를 들자면 살아 움직이는 동물 중에서도
+&amp;quot;물 속에서 헤엄을 치고 공기 없이도 호흡이 가능한 동물들&amp;quot;은 기본적으로 &amp;#x27;어류&amp;#x27;에 해당된다고 볼 수 있다.
+한편 &amp;quot;부리가 있고 날개가 있는 동물들&amp;quot;은 기본적으로 &amp;#x27;조류&amp;#x27;에 해당된다고 볼 수 있다.
+이처럼 &lt;strong&gt;모든 개체가 공유하는 속성과 능력을 기반으로 개체들을 하나의 집단으로 분류한 것&lt;/strong&gt;이 바로 자바의 &lt;strong&gt;클래스&lt;/strong&gt;라고 볼 수 있다.&lt;/p&gt;&lt;p&gt;물론 조류 중에서도 각 개체들이 공유하는 속성들을 기반으로 &amp;#x27;비둘기&amp;#x27;, &amp;#x27;참새&amp;#x27;, &amp;#x27;앵무새&amp;#x27; 등 보다 더욱 세부적으로 구분할 수 있을 것이다.
+이 경우 아마 모든 비둘기들이 공유하는 속성들과 모든 참새들이 공유하는 속성들 사이에는 다소 차이가 있을 것이다.
+그러나 이처럼 다양한 개체차를 지닌 개별 사례(instance)들 중에서도 이들이 전원 공유하는 속성(부리가 있고 날개가 있는 동물)을
+통해 조류라는 하나의 추상적인 범주(class)를 만들어내는 것이 가능하다는 것이 아리스토텔레스의 분류법의 핵심이다.&lt;/p&gt;&lt;p&gt;이 점을 이해하고 위의 자바 코드를 다시 본다면,
+&lt;code&gt;Bird&lt;/code&gt;가 왜 &lt;strong&gt;클래스, 즉 &amp;#x27;범주&amp;#x27;&lt;/strong&gt;라고 불리고
+&lt;code&gt;new Bird(~)&lt;/code&gt;로 생성된 개별 객체들이 왜 &lt;strong&gt;인스턴스(instance), 즉 &amp;#x27;사례&amp;#x27;&lt;/strong&gt;라고 불리는지에 대해 이해할 수 있을 것이다.
+어떠한 개체차를 지니든 모든 조류는 근본적으로 &lt;code&gt;Bird&lt;/code&gt; 클래스의 인스턴스라고 볼 수 있기 때문이다.&lt;/p&gt;&lt;p&gt;여기서 나아가 수많은 새들 중에서도
+&amp;quot;인간의 말을 따라하는 새&amp;quot;라는 공유 속성을 지닌 개체들을 &amp;quot;앵무새&amp;quot;로 분류하고,
+&amp;quot;잠수를 할 수 있는 새&amp;quot;는 속성을 공유하는 개체들은 &amp;quot;펭귄&amp;quot;으로 분류할 수 있을 것이다.&lt;/p&gt;&lt;p&gt;이러한 세부 범주는 전부 &amp;#x27;조류&amp;#x27;라는 더 큰 클래스를 기반으로 생성된다고 볼 수 있다.
+이러한 관계를 우리는 자바의 &lt;strong&gt;상속(inheritance)&lt;/strong&gt; 개념으로 이해할 수 있을 것이다.
+아래는 &amp;#x27;조류&amp;#x27;를 &amp;quot;부리가 있고, 날개가 있으며, 날 수 있는 능력을 지닌 동물&amp;quot;로 보았을 때,
+&amp;#x27;앵무새&amp;#x27;를 &amp;quot;조류의 모든 특성과 함께 말할 수 있는 능력도 지닌 동물&amp;quot;로 보는 경우를 자바의 상속 문법으로 간략히 표현한 결과이다.&lt;/p&gt;&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;java&quot;&gt;&lt;pre style=&quot;counter-reset:linenumber NaN&quot; class=&quot;language-java line-numbers&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Bird&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;boolean&lt;/span&gt; hasBeak &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;boolean&lt;/span&gt; hasWings &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
 
     &lt;span class=&quot;token keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;fly&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;token class-name&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;out&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&amp;quot;Bird can fly!&amp;quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// 메서드: 능력&lt;/span&gt;
+        &lt;span class=&quot;token class-name&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;out&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&amp;quot;I&amp;#x27;m a bird! I can fly!&amp;quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
     &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
 
     &lt;span class=&quot;token annotation punctuation&quot;&gt;@Override&lt;/span&gt;
@@ -57,20 +365,15 @@ Bird 클래스를 기반으로 생성된다고 볼 수 있다.
     &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
 
-&lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Kiwi&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Bird&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;token keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Kiwi&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;token keyword&quot;&gt;super&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;token keyword&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;hasWings &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
 
-    &lt;span class=&quot;token annotation punctuation&quot;&gt;@Override&lt;/span&gt;
-    &lt;span class=&quot;token keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;fly&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;token class-name&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;out&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&amp;quot;Kiwi can not fly :(&amp;quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Parrot&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Bird&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;speak&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;token class-name&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;out&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&amp;quot;I&amp;#x27;m a parrot! I can speak!&amp;quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
     &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
 
     &lt;span class=&quot;token annotation punctuation&quot;&gt;@Override&lt;/span&gt;
     &lt;span class=&quot;token keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;toString&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&amp;quot;Kiwi{&amp;quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&amp;quot;hasBeak=&amp;quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt; hasBeak &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&amp;quot;, hasWings=&amp;quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt; hasWings &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;token char&quot;&gt;&amp;#x27;}&amp;#x27;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&amp;quot;Parrot{&amp;quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&amp;quot;hasBeak=&amp;quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt; hasBeak &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&amp;quot;, hasWings=&amp;quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt; hasWings &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;token char&quot;&gt;&amp;#x27;}&amp;#x27;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
     &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
 
@@ -78,59 +381,73 @@ Bird 클래스를 기반으로 생성된다고 볼 수 있다.
 
     &lt;span class=&quot;token keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; args&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
         &lt;span class=&quot;token class-name&quot;&gt;Bird&lt;/span&gt; bird &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Bird&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;token class-name&quot;&gt;Kiwi&lt;/span&gt; kiwi &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Kiwi&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
-
         &lt;span class=&quot;token class-name&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;out&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;bird&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// Bird{hasBeak=true, hasWings=true}&lt;/span&gt;
-        &lt;span class=&quot;token class-name&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;out&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;kiwi&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// Kiwi{hasBeak=true, hasWings=false}&lt;/span&gt;
+        bird&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;fly&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// I&amp;#x27;m a bird! I can fly!&lt;/span&gt;
 
-        bird&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;fly&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// Bird can fly!&lt;/span&gt;
-        kiwi&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;fly&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// Kiwi can not fly :(&lt;/span&gt;
+        &lt;span class=&quot;token class-name&quot;&gt;Parrot&lt;/span&gt; parrot &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Parrot&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;token class-name&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;out&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;parrot&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// Parrot{hasBeak=true, hasWings=true}&lt;/span&gt;
+        parrot&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;fly&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// I&amp;#x27;m a bird! I can fly!&lt;/span&gt;
+        parrot&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;speak&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// I&amp;#x27;m a parrot! I can speak!&lt;/span&gt;
     &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;span aria-hidden=&quot;true&quot; class=&quot;line-numbers-rows&quot; style=&quot;white-space:normal;width:auto;left:0&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;그런데 이러한 예시를 보면 무언가 이상하다는 생각이 들지 않는가?&lt;/p&gt;&lt;p&gt;우리는 일반적으로 &amp;#x27;새&amp;#x27;를 &lt;em&gt;날개를 지니며 날아다닐 수 있는 동물&lt;/em&gt;이라고 생각한다.
-그러나 타조, 펭귄, 키위새와 같은 개체들은 전혀 그러한 성질을 지니고 있지 않음에도 &lt;em&gt;새&lt;/em&gt;로 분류되고 있다.
-&lt;strong&gt;이는 생물학자들이 일반 대중과는 다른 속성들과 능력을 기준으로 동물들을 분류하고 있음을 의미한다.&lt;/strong&gt;
-그렇다면 우리가 사용하는 새라는 개념은 틀린 것일까?
-우리의 머릿속에 존재하는 이 새라는 일반적인 이미지는 무엇일까?&lt;/p&gt;&lt;p&gt;바로 이러한 가려운 지점을 아주 시원하게 긁어준 인물이 바로 비트겐슈타인이다.&lt;div num=&quot;1&quot;&gt;&lt;/div&gt;&lt;/p&gt;&lt;h2&gt;비트겐슈타인과 프로토타입&lt;/h2&gt;&lt;p&gt;비트겐슈타인은 간단히 말해 철학, 언어학, 심리학에 지대한 영향을 미친 세기의 천재라고 볼 수 있다.&lt;/p&gt;&lt;p&gt;그는 개체들 사이에서 공유되는 속성을 기반으로 분류를 시도하는 행위 자체에 근본적인 한계가 있다고 보았다.
-예를 들어 조류를 단순히 날개라는 속성과, 날아다닌다는 기능을 지닌 동물이라고 볼 경우
-펭귄, 키위, 타조와 같은 예외가 존재한다는 점을 생각해보자.
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;span aria-hidden=&quot;true&quot; class=&quot;line-numbers-rows&quot; style=&quot;white-space:normal;width:auto;left:0&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;보면 알겠지만 앵무새 인스턴스는 &lt;code&gt;Bird&lt;/code&gt; 클래스를 상속받았기 때문에
+다른 모든 조류와 동일하게 &lt;code&gt;hasBeak&lt;/code&gt;과 &lt;code&gt;hasWings&lt;/code&gt; 속성의 값이 &lt;code&gt;true&lt;/code&gt;이며, &lt;code&gt;fly&lt;/code&gt; 메서드를 실행할 수 있다.
+여기서 나아가 다른 조류는 못하는 &lt;code&gt;speak&lt;/code&gt; 메서드도 실행할 수 있다는 특수성을 지닌다.&lt;/p&gt;&lt;p&gt;물론 실제 생물학자들이 이러한 기준으로 조류를 분류하지 않는다.
+만일 이러한 기준을 적용할 경우, 타조나 키위새와 같이 날지 못하는 조류는 존재할 수가 없기 때문이다.&lt;/p&gt;&lt;p&gt;그런데 솔직히 일반적인 대중의 입장에서 비둘기, 참새와 같은 동물들이나
+타조, 키위새와 같은 동물들이 조류라는 점에서 서로 대등하다고 보는 것은 다소 이상하게 느껴질 수 있다.
+일반 대중이 지닌 새에 대한 이미지는 분명 &lt;em&gt;날개를 지니고 날아다닐 수 있는 동물&lt;/em&gt;이다.
+그렇다면 대체 우리의 머릿속에 존재하는 이 새라는 일반적인 이미지는 무엇일까?&lt;/p&gt;&lt;p&gt;바로 이러한 의문에 대한 답변을 최초로 제시한 것이 바로 비트겐슈타인이다.&lt;div num=&quot;1&quot;&gt;&lt;/div&gt;&lt;/p&gt;&lt;h2&gt;비트겐슈타인과 프로토타입&lt;/h2&gt;&lt;p&gt;비트겐슈타인은 간단히 말해 철학, 언어학, 심리학에 지대한 영향을 미친 인물로 수백년에 한 명씩 나오는 천재라고 볼 수 있다.&lt;/p&gt;&lt;p&gt;기본적으로 그는 &lt;strong&gt;범주 내의 모든 개체들 사이에 공유되는 속성&lt;/strong&gt;을 기반으로 분류를 시도하는 행위 자체에 근본적인 한계가 있다고 보았다.
+예를 들어 조류를 단순히 &amp;quot;날아다니는 동물&amp;quot;로 볼 경우 펭귄과 타조와 같은 예외들이 당연히 생겨날 수 밖에 없다.
 그렇다고 이들을 조류가 아닌 포유류 혹은 양서류로 보기에는 어려움이 있기 때문에
-생물학자들은 이들을 조류에 포함시키기 위해 조류에 대한 분류법을 인위적으로 수정하여야 했을 것이다.&lt;/p&gt;&lt;p&gt;이러한 과정을 생각한다면 애초에 &amp;quot;새&amp;quot;라는 본질이 존재한다고 볼 수 있을까?&lt;/p&gt;&lt;p&gt;그러한 관점에서 비트겐슈타인은 &amp;quot;세계에 미리 내재되어서 대상과 언어를 완전히 규정하는 어떤 언어란 존재하지 않는다&amp;quot;고 말하였다.
-어렵게 느껴질 수 있지만,
-하나의 자바 애플리케이션을 세상이라고 보았을 때
-애플리케이션이 실행되는 시점에 JVM의 data 영역에 클래스 정보가 미리 내재되고,
+생물학자들은 이들을 조류에 포함시키기 위해 조류에 대한 분류법을 인위적으로 수정하여야 했을 것이다.
+그런데 예를 들어 펭귄과 타조를 포함시키기 위해 조류를 &amp;quot;날개가 있는 동물&amp;quot;로 규정한 경우
+다시 키위새라는 예외가 생겨난다.&lt;/p&gt;&lt;p&gt;전통적인 분류법에서는 이처럼 공유 속성을 수정함으로써 점점 조류의 본질에 대한 정의에 가까워진다고 생각했을 것이다.
+그러나 이러한 과정을 보며 비트겐슈타인은 애초에 조류라는 본질 자체가 존재하지 않기 때문에
+이처럼 인위적인 수정 작업이 끝없이 생겨난다고 보았을 것이다.&lt;/p&gt;&lt;p&gt;그러한 관점에서 비트겐슈타인은 &amp;quot;세계에 미리 내재되어서 대상과 언어를 완전히 규정하는 어떤 언어란 존재하지 않는다&amp;quot;고 말하였다.
+어렵게 느껴질 수 있지만, 간단히 말해 위에서 설명한 이데아를 통한 우주의 생성 원리를 부정한 것이라고 볼 수 있다.
+만일 세상을 하나의 자바 애플리케이션이라고 보았을 때
+비트겐슈타인은 애플리케이션이 실행되는 시점에 JVM의 data 영역에 클래스 정보가 미리 내재되고,
 이를 기반으로 세상에 존재하는 수많은 사물들이 만들어지는 구조를 부정한 것이라고 볼 수 있다.&lt;/p&gt;&lt;p&gt;&lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position:relative;display:block;margin-left:auto;margin-right:auto;max-width:590px&quot;&gt;
       &lt;a class=&quot;gatsby-resp-image-link&quot; href=&quot;/static/bc604c2a1b202f91ffe3c5e2ccf3b458/dd104/family-resemblance.png&quot; style=&quot;display:block&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;
     &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom:66.21621621621621%;position:relative;bottom:0;left:0;background-image:url(&amp;#x27;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAANCAYAAACpUE5eAAAACXBIWXMAABYlAAAWJQFJUiTwAAACd0lEQVQ4y42TaU8TURiF+6f9ARK/EeWLGjWCfMCaoCLKIpEUBsTK0tJ1SqftdJmW6TLTlbaztX3MTG0REqNv8t5kbt577plzzvUBKM0bCqpCOp+icF1EqSpIRQmpNG3323Ec7le7XkSvSHf2fO7ijMa0bnpklSwpWUSuyOQreVL5FJF0hHKtzHg89g50dI2TL+u09QaisEUisEFbaxAPHmFbFr7JZDJHzyk54pkYQkjgOHxMTa+htRoYljGfqRdlAq+f0igriAcbRHffkk/EOFxbpt/tTAFnoOlimlAq5P2uy7LVbVHVVGzbht8zHb3B6sMHaNcVqtlz1MwpcizCh8cL2KZ5y9AZOZRrisfKsi16/R6dXhvTMhlPxnOG7rReVxmPbjXttnSyicuphjPAgTGgplfR2hqqplJv1imqReRyzmPuaiuVMghHu/iXnxBOnhM53idyuOedD+3vkAweTU2Zgf6p599Kla74sbbisYwF9jj9/J7RaITwbhXxRLjVcDQeec667TKbsXOddmNTqVdodHVyV3HWlx55rge3P7L5bNG7aHvlOT+/bk4Z/qua3SZVverJ4F5yIOwQSV6QKUokpTi2Y9GsFjAGfXy2Y2OYhie+q6MbkaE59IwZGkNM27wDbg76BPxvkKNhlEKGSDhIVRYJ+hdpqQV8jVaDC/GCaDpCIpsgKkW9dgMdToW4vLr08mmYQw+w3+uy82KJghgn+m2b8NYnKukoB68W6Gp1fFpLI56JI+ZEsqUs+bLs5TAmxciUMiSzSdKF9Pzp2ZbJ5sslapUSCWEfwb9Kt3nN2eZjHMv4Pw3nGbyXgkIqTvLs+523/Avyxr4F1cLtPgAAAABJRU5ErkJggg==&amp;#x27;);background-size:cover;display:block&quot;&gt;&lt;/span&gt;
   &lt;img class=&quot;gatsby-resp-image-image&quot; alt=&quot;가족유사성&quot; title=&quot;가족유사성&quot; src=&quot;/static/bc604c2a1b202f91ffe3c5e2ccf3b458/fcda8/family-resemblance.png&quot; srcSet=&quot;/static/bc604c2a1b202f91ffe3c5e2ccf3b458/12f09/family-resemblance.png 148w,/static/bc604c2a1b202f91ffe3c5e2ccf3b458/e4a3f/family-resemblance.png 295w,/static/bc604c2a1b202f91ffe3c5e2ccf3b458/fcda8/family-resemblance.png 590w,/static/bc604c2a1b202f91ffe3c5e2ccf3b458/efc66/family-resemblance.png 885w,/static/bc604c2a1b202f91ffe3c5e2ccf3b458/dd104/family-resemblance.png 1064w&quot; sizes=&quot;(max-width: 590px) 100vw, 590px&quot; style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;/&gt;
   &lt;/a&gt;
-    &lt;/span&gt;&lt;/p&gt;&lt;p&gt;나아가, 비트겐슈타인은 실제 사람들이 물질을 분류할 때 공유되는 속성에 기반을 둔 분류법보다는
-&lt;strong&gt;가족유사성(family resemblance)에 기반을 둔 분류&lt;/strong&gt;를 한다고 주장하였다.
-위의 그림은 가족유사성을 설명할 때 가장 일반적으로 사용되는 예시이다.
+    &lt;/span&gt;&lt;/p&gt;&lt;p&gt;이러한 맥락에서 비트겐슈타인은 실제 현실에서도
+사람들이 물질을 분류할 때 &lt;strong&gt;모든 개체들이 확실히 공유하는 최소한의 속성들만을 통해 분류하지 않는다&lt;/strong&gt;고 주장하였다.
+그 대신 그는 사람들이 &lt;strong&gt;가족유사성(family resemblance)에 기반을 둔 분류&lt;/strong&gt;를 수행한다고 주장하였다.
+위의 그림은 이 가족유사성을 설명할 때 가장 일반적으로 사용되는 예시이다.
 9명의 남성들 전원이 공유하는 속성은 오로지 풍성한 턱수염을 지닌 남성이라는 점일 뿐이다.
-그럼에도 우리는 &lt;em&gt;이들을 함께 보았을 때&lt;/em&gt; 서로 비슷한 외모를 지녔다고 생각하게 된다.
-이는 이들이 &lt;em&gt;전반적으로&lt;/em&gt; 검은 머리(7/9), 큰 코(7/9), 안경(5/9), 콧수염(5/9)
-등의 속성을 지니고 있기 때문일 것이다.&lt;/p&gt;&lt;p&gt;가족유사성 이론이란 이처럼 개체들 사이에 존재하는 전형적인(typical) 속성들을 통해
-이들을 동일한 범주로 간주한다는 것이다.
-물론 하나의 범주 내에는 이러한 전형적인 속성을 유난히 많이 지닌 개체도 존재할 수 있고,
-유난히 덜 지닌 개체가 존재한다고 볼 수 있다.&lt;/p&gt;&lt;p&gt;그리고 이러한 관점을 계승하고 발전시킨 것이 바로 로쉬의 프로토타입 이론이다.&lt;/p&gt;&lt;h3&gt;프로토타입 이론&lt;/h3&gt;&lt;p&gt;로쉬는 사람들이 사물을 분류할 때 가족유사성이 높은 전형적인 것과
+만일 전통적인 분류법을 사용한다면 &amp;quot;턱수염을 지닌 남성&amp;quot;을 위의 범주의 공유 속성이라고 결론 내렸을 것이다.
+그러나 9명의 남성들을 보면 몇몇 예외가 있더라도, &lt;em&gt;전반적으로&lt;/em&gt; 공유하는 속성이 몇 가지 있다고 느낀다.
+이들은 &lt;em&gt;전반적으로&lt;/em&gt; 검은 머리(7/9), 큰 코(7/9), 안경(5/9), 콧수염(5/9) 등의 속성을 지니고 있다.&lt;/p&gt;&lt;p&gt;이러한 상황에서 만일 턱수염은 없지만 검은 머리, 큰 코,
+안경, 콧수염을 지니고 있는 10번째 남성이 나타났다고 생각하자.
+전통적인 분류법에 따르면 &amp;quot;턱수염을 지닌 남성&amp;quot;이라는 공유 속성을 더 이상 적용할 수 없으므로 이 기준으로는 이들을 동일 범주로 간주할 수 없게 되었다.
+그러나 이 10명은 여전히 턱수염(9/10), 검은 머리(8/10), 큰 코(8/10), 안경(6/10), 콧수염(6/10) 등의 &lt;em&gt;전반적&lt;/em&gt;으로 공유한다.&lt;/p&gt;&lt;p&gt;가족유사성 이론이란 이처럼 개체들 사이에 존재하는 &lt;strong&gt;전형적인(typical) 속성들을 통해 이들을 동일한 범주로 간주할 수 있다&lt;/strong&gt;는 이론이다.
+그리고 하나의 범주 내에는 이러한 전형적인 속성을 유난히 많이 지닌 개체도 존재할 수 있고,
+유난히 덜 지닌 개체가 존재한다고 볼 수 있다.&lt;/p&gt;&lt;p&gt;그리고 이러한 관점을 계승하고 발전시킨 것이 바로 로쉬의 프로토타입 이론이다.&lt;/p&gt;&lt;h3&gt;프로토타입 이론&lt;/h3&gt;&lt;p&gt;로쉬는 사람들이 동일 범주 내의 사물들을 분류할 때 가족유사성이 높은 전형적인 것과
 가족유사성이 낮은 비전형적인 것들로 등급을 매겨 분류한다고 설명하였다.
 그리고 특정 범주의 모든 사물들 중 가장 전형적인 사물이
-바로 원형(prototype)이 되는 것이다.&lt;/p&gt;&lt;p&gt;&lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position:relative;display:block;margin-left:auto;margin-right:auto;max-width:590px&quot;&gt;
+바로 해당 범주의 &lt;strong&gt;원형(prototype)&lt;/strong&gt;이 되는 것이다.&lt;/p&gt;&lt;p&gt;그동안 예시로 든 조류를 기준으로 생각해보자.
+전통적인 분류법에서는 동물들을 분류할 때 공유 속성에 기반을 두어 조류가 맞는지, 아닌지의 여부로 조류를 분류하였다.
+이는 참새, 두루미, 타조, 키위새, 앵무새 등 조류로 분류된 모든 개체들이 조류라는 측면에서 서로 대등한 지위를 지닌다는 것을 의미한다.&lt;/p&gt;&lt;p&gt;&lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position:relative;display:block;margin-left:auto;margin-right:auto;max-width:590px&quot;&gt;
       &lt;a class=&quot;gatsby-resp-image-link&quot; href=&quot;/static/6a14318fadbb71d425d61a7e0f827603/9685e/prototype-theory.png&quot; style=&quot;display:block&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;
     &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom:85.8108108108108%;position:relative;bottom:0;left:0;background-image:url(&amp;#x27;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAARCAYAAADdRIy+AAAACXBIWXMAABYlAAAWJQFJUiTwAAACIElEQVQ4y3VUyaoCMRD05z3rWfQgeBFERT2pICjuIoK7KO6K+74v9aiGyMzoC4RMetLV1dWdmN7vN9Tk2O/32O12eL1e8r1er2XP781mg+12i8vlAjWUn1pN6gcBOOr1OgKBAMbjsYCpw9frFbfb7ROI4MpHC2rSsuM6mUzgcDgEeD6fIxKJIB6Po1ar4XQ6CcPn84nH44HVaiWrjqEWkAx4oFAooN/vi61YLMLn88HtdoudrMiO4ASmHApQGBq1YGqcdMxms2g0GhKENjorhgRUWupSNhqUbh6PB3a7HbPZTPQcjUaiHc8QlIFCoRCGw6GuBjpARiQTOlQqFQwGAzSbTQnSbreRTCbR6/WwXC4RDAZRKpV0LL8YkgF1PB6POJ/PAtbtdpHP52WdTqfodDrIZDLCkIF59qtt1OZwOOB+v4tzOp0WJpzRaFRaiVqSbTgcFmBqSZ9/AVXFyuUyrFbrR89cLgev1ytMCWSz2aSNqNvPKmsrzBTIkgXx+/3CioVxuVxwOp3yjymTOeWhND8ZKoNixYKkUinRNZFIiARschaCfchBDY1t9wVIXXgDmA6dmRJTjsViUhQGIkuyJiCz4v5nH7IFOJkmD7daLSwWi49N9RpTJTBbiQ2u09D42jAd6khnRmfKrCSZ0pm3x2KxwGw2S4GMGX5dPdU+WmCy4+RjUa1WpYUIbAT7+dpotVSvC8HVW0g7gfkqaX0Uwz8xOAd2Ls4AWQAAAABJRU5ErkJggg==&amp;#x27;);background-size:cover;display:block&quot;&gt;&lt;/span&gt;
   &lt;img class=&quot;gatsby-resp-image-image&quot; alt=&quot;프로토타입 이론&quot; title=&quot;프로토타입 이론&quot; src=&quot;/static/6a14318fadbb71d425d61a7e0f827603/fcda8/prototype-theory.png&quot; srcSet=&quot;/static/6a14318fadbb71d425d61a7e0f827603/12f09/prototype-theory.png 148w,/static/6a14318fadbb71d425d61a7e0f827603/e4a3f/prototype-theory.png 295w,/static/6a14318fadbb71d425d61a7e0f827603/fcda8/prototype-theory.png 590w,/static/6a14318fadbb71d425d61a7e0f827603/efc66/prototype-theory.png 885w,/static/6a14318fadbb71d425d61a7e0f827603/c83ae/prototype-theory.png 1180w,/static/6a14318fadbb71d425d61a7e0f827603/9685e/prototype-theory.png 1336w&quot; sizes=&quot;(max-width: 590px) 100vw, 590px&quot; style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;/&gt;
   &lt;/a&gt;
-    &lt;/span&gt;&lt;/p&gt;&lt;p&gt;그동안 예시로 든 조류를 기준으로 설명할 경우,
-정중앙에 존재하는 로빈(지빠귀)이 바로 새의 프로토타입이 된다.
-그에 반해 원형으로부터 거리가 있는 타조와 펭귄은 비전형적인 새로 볼 수 있을 것이다.
-이는 &lt;em&gt;&amp;quot;새인가, 새가 아닌가&amp;quot;&lt;/em&gt;라는 이분법적 구조에서 벗어나
-&lt;em&gt;&amp;quot;얼마나 조류스러운가&amp;quot;&lt;/em&gt;라는 정도의 측면으로 대상을 분류할 수 있게 된다.&lt;/p&gt;&lt;h3&gt;프로토타입 기반의 객체지향&lt;/h3&gt;&lt;p&gt;이제 다시 프로그래밍 이야기로 돌아오자.&lt;/p&gt;&lt;p&gt;자바스크립트는 전통적인 &lt;strong&gt;클래스 기반의 객체지향&lt;/strong&gt;과는 다른
-&lt;strong&gt;프로토타입 기반의 객체지향&lt;/strong&gt;이라는 새로운 개념을 지니고 등장하였다.
-이 둘은 어떠한 차이를 지닐까?&lt;/p&gt;&lt;p&gt;자바에서의 객체는 data 영역에서 관리되고 있는 클래스 정보라는 틀에 맞추어 생성된다.
-이 때 클래스 정보는 그 자체로는 heap 영역과 stack 영역이라는 &amp;#x27;현실 세계&amp;#x27;와는
-동떨어진 차원에 존재하고 있다.&lt;/p&gt;&lt;p&gt;그러나 자바스크립트에서의 객체는 기본적으로 &lt;strong&gt;다른 객체를 기반으로 생성&lt;/strong&gt;된다고 볼 수 있다.
+    &lt;/span&gt;&lt;/p&gt;&lt;p&gt;그러나 프로토타입 이론은 &lt;em&gt;&amp;quot;새인가, 새가 아닌가&amp;quot;&lt;/em&gt;라는 &lt;strong&gt;이분법적 구조&lt;/strong&gt;에서 벗어나
+다시 &lt;strong&gt;동일 범주 내에서&lt;/strong&gt; &lt;em&gt;&amp;quot;얼마나 조류스러운가&amp;quot;&lt;/em&gt;라는 &lt;strong&gt;정도&lt;/strong&gt;의 측면으로 대상을 분류하고자 한다.&lt;/p&gt;&lt;p&gt;프로토타입에 기반한 분류법에 따르면 인간들은 기본적으로
+&lt;em&gt;대부분의&lt;/em&gt; 조류들이 &lt;em&gt;전반적으로 공유&lt;/em&gt;하는 속성들을 파악하고,
+그러한 &lt;em&gt;전형적인 속성&lt;/em&gt;을 가장 많이 지니고 있는 &lt;strong&gt;전형적인 조류 개체&lt;/strong&gt;를 새의 &lt;strong&gt;원형, 즉 프로토타입&lt;/strong&gt;으로 설정한다.
+이후 프로토타입으로 설정된 개체(robin, 지빠귀)를 중심으로
+얼마나 조류의 전형적인 특성들을 덜 지녔는지에 따라 각 조류를 위계적으로 구분한다.
+이러한 작업을 거침으로써 우리는
+프로토타입으로부터 거리가 있는 타조와 펭귄이 다른 조류들에 비해 &amp;#x27;비전형적인 새&amp;#x27;라고 말할 수 있게 된다.&lt;/p&gt;&lt;p&gt;이는 플라톤/아리스토텔레스의 관점에 대응되는 철학적인 주장임과 동시에
+사람들이 실제로 무의식적으로 사물을 분류하는 인지 메커니즘이다.&lt;/p&gt;&lt;h3&gt;프로토타입 기반의 객체지향&lt;/h3&gt;&lt;p&gt;이제 다시 프로그래밍 이야기로 돌아오자.&lt;/p&gt;&lt;p&gt;자바스크립트는 전통적인 &lt;strong&gt;클래스 기반의 객체지향&lt;/strong&gt;과는 다른
+&lt;strong&gt;프로토타입 기반의 객체지향&lt;/strong&gt;이라는 새로운 개념을 내세우며 등장하였다.
+이 둘은 어떠한 차이를 지닐까?&lt;/p&gt;&lt;p&gt;자바에서의 객체는 data 영역에 관리되고 있는 클래스 정보라는 틀에 맞추어 생성된다.
+이 클래스 정보는 그 자체로는 heap 영역과 stack 영역이라는 &amp;#x27;현실 세계&amp;#x27;와는 동떨어진 차원에 존재하고 있다.&lt;/p&gt;&lt;p&gt;그러나 자바스크립트에서의 객체는 기본적으로 &lt;strong&gt;다른 객체를 기반으로 생성&lt;/strong&gt;된다고 볼 수 있다.
 현실에 존재하는 또 다른 객체인 &lt;em&gt;프로토타입&lt;/em&gt;를 복제/참조하는 방식으로
-데이터가 생성되기 때문에 클래스와는 구조 자체가 다르다고 볼 수 있다.&lt;/p&gt;&lt;p&gt;이에 대해 아주 가볍게만 알아보자.&lt;/p&gt;&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;javascript&quot;&gt;&lt;pre style=&quot;counter-reset:linenumber NaN&quot; class=&quot;language-javascript line-numbers&quot;&gt;&lt;code class=&quot;language-javascript&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; stringObject &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&amp;quot;a,b&amp;quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+데이터가 생성되기 때문에 클래스와는 구조 자체가 다르다고 볼 수 있다.&lt;/p&gt;&lt;p&gt;또한 상속에 있어서도 자바는 &lt;strong&gt;추상적인 두 클래스 사이에서&lt;/strong&gt; 상속이 일어나지만
+자바스크립트는 &lt;strong&gt;구체적인 객체들 사이에서&lt;/strong&gt; 복제를 통해 데이터가 생성된다.&lt;/p&gt;&lt;p&gt;이에 대해 아주 가볍게만 알아보자.&lt;/p&gt;&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;javascript&quot;&gt;&lt;pre style=&quot;counter-reset:linenumber NaN&quot; class=&quot;language-javascript line-numbers&quot;&gt;&lt;code class=&quot;language-javascript&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; stringObject &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&amp;quot;a,b&amp;quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
 
 stringObject&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&amp;quot;,&amp;quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// [&amp;#x27;a&amp;#x27;, &amp;#x27;b&amp;#x27;]&lt;/span&gt;
 
@@ -144,13 +461,13 @@ console&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span cl
 console&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;stringObject&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;__proto__&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;__proto__ &lt;span class=&quot;token operator&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Object&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;prototype&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// true&lt;/span&gt;&lt;/code&gt;&lt;span aria-hidden=&quot;true&quot; class=&quot;line-numbers-rows&quot; style=&quot;white-space:normal;width:auto;left:0&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;위와 같이 &lt;code&gt;new String(&amp;quot;a,b&amp;quot;)&lt;/code&gt;를 통해 String 인스턴스를 생성한 경우,
 우리는 자연스럽게 split과 같은 다양한 메서드를 호출할 수 있게 된다.&lt;/p&gt;&lt;p&gt;이러한 메서드들은 &lt;code&gt;String.prototype&lt;/code&gt; 객체에 담겨있는데,
 String 인스턴스에서는 &lt;code&gt;__proto__&lt;/code&gt; 속성을 통해 이 프로토타입 객체에
-접근하고 그 기능들을 호출할 수 있게 되는 것이다.
-그리고 모든 프로토타입 객체들은 최종적으로 Object.prototype을 가리키고 있다.
-이러한 객체 간의 참조 관계가 바로 자바스크립트에서의 상속이다.&lt;/p&gt;&lt;h2&gt;맺으며&lt;/h2&gt;&lt;p&gt;개인적으로 철학 및 심리학 이론으로서
+접근하고 그 기능들을 호출할 수 있게 된다.&lt;/p&gt;&lt;p&gt;그리고 모든 프로토타입 객체들은 최종적으로 Object.prototype을 가리키고 있다.
+이처럼 실체를 지닌 객체들 간의 참조 관계가 바로 자바스크립트에서의 상속이다.&lt;/p&gt;&lt;h2&gt;맺으며&lt;/h2&gt;&lt;p&gt;개인적으로 철학 및 심리학 이론으로서
 프로토타입 이론이 플라톤의 관점에 비해 더 합리적이고 과학적이라고 생각한다.
 다만, 프로그래밍 언어로서 클래스와 프로토타입 개념을 굳이 비교한다면
-성능, 안정성 등의 요소를 복합적으로 고려해야 한다고 생각된다.&lt;/p&gt;&lt;p&gt;솔직히 이러한 주제에 대해 나도 흥미를 느낄 뿐이지 나도 정확히 아는 것은 아니다.
-이런 주제에 대해 보다 깊게 알아보고 싶다면 아래에 기재한 참고문헌이나 각종 서적을 참고하기를 바란다.&lt;/p&gt;&lt;hr/&gt;&lt;div&gt;참고문서&lt;/div&gt;&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.56.4713&amp;amp;rep=rep1&amp;amp;type=pdf&quot;&gt;Classes vs Prototypes - Some Philosophical and Historical Observations&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://medium.com/@limsungmook/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%EB%8A%94-%EC%99%9C-%ED%94%84%EB%A1%9C%ED%86%A0%ED%83%80%EC%9E%85%EC%9D%84-%EC%84%A0%ED%83%9D%ED%96%88%EC%9D%84%EA%B9%8C-997f985adb42&quot;&gt;자바스크립트는 왜 프로토타입을 선택했을까(임성묵 개발자)&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;div&gt;&lt;div num=&quot;1&quot;&gt;&lt;p&gt;사실 아리스토텔레스의 구분법(classification)은 19세기에 와서 휴얼(Whewell)과 제번스(Jevons)에 의해
+성능, 안정성 등의 요소를 복합적으로 고려해야 한다고 생각된다.&lt;/p&gt;&lt;p&gt;솔직히 이러한 주제에 대해 나도 흥미를 느낄 뿐이지 정확히 아는 것은 아니다.
+다만, 어떤 분야는 당연하게 여기던 개념에 대해 자세히 파고드는 것은 중요하다고 생각한다.
+이런 주제에 대해 보다 깊게 알아보고 싶다면 아래에 기재한 참고문헌이나 각종 서적을 참고하기를 바란다.&lt;/p&gt;&lt;hr/&gt;&lt;div&gt;참고문서&lt;/div&gt;&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.56.4713&amp;amp;rep=rep1&amp;amp;type=pdf&quot;&gt;Classes vs Prototypes - Some Philosophical and Historical Observations&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://medium.com/@limsungmook/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%EB%8A%94-%EC%99%9C-%ED%94%84%EB%A1%9C%ED%86%A0%ED%83%80%EC%9E%85%EC%9D%84-%EC%84%A0%ED%83%9D%ED%96%88%EC%9D%84%EA%B9%8C-997f985adb42&quot;&gt;자바스크립트는 왜 프로토타입을 선택했을까(임성묵 개발자)&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;div&gt;&lt;div num=&quot;1&quot;&gt;&lt;p&gt;엄밀히 말해 아리스토텔레스의 구분법(classification)은 19세기에 와서 휴얼(Whewell)과 제번스(Jevons)에 의해
 최초로 비판받게 되었다. 이에 대해 알고 싶으면 한 번 검색해보기를 바란다.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;</content:encoded></item><item><title><![CDATA[[JS] 프록시 패턴과 프런트엔드 커스텀 캐쉬 구현]]></title><description><![CDATA[애플리케이션 외부 대상을 대리자를 통해 간접적으로 접근하는 방식으로 프록시 패턴이 사용될 수 있다. 대리자는 외부 서버로부터 받은 데이터와 그 유효기간을 캐쉬의 형태로 관리함으로써 서버에 대한 접근 빈도를 줄이고 과한 리소스 낭비를 절감할 수 있다.]]></description><link>https://bugoverdose.github.io/development/proxy-and-frontend-custom-cache/</link><guid isPermaLink="false">https://bugoverdose.github.io/development/proxy-and-frontend-custom-cache/</guid><pubDate>Sat, 05 Feb 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;&lt;strong&gt;프록시 패턴(proxy pattern)&lt;/strong&gt;이란
 특정 데이터에 대한 접근을 중간에서 가로채는 대리자(proxy)를 두는 디자인 패턴을 의미한다.&lt;/p&gt;&lt;p&gt;애플리케이션에서 해당 데이터에 직접적으로 접근할 권한은 오직 이 대리자에게만 있으며,
 애플리케이션 내 다른 요소들은 오직 이 대리자를 통해서만 해당 데이터에 대한 접근을 시도할 수 있다.&lt;/p&gt;&lt;h2&gt;Proxy 클래스의 이해&lt;/h2&gt;&lt;p&gt;자바스크립트와 자바에 모두 &lt;code&gt;Proxy&lt;/code&gt;라는 클래스가 내장되어있을 정도로
