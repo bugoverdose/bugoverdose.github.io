@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[RSS Feed | bugoverdose]]></title><description><![CDATA[공부하고 경험한 내용을 깔끔하게 설명하는 것을 목표로 하는 개발 블로그입니다. 컴퓨터과학, 웹 개발 등 다양한 주제를 포괄적으로 다룹니다.]]></description><link>https://bugoverdose.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Sat, 19 Feb 2022 18:08:08 GMT</lastBuildDate><item><title><![CDATA[[Git] 저장소, 브랜치, 커밋에 대한 고찰]]></title><description><![CDATA[로컬저장소와 원격저장소는 어떠한 관계에 있는가? 서로 다른 브랜치가 동기화되기 위한 조건은 무엇인가? 동기화 없이 원격저장소의 브랜치를 조회할 수는 없는가? 브랜치를 rebase로 통합하게 되면 동일한 커밋이 그대로 브랜치에 추가되는 것이 맞는가?]]></description><link>https://bugoverdose.github.io/development/git-commit-branch-repository/</link><guid isPermaLink="false">https://bugoverdose.github.io/development/git-commit-branch-repository/</guid><pubDate>Sat, 19 Feb 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;지난 몇 년 간 git 명령어들을 꾸준히 사용해왔는데,
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[RSS Feed | bugoverdose]]></title><description><![CDATA[공부하고 경험한 내용을 깔끔하게 설명하는 것을 목표로 하는 개발 블로그입니다. 컴퓨터과학, 웹 개발 등 다양한 주제를 포괄적으로 다룹니다.]]></description><link>https://bugoverdose.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Mon, 21 Feb 2022 05:08:49 GMT</lastBuildDate><item><title><![CDATA[[Git] 저장소, 브랜치, 커밋 파고들기]]></title><description><![CDATA[로컬저장소와 원격저장소는 어떠한 관계에 있는가? 서로 다른 브랜치가 동기화되기 위한 조건은 무엇인가? 동기화 없이 원격저장소의 브랜치를 조회할 수는 없는가? 브랜치를 rebase로 통합하게 되면 동일한 커밋이 그대로 브랜치에 추가되는 것이 맞는가?]]></description><link>https://bugoverdose.github.io/development/git-commit-branch-repository/</link><guid isPermaLink="false">https://bugoverdose.github.io/development/git-commit-branch-repository/</guid><pubDate>Sat, 19 Feb 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;지난 몇 년 간 git 명령어들을 꾸준히 사용해왔는데,
 한 번도 각잡고 하루종일 git에 대해서만 생각해본 적이 없었다는 점을 깨달았다.
 실로 수치스러운 일이 아닐 수 없다.&lt;/p&gt;&lt;p&gt;그러한 의미에서 우선 모든 작업의 기초가 되는 &lt;strong&gt;저장소&lt;/strong&gt;, &lt;strong&gt;브랜치&lt;/strong&gt;, &lt;strong&gt;커밋&lt;/strong&gt; 에 대해
 그동안 배웠고, 경험으로 깨달았고, 개인적인 실험을 통해 입증한 정보를 정리해보고자 한다.&lt;/p&gt;&lt;h2&gt;저장소&lt;/h2&gt;&lt;p&gt;일단 저장소와 브랜치에 대해 이해하기 위해 최소한의 실험 환경을 만들어보자.
@@ -24,7 +24,7 @@
 &lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; init&lt;/code&gt;&lt;span aria-hidden=&quot;true&quot; class=&quot;line-numbers-rows&quot; style=&quot;white-space:normal;width:auto;left:0&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;CLI로 &lt;code&gt;git init&lt;/code&gt; 명령어을 실행하면 &lt;code&gt;.git&lt;/code&gt;라는 폴더가 현재 경로에 (즉,현재 프로젝트 내부에) 생성되는데,
 &lt;strong&gt;이 .git 폴더가 바로 깃 저장소의 본체라고 볼 수 있다.&lt;/strong&gt;
 이제 해당 프로젝트 내부에서 일어나는 모든 git 관련 명령어들은
-이 &lt;code&gt;.git&lt;/code&gt;에 담긴 정보들을 활용하여 일어나게 된다.&lt;/p&gt;&lt;h3&gt;하나의 프로젝트에 복수의 저장소가 공존할 수 없다.&lt;/h3&gt;&lt;p&gt;당연한 이야기겠지만 이미 하나의 저장소가 등록된 프로젝트 내부에
+이 &lt;code&gt;.git&lt;/code&gt;에 담긴 정보들을 활용하여 일어나게 된다.&lt;/p&gt;&lt;h3&gt;하나의 프로젝트에 복수의 저장소는 공존 불가&lt;/h3&gt;&lt;p&gt;당연한 이야기겠지만 이미 하나의 저장소가 등록된 프로젝트 내부에
 또 다른 저장소가 등록될 수는 없다.
 물론 &lt;code&gt;git init&lt;/code&gt; 명령어를 다시 한 번 실행하는 것은 가능하다.
 그러나 &lt;code&gt;.git (2)&lt;/code&gt; 같은 폴더가 별도로 생성되지 않으며,
@@ -36,7 +36,7 @@
 생성되는 빌드 결과물이 모이는 &lt;code&gt;public&lt;/code&gt; 내부에 별도로 깃 저장소를 만들고
 &lt;code&gt;bugoverdose.github.io&lt;/code&gt;라는 이름의 원격저장소로 연동해놓았었다.
 현재는 &lt;code&gt;github action&lt;/code&gt;을 통해 CI/CD를 구현하면서 쓸모 없어졌지만,
-생각보다 쓸모가 있는 잔기술이라고 생각한다.&lt;/p&gt;&lt;h3&gt;각 저장소는 서로 독립적으로 존재한다.&lt;/h3&gt;&lt;p&gt;이제 로컬저장소에 원격저장소(remote repository)의 위치를 등록해보자.
+생각보다 쓸모가 있는 잔기술이라고 생각한다.&lt;/p&gt;&lt;h3&gt;각 저장소는 서로 독립적으로 존재&lt;/h3&gt;&lt;p&gt;이제 로컬저장소에 원격저장소(remote repository)의 위치를 등록해보자.
 CLI로 &lt;code&gt;git remote add &amp;lt;원격저장소_별칭&amp;gt; &amp;lt;깃헙_저장소_주소&amp;gt;&lt;/code&gt; 명령어를 실행함으로써
 우리는 &lt;code&gt;&amp;lt;원격저장소_별칭&amp;gt;&lt;/code&gt;을 통해 &lt;code&gt;&amp;lt;깃헙_저장소_주소&amp;gt;&lt;/code&gt;에 위치하는
 원격저장소에 접근할 수 있게 되었다.
@@ -71,7 +71,7 @@ origin	https://github.com/bugoverdose/git-test-repo.git &lt;span class=&quot;tok
 그 둘은 heap 영역에 서로 별개로 존재하는 인스턴스이며, 서로 별개의 메모리주소 값을 지닌다.
 프로그램이 실행되는 과정에서 두 인스턴스의 속성들이 서로 같은 값을 지닐 때도 있고
 달라질 때도 있겠지만 이들이 하나의 인스턴스가 될 일은 절대로 없다.&lt;/p&gt;&lt;p&gt;로컬저장소가 존재하는 폴더명과 두 원격저장소의 이름을 전혀 다르게 지은 것도
-이처럼 모든 저장소들이 서로 독립적이라는 점을 좀 더 쉽게 이해할 수 있도록 하기 위함이었다.&lt;/p&gt;&lt;h3&gt;저장소들 사이에는 상하관계가 성립한다.&lt;/h3&gt;&lt;p&gt;어느 집단이든 기강이 해이해지지 않기 위해서는 위/아래에 대한 기준이 명확해야 하는 법,
+이처럼 모든 저장소들이 서로 독립적이라는 점을 좀 더 쉽게 이해할 수 있도록 하기 위함이었다.&lt;/p&gt;&lt;h3&gt;저장소들 사이의 상하관계&lt;/h3&gt;&lt;p&gt;어느 집단이든 기강이 해이해지지 않기 위해서는 위/아래에 대한 기준이 명확해야 하는 법,
 이는 저장소들의 세계에서도 마찬가지이다.&lt;/p&gt;&lt;p&gt;두 저장소 사이에서 push/pull 등의 방식으로 정보를 교환하는 경우
 기본적으로 어느 쪽이 &amp;#x27;upstream&amp;#x27;인지를 명시해야 한다.
 upstream이란 두 저장소 중 어떤 것이 원본, 즉 웃어른인지에 대한 이야기이다.
@@ -95,7 +95,7 @@ downstream 저장소에 존재하는 브랜치들의 종류가 굳이 서로 일
 이를 다른 저장소로 push하거나 pull해오든,
 아니면 굳이 동기화시키지 않을 수 있다는 것이다.&lt;/p&gt;&lt;p&gt;다만, 우리가 일반적으로 깃과 깃헙을 사용하는 가장 큰 이유는
 로컬저장소와 원격저장소의 브랜치들을 서로 동기화시키고 싶기 때문이다.
-그러한 맥락에서 해당 글에서는 브랜치 동기화 기능에 초점을 맞추어 설명을 해보고자 한다.&lt;/p&gt;&lt;h3&gt;커밋 이력 공유하는 두 브랜치는 동기화될 수 있다.&lt;/h3&gt;&lt;p&gt;사실 엄밀히 말하자면 &lt;strong&gt;서로 커밋 이력을 일부분이라도 공유하는 브랜치끼리는 자유롭게 서로 동기화를 시도할 수 있다.&lt;/strong&gt;
+그러한 맥락에서 해당 글에서는 브랜치 동기화 기능에 초점을 맞추어 설명을 해보고자 한다.&lt;/p&gt;&lt;h3&gt;커밋 이력을 공유하는 두 브랜치는 동기화 가능&lt;/h3&gt;&lt;p&gt;사실 엄밀히 말하자면 &lt;strong&gt;서로 커밋 이력을 일부분이라도 공유하는 브랜치끼리는 자유롭게 서로 동기화를 시도할 수 있다.&lt;/strong&gt;
 이는 로컬저장소의 브랜치들 사이에서 CLI를 통해 수행될 수도,
 하나의 원격저장소 내의 브랜치들 사이 혹은 서로 다른 원격저장소들 사이의 특정 브랜치들 사이의 PR을 통해서 수행될 수도,
 github action을 통해 외부 서버(runner)와 원격저장소 사이에서 수행될 수도,
@@ -105,7 +105,7 @@ github action을 통해 외부 서버(runner)와 원격저장소 사이에서 �
 &lt;strong&gt;다만, 혹시 현재 위치한 브랜치와는 무관하게 자동으로 동일한 이름의 브랜치들 사이에서 동기화가 일어날 것이라 생각하고 작업한다면 끔찍한 시간을 겪게 될 것이라 생각한다.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;한편 로컬저장소에서 특정 브랜치(A)를 원격저장소의 특정 브랜치(B)에 대해 push하는 경우에도 두 브랜치(A-B) 사이에 동기화가 시도된다.
 물론 일반적으로 push 명령어를 사용하는 경우, 원격저장소에 존재하는 동명의 브랜치로 push하는 것이 기본 동작이다.
 그러나 만일 두 브랜치의 이름이 서로 다른 경우
-&lt;code&gt;git push origin 로컬_브랜치명:원격_브랜치명&lt;/code&gt;과 같이 원격저장소의 대상 브랜치를 명시하여 동기화시킬 수도 있다.&lt;/p&gt;&lt;h3&gt;저장소와 브랜치의 초기 상태는 다양할 수 있다.&lt;/h3&gt;&lt;p&gt;위에서 생성한 저장소 중
+&lt;code&gt;git push origin 로컬_브랜치명:원격_브랜치명&lt;/code&gt;과 같이 원격저장소의 대상 브랜치를 명시하여 동기화시킬 수도 있다.&lt;/p&gt;&lt;h3&gt;저장소와 브랜치 초기 상태의 다양성&lt;/h3&gt;&lt;p&gt;위에서 생성한 저장소 중
 깃헙의 &lt;code&gt;git-test-repo&lt;/code&gt;는 현재 아무런 브랜치도 없는 아주 클-린한 상태이다.
 로컬저장소(&lt;code&gt;local-repo&lt;/code&gt; 프로젝트)의 경우 &lt;code&gt;git init&lt;/code&gt;의 실행과 함께
 디폴트 브랜치로 &lt;code&gt;master&lt;/code&gt;라는 브랜치가 생성되었지만 아무런 커밋도 없는 상태이다.&lt;div num=&quot;2&quot;&gt;&lt;/div&gt;
@@ -219,7 +219,7 @@ fetch해온 브랜치로 이동하게 된다.
 그러나 이는 해당 브랜치의 커밋 이력이 fetch해온 원격저장소의 &lt;code&gt;&amp;lt;저장소&amp;gt;/&amp;lt;원격_브랜치명&amp;gt;&lt;/code&gt; 브랜치와 동일하기 때문이지,
 특별하게 설정된 기능이 있어서는 아니다.&lt;/p&gt;&lt;h2&gt;커밋&lt;/h2&gt;&lt;p&gt;기본적으로 하나의 브랜치에는 수많은 커밋이 스택 구조로 쌓여있다고 볼 수 있다.&lt;/p&gt;&lt;p&gt;하나의 커밋(commit)은 정말 다양한 정보로 구성된다.&lt;/p&gt;&lt;ol&gt;&lt;li&gt;현재 브랜치에 등록된 모든 파일들의 최종적인 상태&lt;/li&gt;&lt;li&gt;커밋의 ID(SHA)&lt;/li&gt;&lt;li&gt;커밋 메시지&lt;/li&gt;&lt;li&gt;커밋이 생성된 시점&lt;/li&gt;&lt;li&gt;커밋의 생성자에 대한 정보(이메일과 이름)&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;사실 커밋에 대해 이야기하자면 끝이 없다.
 그러나 우측의 네비게이터 바가 폭발하려고 하니,
-이 중에서도 github이 아닌 git 자체에 초점을 맞추고 몇 가지에 대해서만 추가로 알아보자.&lt;/p&gt;&lt;h3&gt;각 커밋에는 모든 파일들의 현재 상태가 담긴다.&lt;/h3&gt;&lt;p&gt;분명 &lt;code&gt;git add&lt;/code&gt;, &lt;code&gt;git commit&lt;/code&gt; 명령어를 실행할 때 우리 눈에는 변경사항만이 표시된다.
+이 중에서도 github이 아닌 git 자체에 초점을 맞추고 몇 가지에 대해서만 추가로 알아보자.&lt;/p&gt;&lt;h3&gt;각 커밋에는 모든 파일들의 현재 상태가 담김&lt;/h3&gt;&lt;p&gt;분명 &lt;code&gt;git add&lt;/code&gt;, &lt;code&gt;git commit&lt;/code&gt; 명령어를 실행할 때 우리 눈에는 변경사항만이 표시된다.
 이전 커밋으로부터의 변경사항 중 일부 파일들 혹은 모든 파일을 선택하여
 &lt;code&gt;staging area&lt;/code&gt;에 올리고 커밋을 하는 과정은 GUI를 쓰든 CLI를 쓰든 일관되게 보이는 작업 과정이다.
 이 때문에 각 커밋에 모든 파일들의 현재 상태가 담긴다는 점은 의외라고 느껴진다.&lt;/p&gt;&lt;p&gt;그러나 각 커밋에 변경사항만을 담을 경우
@@ -227,7 +227,7 @@ fetch해온 브랜치로 이동하게 된다.
 그에 반해 코드라는 것의 본질은 특정한 문법에 맞추어 작성한 문자열일 뿐이니
 다양한 알고리즘을 통해 극한으로 압축하면 모든 파일들을 관리하는 것도 불가능하지 않아 보인다.
 또한 브랜치 통합 등의 작업을 수행함에 있어 버그의 가능성을 최소화한다는 측면에서도
-옳은 선택이라고 느껴진다.&lt;/p&gt;&lt;h3&gt;같은 ID의 커밋은 다양한 브랜치에 존재할 수 있다.&lt;/h3&gt;&lt;p&gt;하나의 커밋이 생성될 때마다 각 커밋에 대해 자동으로 고유한 ID가 부여된다.
+옳은 선택이라고 느껴진다.&lt;/p&gt;&lt;h3&gt;같은 ID의 커밋은 다양한 브랜치에 존재 가능&lt;/h3&gt;&lt;p&gt;하나의 커밋이 생성될 때마다 각 커밋에 대해 자동으로 고유한 ID가 부여된다.
 이는 SHA1 해쉬라고 하는데 커밋ID의 형태, 길이, 생성방식 등의 정보는 사실 그다지 중요하지 않다.&lt;/p&gt;&lt;p&gt;가장 중요한 점은 동일한 ID의 커밋이 다양한 브랜치에 존재할 수 있다는 점이다.
 예를 들어 &lt;code&gt;test&lt;/code&gt; 브랜치에 있는 상태에서 &lt;code&gt;git checkout -b check-id&lt;/code&gt; 명령어를 실행해
 &lt;code&gt;check-id&lt;/code&gt; 브랜치를 만들어낸 경우, 우리는 두 브랜치의 커밋 내역이 동일하다고 말한다.
@@ -249,10 +249,9 @@ fetch해온 브랜치로 이동하게 된다.
     &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom:42.567567567567565%;position:relative;bottom:0;left:0;background-image:url(&amp;#x27;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAJCAYAAAAywQxIAAAACXBIWXMAABYlAAAWJQFJUiTwAAABKElEQVQoz5WS2U4DMQxF5///kNJKCNqhC0wymezbgaRUFFArYekq8oPtu2TYjnsOp3dyLlyq1kq9vP/EIOWMUgtaGxatcc5/L62V/9ZgnUcb02GMJZdrplC+Fpcr1JyJYiJKgROSKCUxhK5ymN5OrFYrHlaPHI5H2oHGVC2aEMJf6a2PAbV5RG1f2G22yKdnzDzjY2JoQ957rHUYazHWkVIixEjO+aZXNCU5QWnIXU33UMiZ90kwCcmsFCnnn+HcQLMml0rMlVTOfSmFQUnBer3pko/HUw+ledlY31so1YLShlfhkLrlYPEhMohpwhhzvtjMjqkj3ZHb0KwxziN0RLuID4GYUmM4MY4j4+seIWX/QmpZuvxylfjvaoyM9ewmj9QR5z3hM5QP7du/5MoXY94AAAAASUVORK5CYII=&amp;#x27;);background-size:cover;display:block&quot;&gt;&lt;/span&gt;
   &lt;img class=&quot;gatsby-resp-image-image&quot; alt=&quot;amend-check-id&quot; title=&quot;amend-check-id&quot; src=&quot;/static/c3eb6c9802f64ce8087f4db9d60294c1/fcda8/amend-creates-new-commit.png&quot; srcSet=&quot;/static/c3eb6c9802f64ce8087f4db9d60294c1/12f09/amend-creates-new-commit.png 148w,/static/c3eb6c9802f64ce8087f4db9d60294c1/e4a3f/amend-creates-new-commit.png 295w,/static/c3eb6c9802f64ce8087f4db9d60294c1/fcda8/amend-creates-new-commit.png 590w,/static/c3eb6c9802f64ce8087f4db9d60294c1/efc66/amend-creates-new-commit.png 885w,/static/c3eb6c9802f64ce8087f4db9d60294c1/c83ae/amend-creates-new-commit.png 1180w,/static/c3eb6c9802f64ce8087f4db9d60294c1/5df5d/amend-creates-new-commit.png 1572w&quot; sizes=&quot;(max-width: 590px) 100vw, 590px&quot; style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;/&gt;
   &lt;/a&gt;
-    &lt;/span&gt;&lt;/p&gt;&lt;h3&gt;브랜치 통합시 다른 브랜치의 정보는 새로 커밋된다.&lt;/h3&gt;&lt;p&gt;커밋 ID라는 개념을 알았으니 마지막으로 한 가지만을 보여주고 이 긴 글을 끝내고자 한다.&lt;/p&gt;&lt;p&gt;두 브랜치를 rebase를 통해 통합하는 경우,
+    &lt;/span&gt;&lt;/p&gt;&lt;h3&gt;브랜치 통합시 불일치 정보는 새로운 커밋에 담김&lt;/h3&gt;&lt;p&gt;커밋 ID라는 개념을 알았으니 마지막으로 한 가지만을 보여주고 이 긴 글을 끝내고자 한다.&lt;/p&gt;&lt;p&gt;두 브랜치를 rebase를 통해 통합하는 경우,
 다른 브랜치로부터 온 커밋들이 그대로 통합된 브랜치에 추가된다고 생각하는 것이 일반적일 것이다.
-그러나 두 브랜치를 통합했을 때 뭔가 커밋들이
-실제로 생성된 시간순으로 나열되지 않는다는 느낌을 받는 경우가 있다.
+그러나 두 브랜치를 통합한 결과물을 보면 종종 &lt;strong&gt;커밋들이 실제로 생성된 시간순으로 나열되지 않는다&lt;/strong&gt;는 느낌을 받을 것이다.
 매번 어렴풋이 느끼던 점을 이번 기회에 확인해보았다.&lt;/p&gt;&lt;p&gt;그러한 이유에서 한 번 두 브랜치, &lt;code&gt;merge-test&lt;/code&gt;와 &lt;code&gt;test&lt;/code&gt;를 오가며
 순차적으로 커밋을 하나씩 남기고 &lt;code&gt;test&lt;/code&gt; 브랜치를 &lt;code&gt;merge-test&lt;/code&gt; 브랜치로 rebase하여 통합해보았다.
 그 결과, 흥미롭게도 rebase를 실행한 시점에 &lt;code&gt;test&lt;/code&gt; 브랜치의 커밋들이 그대로 재생성된다는 점이 확인되었다.
@@ -303,8 +302,8 @@ rebase 전략을 사용하게 된다.
 이 관점의 핵심은 현실 세계에서는 이 본질의 세계에 직접적으로 접근할 수가 없지만,
 현실 세계에 실존하는 모든 구체적인 물질들의 본질은 이 본질의 세계에 존재한다는 것이다.&lt;/p&gt;&lt;p&gt;간단히 말해 현실에 존재하는 모든 새들을 생각해보자.
 참새, 비둘기, 두루미, 펭귄, 타조, 키위 등 현실에 구체적으로 존재하는 모든 새들은
-&lt;em&gt;새&lt;/em&gt;라는 본질을 공유하고 있으며, 그 본질은 이데아에 존재하는 것이다.&lt;/p&gt;&lt;h3&gt;이데아를 통해 이해한 우주의 생성 원리&lt;/h3&gt;&lt;p&gt;그렇다면 한 번 이데아 개념에 빅뱅 이론을 접목하여 우리가 사는 세상에 대해 해석해보자.&lt;/p&gt;&lt;p&gt;아마도 본질의 세계는 우리가 사는 세계와는 전혀 다른 차원에 존재하며,
-우리 차원의 우주가 탄생하기 전부터 존재했을 것이라고 생각할 수 있다.
+&lt;em&gt;새&lt;/em&gt;라는 본질을 공유하고 있으며, 그 본질은 이데아에 존재하는 것이다.&lt;/p&gt;&lt;h3&gt;이데아를 통해 이해한 우주의 생성 원리&lt;/h3&gt;&lt;p&gt;그렇다면 한 번 이데아 개념에 빅뱅 이론을 접목하여 우리가 사는 세상에 대해 해석해보자.&lt;/p&gt;&lt;p&gt;기본적으로 본질의 세계는 우리가 사는 세계와는 전혀 다른 차원에 존재하며,
+우리 차원의 우주가 탄생하기 전부터 존재했을 것이라고 가정하자.
 그리고 우리가 사는 차원에 빅뱅이 일어나 우주가 탄생하면서
 다른 차원으로부터 행성의 본질을 토대로 구체적인 행성들이 생겨나고,
 식물의 본질을 토대로 구체적인 식물들이 생겨나고,
@@ -466,8 +465,9 @@ String 인스턴스에서는 &lt;code&gt;__proto__&lt;/code&gt; 속성을 통해
 프로토타입 이론이 플라톤의 관점에 비해 더 합리적이고 과학적이라고 생각한다.
 다만, 프로그래밍 언어로서 클래스와 프로토타입 개념을 굳이 비교한다면
 성능, 안정성 등의 요소를 복합적으로 고려해야 한다고 생각된다.&lt;/p&gt;&lt;p&gt;솔직히 이러한 주제에 대해 나도 흥미를 느낄 뿐이지 정확히 아는 것은 아니다.
-다만, 어떤 분야는 당연하게 여기던 개념에 대해 자세히 파고드는 것은 중요하다고 생각한다.
-이런 주제에 대해 보다 깊게 알아보고 싶다면 아래에 기재한 참고문헌이나 각종 서적을 참고하기를 바란다.&lt;/p&gt;&lt;hr/&gt;&lt;div&gt;참고문서&lt;/div&gt;&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.56.4713&amp;amp;rep=rep1&amp;amp;type=pdf&quot;&gt;Classes vs Prototypes - Some Philosophical and Historical Observations&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://medium.com/@limsungmook/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%EB%8A%94-%EC%99%9C-%ED%94%84%EB%A1%9C%ED%86%A0%ED%83%80%EC%9E%85%EC%9D%84-%EC%84%A0%ED%83%9D%ED%96%88%EC%9D%84%EA%B9%8C-997f985adb42&quot;&gt;자바스크립트는 왜 프로토타입을 선택했을까(임성묵 개발자)&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;div&gt;&lt;div num=&quot;1&quot;&gt;&lt;p&gt;엄밀히 말해 아리스토텔레스의 구분법(classification)은 19세기에 와서 휴얼(Whewell)과 제번스(Jevons)에 의해
+또한 해당 게시글에서 억지로 비유를 사용하다보니 해석 방식에 따라 충분히 불편할 수 있는 내용들도 있다고 생각한다.&lt;/p&gt;&lt;p&gt;다만, 어떤 분야에서든 그동안 당연하게 여겨온 개념들에 대해 자세히 파고드는 것은 중요하다고 생각한다.
+이런 주제에 대해 보다 깊게 알아보고 싶다면 아래에 기재한 참고문헌이나 각종 서적을 참고하기를 바란다.
+그리고 해당 게시글을 일종의 화두라고 생각하고 각자 본인만의 관점과 해석을 정립해나가는 것이 좋지 않을까 한다.&lt;/p&gt;&lt;hr/&gt;&lt;div&gt;참고문서&lt;/div&gt;&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.56.4713&amp;amp;rep=rep1&amp;amp;type=pdf&quot;&gt;Classes vs Prototypes - Some Philosophical and Historical Observations&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://medium.com/@limsungmook/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%EB%8A%94-%EC%99%9C-%ED%94%84%EB%A1%9C%ED%86%A0%ED%83%80%EC%9E%85%EC%9D%84-%EC%84%A0%ED%83%9D%ED%96%88%EC%9D%84%EA%B9%8C-997f985adb42&quot;&gt;자바스크립트는 왜 프로토타입을 선택했을까(임성묵 개발자)&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;div&gt;&lt;div num=&quot;1&quot;&gt;&lt;p&gt;엄밀히 말해 아리스토텔레스의 구분법(classification)은 19세기에 와서 휴얼(Whewell)과 제번스(Jevons)에 의해
 최초로 비판받게 되었다. 이에 대해 알고 싶으면 한 번 검색해보기를 바란다.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;</content:encoded></item><item><title><![CDATA[[JS] 프록시 패턴과 프런트엔드 커스텀 캐쉬 구현]]></title><description><![CDATA[애플리케이션 외부 대상을 대리자를 통해 간접적으로 접근하는 방식으로 프록시 패턴이 사용될 수 있다. 대리자는 외부 서버로부터 받은 데이터와 그 유효기간을 캐쉬의 형태로 관리함으로써 서버에 대한 접근 빈도를 줄이고 과한 리소스 낭비를 절감할 수 있다.]]></description><link>https://bugoverdose.github.io/development/proxy-and-frontend-custom-cache/</link><guid isPermaLink="false">https://bugoverdose.github.io/development/proxy-and-frontend-custom-cache/</guid><pubDate>Sat, 05 Feb 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;&lt;strong&gt;프록시 패턴(proxy pattern)&lt;/strong&gt;이란
 특정 데이터에 대한 접근을 중간에서 가로채는 대리자(proxy)를 두는 디자인 패턴을 의미한다.&lt;/p&gt;&lt;p&gt;애플리케이션에서 해당 데이터에 직접적으로 접근할 권한은 오직 이 대리자에게만 있으며,
 애플리케이션 내 다른 요소들은 오직 이 대리자를 통해서만 해당 데이터에 대한 접근을 시도할 수 있다.&lt;/p&gt;&lt;h2&gt;Proxy 클래스의 이해&lt;/h2&gt;&lt;p&gt;자바스크립트와 자바에 모두 &lt;code&gt;Proxy&lt;/code&gt;라는 클래스가 내장되어있을 정도로
