@@ -1,4 +1,98 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[RSS Feed | bugoverdose]]></title><description><![CDATA[공부하고 경험한 내용을 깔끔하게 설명하는 것을 목표로 하는 개발 블로그입니다. 컴퓨터과학, 웹 개발 등 다양한 주제를 포괄적으로 다룹니다.]]></description><link>https://bugoverdose.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Tue, 26 Apr 2022 00:49:06 GMT</lastBuildDate><item><title><![CDATA[[OOP] SOLID 압축 정리본]]></title><description><![CDATA[우아한테크코스 레벨 인터뷰 준비 과정에서 작성한 SOLID에 대한 개념 정리이다. 너무 깊지도, 얕지도 않도록 최소한의 예제만을 활용한 압축본을 만드는 것을 목표로 하였다. 오브젝트 스터디 종료 후 수정할 계획이다.]]></description><link>https://bugoverdose.github.io/computer-science/solid-basics/</link><guid isPermaLink="false">https://bugoverdose.github.io/computer-science/solid-basics/</guid><pubDate>Tue, 26 Apr 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;SOLID란 쉽고 안정적으로 변경될 수 있는 코드를 작성하기 위한 5가지 객체지향 설계 원칙을 의미한다.
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[RSS Feed | bugoverdose]]></title><description><![CDATA[공부하고 경험한 내용을 깔끔하게 설명하는 것을 목표로 하는 개발 블로그입니다. 컴퓨터과학, 웹 개발 등 다양한 주제를 포괄적으로 다룹니다.]]></description><link>https://bugoverdose.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Sun, 08 May 2022 14:13:11 GMT</lastBuildDate><item><title><![CDATA[[번역] 스프링 프레임워크 개요]]></title><description><![CDATA[Spring Framework 공식문서 중 Spring Framework Overview 섹션의 모든 내용 번역]]></description><link>https://bugoverdose.github.io/docs/spring/framework/overview/</link><guid isPermaLink="false">https://bugoverdose.github.io/docs/spring/framework/overview/</guid><pubDate>Sun, 08 May 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;스프링은 상업용 자바 애플리케이션을 쉽게 만들 수 있도록 해준다.
+상업 환경에서 자바 언어를 사용하는데 필요한 모든 것들을 제공해주며,
+JVM에서 동작하는 대안 언어로써 그루비와 코틀린도 지원하며,
+애플리케이션의 요구사항에 따라 다양한 종류의 구조를 만들 수 있도록 해주는
+유연성까지 겸비한다.
+스프링 프레임워크 5.1부터 스프링은 JDK 8+(Java SE 8+) 버전을 요구하며,
+JDK 11 LTS 버전들에 대한 지원을 제공한다.
+적어도 Java SE 8 업데이트 60버전을 사용해야 하며,
+일반적으로 최신 릴리즈 버전을 사용하는 것이 권장된다.&lt;/p&gt;&lt;p&gt;스프링이 지원하는 애플리케이션 시나리오의 범주는 광범위하다.
+대규모 기업의 애플리케이션인 경우, 일반적으로 장기간 존재하며
+개발자의 통제를 벗어난 수준의 업그레이드 싸이클을 지닌 JDK와 서버 위에서 동작한다.
+혹은 클라우드 환경에서, 서버가 내장된 단일 JAR로서 실행되는 경우도 있다.
+한편으로는 배치, 통합 워크로드 등과 같이
+서버가 필요하지 않은 단독 애플리케이션인 경우도 존재하다.&lt;/p&gt;&lt;p&gt;스프링은 오픈소스다. 대규모와 활발한 커뮤니티가 존재하며,
+다양한 종류의 실제 경험에 기반을 둔 피드백이 지속적으로 오간다.
+이 덕분에 스프링은 굉장히 오랜 기간 동안 성공적으로 진화할 수 있었다.&lt;/p&gt;&lt;h2&gt;1. 스프링에 담긴 의미&lt;/h2&gt;&lt;p&gt;&amp;quot;스프링&amp;quot;이라는 용어는 다양한 맥락에서 다른 대상을 의미한다.
+모든 것이 시작된 스프링 프레임워크 프로젝트 자체를 지칭할 수도 있다.
+시간이 지나면서 기존 스프링 프레임워크 위에 다른 스프링 프로젝트들이 생겨났다.
+대부분의 사람들은 이러한 모든 프로젝트들을 포괄하는 의미에서 &amp;quot;스프링&amp;quot;이라고 말한다.
+해당 공식문서에서는 바로 이 기반, 즉 스프링 프레임워크 그 자체에 초점을 맞춘다.&lt;/p&gt;&lt;p&gt;스프링 프레임워크는 다양한 모듈로 구분되어있다.
+애플리케이션은 자신이 필요로 하는 모듈을 선택할 수 있다.
+심장부에는 코어 컨테이너의 모듈들이 존재하며,
+설정 모델(configuration model)과 의존성 주입 메커니즘을 포함하고 있다.
+나아가 스프링 프레임워크는 메세징, 트랜젝션 데이터, 영속성, 웹 등
+다양한 애플리케이션 구조의 기반을 지원한다.
+또한 서블릿 기반의 스프링 MVC 웹 프레임워크과
+스프링 WebFlux 리액티브 웹 프레임워크를 포함하고 있다.&lt;/p&gt;&lt;p&gt;모듈과 관련하여, 스프링의 프레임워크 JAR들은
+JDK 9의 모듈 경로(Jigsaw)로의 배포를 지원한다.
+Jigsaw를 지원하는 애플리케이션에서의 활용을 위해
+스프링 프레임워크 5 JAR들은 &amp;quot;자동 모듈명(Automatic-Module-Name)&amp;quot;
+매니페스트 엔트리를 지원한다. 자동 모듈명 매니페스트 엔트리는
+JAR 아티팩트명과는 독립적인 안정화된 언어 레벨 모듈명(&amp;quot;spring.core&amp;quot;,
+&amp;quot;spring.context&amp;quot;, 등)을 정의한다. JAR들의 경우,
+&amp;quot;spring-core&amp;quot;, &amp;quot;spring-context&amp;quot;와 같이 &amp;quot;.&amp;quot; 대신 &amp;quot;-&amp;quot;를 활용한다.
+물론 스프링 프레임워크 JAR들은 JDK 8이나 9+버전들에서 모두 문제 없이 동작한다.&lt;/p&gt;&lt;h2&gt;2. 스프링과 스프링 프레임워크의 역사&lt;/h2&gt;&lt;p&gt;스프링은 초기 J2EE 스펙의 복잡성에 대한 반응으로써 2003년에 등장하였다.
+Java EE와 스프링이 서로 경쟁한다고 생각하는 사람들도 있지만,
+사실 스프링은 &lt;a href=&quot;https://en.wikipedia.org/wiki/Jakarta_EE&quot;&gt;Java EE&lt;/a&gt;를 보완한다.
+스프링 프로그래밍 모델은 Java EE 플랫폼 스펙을 따르지 않는다.
+그 대신 EE 내에서도 신중하게 선택된 개별 스펙과의 통합을 추구한다.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Servlet API (&lt;a href=&quot;https://jcp.org/en/jsr/detail?id=340&quot;&gt;JSR 340&lt;/a&gt;)&lt;/li&gt;&lt;li&gt;WebSocket API (&lt;a href=&quot;https://www.jcp.org/en/jsr/detail?id=356&quot;&gt;JSR 356&lt;/a&gt;)&lt;/li&gt;&lt;li&gt;Concurrency Utilities (&lt;a href=&quot;https://www.jcp.org/en/jsr/detail?id=236&quot;&gt;JSR 236&lt;/a&gt;)&lt;/li&gt;&lt;li&gt;JSON Binding API (&lt;a href=&quot;https://jcp.org/en/jsr/detail?id=367&quot;&gt;JSR 367&lt;/a&gt;)&lt;/li&gt;&lt;li&gt;Bean Validation (&lt;a href=&quot;https://jcp.org/en/jsr/detail?id=303&quot;&gt;JSR 303&lt;/a&gt;)&lt;/li&gt;&lt;li&gt;JPA (&lt;a href=&quot;https://jcp.org/en/jsr/detail?id=338&quot;&gt;JSR 338&lt;/a&gt;)&lt;/li&gt;&lt;li&gt;JMS (&lt;a href=&quot;https://jcp.org/en/jsr/detail?id=914&quot;&gt;JSR 914&lt;/a&gt;)&lt;/li&gt;&lt;li&gt;필요하다면 트랜잭션 관리(transaction coordination)를 위한 JTA/JCA 셋업&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;스프링 프레임워크는 의존성 주입(&lt;a href=&quot;https://www.jcp.org/en/jsr/detail?id=330&quot;&gt;JSR 330&lt;/a&gt;)과
+표준 어노테이션(&lt;a href=&quot;https://jcp.org/en/jsr/detail?id=250&quot;&gt;JSR 250&lt;/a&gt;) 스펙도 지원한다.
+애플리케이션 개발자들은 스프링 프레임워크에서 지원되는 스프링에 제한된 메커니즘 대신 이를 사용할 수 있다.&lt;/p&gt;&lt;p&gt;스프링 프레임워크 5.0부터 스프링은 Java EE 7레벨(서블릿 3.1+, JPA 2.1+ 등)을
+최소한의 필수요건으로 하고 있다.
+이와 동시에 런타임에는 Java EE 8레벨의 최신
+API(Servlet 4.0, JSON Binding API 등)에 대한 지원도 제공한다.
+이 덕분에 스프링은 Tomcat 8과 9, WebSphere 9, JBoss EAP 7 등과 완전히 호환된다.&lt;/p&gt;&lt;p&gt;시간이 지나면서 애플리케이션 개발에서 Java EE의 역할은 진화하였다.
+Java EE와 스프링의 초기에, 애플리케이션은 서버로 배포되기 위해 만들어졌다.
+오늘날의 애플리케이션들은 스프링 부트의 도움 덕분에
+데브옵스와 클라우드에 친화적인 방식으로 만들어지며,
+서블렛 컨테이너는 내장되며 변화에 취약하지도 않다.
+스프링 프레임워크 5부터 지원된 WebFlux 애플리케이션들의 경우
+서블릿 API을 직접적으로 다루지도 않으며
+서블릿 컨테이너가 아닌 (Netty와 같은) 서버들에서 실행될 수 있다.&lt;/p&gt;&lt;p&gt;스프링은 꾸준히 혁신하며 진화하고 있다.
+스프링 프레임워크 이외에도 스프링 부트, 스프링 시큐리티,
+스프링 데이터, 스프링 클라우드, 스프링 배치 등 다양한 프로젝트들이 존재한다.
+각 프로젝트마다 자신만의 소스 코드 저장소, 이슈 트래커,
+릴리즈 기록을 관리하고 있다는 점은 중요하다.
+&lt;a href=&quot;https://spring.io/projects&quot;&gt;spring.io/projects&lt;/a&gt;에서
+스프링 프로젝트들의 완전한 목록을 확인할 수 있다.&lt;/p&gt;&lt;h2&gt;3. 설계 철학&lt;/h2&gt;&lt;p&gt;프레임워크에 대해 배울 때 무엇을 하는지만이 아니라
+어떠한 원칙을 따르고 있는지에 대해 아는 것이 중요하다.
+다음은 스프링 프레임워크이 따르는 원칙들이다.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;p&gt;모든 레벨에서 선택지를 제공한다. 스프링은 설계에 대한 결정을 최대한
+나중으로 연기할 수 있도록 해준다. 예를 들어,
+코드를 수정하지 않고도 설정 변경만으로도 영속성 제공자를 갈아끼우는 것이 가능하다.
+다양한 인프라 관련 고민 및 제3자 API와의 통합에 있어서도 마찬가지다.&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;p&gt;다양한 관점을 수용한다. 스프링은 유연성을 추구하며,
+어떠해야 하는지에 대해 독단적이지 않다.
+다양한 관점을 지닌 애플리케이션 요구사항들에 대해 광범위하게 지원한다.&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;p&gt;강력한 하위호환성을 유지한다. 버전 간 차이를 최소화하기 위해
+스프링의 진화는 신중하게 관리되었다.&lt;div num=&quot;1&quot;&gt;&lt;/div&gt;
+스프링에 의존하는 애플리케이션과 라이브러리의 유지보수를 위해
+스프링은 신중하게 선정된 JDK 버전들과 제3자 라이브러리만을 지원한다.&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;p&gt;API 설계에 신경을 쓴다. 스프링 팀은 직관적이면서도 수년에 걸쳐
+다양한 버전들을 받아들일 수 있는 API를 만들기 위한 노력에
+굉장히 많은 시간을 투자한다.&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;p&gt;코드의 질에 대해 높은 기준을 설정한다. 스프링 프레임워크는
+의미 있고, 최신이며, 정확한 자바독을 강조한다.
+패키지 간의 순환 참조 없이 깨끗한 코드 구조를 지니고 있다고
+당당하게 주장할 수 있는 몇 안 되는 프로젝트 중 하나다.&lt;/p&gt;&lt;/li&gt;&lt;/ul&gt;&lt;h2&gt;4. 피드백과 기여&lt;/h2&gt;&lt;p&gt;방법에 대한 질문, 이슈에 대한 진단 및 디버깅의 경우
+스택 오버플로우를 사용하는 것을 권장한다.
+스택 오버플로우에서 사용하는 것을 권장하는 태그들의 목록을 보려면
+&lt;a href=&quot;https://stackoverflow.com/questions/tagged/spring+or+spring-mvc+or+spring-aop&quot;&gt;여기&lt;/a&gt;를
+클릭하여라.
+만약 스프링 프레임워크에 문제가 있다고 확신하고 있거나 기능을 제안하고 싶다면
+&lt;a href=&quot;https://github.com/spring-projects/spring-framework/issues&quot;&gt;깃헙 이슈&lt;/a&gt;를 사용하여라.&lt;/p&gt;&lt;p&gt;만약 해결책을 제안하고 싶다면
+&lt;a href=&quot;https://github.com/spring-projects/spring-framework&quot;&gt;Github&lt;/a&gt;에서
+PR을 제출해도 된다.
+다만, 대부분의 경우 논의를 진행하고 향후에 참조될 수 있도록 이슈 트래커에
+티켓을 만드는 것이 기대된다는 점을 염두에 두기를 바란다.&lt;/p&gt;&lt;p&gt;자세한 사항은 프로젝트의 최상위 페이지에 있는
+&lt;a href=&quot;https://github.com/spring-projects/spring-framework/blob/main/CONTRIBUTING.md&quot;&gt;CONTRIBUTING&lt;/a&gt;의
+가이드라인을 참고하여라.&lt;/p&gt;&lt;h2&gt;5. 시작하기&lt;/h2&gt;&lt;p&gt;스프링이 완전히 처음이라면 스프링 부트 기반의 애플리케이션을 만들면서
+스프링 프레임워크에 입문하는 것을 추천한다.
+스프링 부트는 스프링 기반의 애플리케이션을 (독단적이지만) 빨리 개발할 수 있는 방법을 제공한다.
+스프링 부트는 스프링 프레임워크에 기반을 두고 있으며,
+설정보다는 컨벤션을 추구하며, 최대한 빨리 개발을 할 수 있도록 설계되어있다.&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://start.spring.io/&quot;&gt;start.spring.io&lt;/a&gt;를 사용하여
+기본적인 프로젝트를 생성하거나,
+&lt;a href=&quot;https://spring.io/guides/gs/rest-service/&quot;&gt;RESTful한 웹 서비스 만들기&lt;/a&gt;와
+같은 &lt;a href=&quot;https://spring.io/guides&quot;&gt;가이드&lt;/a&gt;들 중 하나를 따라해보는 것을 권장한다.
+해당 가이드들은 소화하기 쉬울뿐만 아니라, 특정 과업에 초점을 맞추고 있으며,
+거의 대부분 스프링 부트 기반이다.
+특정한 문제를 해결하는 데 고려해볼 필요가 있는 스프링 포트폴리오의 프로젝트들도 다룬다.&lt;/p&gt;&lt;hr/&gt;&lt;div&gt;원문&lt;/div&gt;&lt;ul&gt;&lt;li&gt;&lt;p&gt;&lt;a href=&quot;https://docs.spring.io/spring-framework/docs/current/reference/html/overview.html&quot;&gt;Spring Framework Overview&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;p&gt;버전 5.3.19&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;p&gt;최종 업데이트 2022-04-13 08:58:09 UTC&lt;/p&gt;&lt;/li&gt;&lt;/ul&gt;&lt;div&gt;&lt;div num=&quot;1&quot;&gt;&lt;p&gt;만일 이게 당연한 것이라고 생각한다면 Gatsby를 배워보는 것을 권장한다.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;</content:encoded></item><item><title><![CDATA[[OOP] SOLID 압축 정리본]]></title><description><![CDATA[우아한테크코스 레벨 인터뷰 준비 과정에서 작성한 SOLID에 대한 개념 정리이다. 너무 깊지도, 얕지도 않도록 최소한의 예제만을 활용한 압축본을 만드는 것을 목표로 하였다. 오브젝트 스터디 종료 후 수정할 계획이다.]]></description><link>https://bugoverdose.github.io/computer-science/solid-basics/</link><guid isPermaLink="false">https://bugoverdose.github.io/computer-science/solid-basics/</guid><pubDate>Tue, 26 Apr 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;SOLID란 쉽고 안정적으로 변경될 수 있는 코드를 작성하기 위한 5가지 객체지향 설계 원칙을 의미한다.
 OOP에 대해 논할 때 빠질 수 없는 개념이지만
 막상 인터뷰에서 개별 원칙에 대해 깔끔하고 명료하게 설명하는 것은 생각보다 어렵다.&lt;/p&gt;&lt;p&gt;한 줄로 요약해버리면 실제로 그 뜻을 이해하고 있는지 파악하기 힘들고,
 그렇다고 자세히 설명하는 경우 너무 시간이 오래 걸린다.
@@ -1305,7 +1399,7 @@ github action을 통한 CI/CD, github.io 도메인의 웹호스팅 등 깃헙의
 만일 깃헙 계정에 등록된 이메일을 변경할 경우 어떠한 일이 일어나는지와 같은
 실용성이 전혀 없는 이야기도 사실 좀 자세히 쓰고 싶었다.
 이왕 여기에 쓴 김에 간략히 정리하자면 다음과 같다.&lt;/p&gt;&lt;ol&gt;&lt;li&gt;특정 커밋을 누가 작성했는지 보여주기 위해 우선 깃헙은 커밋 작성자의 이메일로 인증된 깃헙 계정이 존재하는지 찾는다.&lt;/li&gt;&lt;li&gt;만일 해당 이메일이 인증된 깃헙 계정이 존재하지 않는 경우, 이메일 대신 깃헙 사용자명이 그대로 표시된다.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;그런데 중요한 점은 원래 깃헙 계정 A에 등록되었던 이메일을 다른 깃헙 계정 B에 등록하는 것이 가능하다는 점이다.
-이 경우 &lt;strong&gt;원래는 깃헙 계정 A가 작성한 것으로 보이던 모든 커밋들이 깃헙 계정 B가 작성한 것으로 변경된다.&lt;/strong&gt;&lt;/p&gt;&lt;hr/&gt;&lt;div&gt;참고문서&lt;/div&gt;&lt;div&gt;&lt;div num=&quot;1&quot;&gt;&lt;p&gt;만약 &lt;code&gt;git init&lt;/code&gt;을 실행했던 초기 상태로 되돌리고 싶다면
+이 경우 &lt;strong&gt;원래는 깃헙 계정 A가 작성한 것으로 보이던 모든 커밋들이 깃헙 계정 B가 작성한 것으로 변경된다.&lt;/strong&gt;&lt;/p&gt;&lt;hr/&gt;&lt;div&gt;&lt;div num=&quot;1&quot;&gt;&lt;p&gt;만약 &lt;code&gt;git init&lt;/code&gt;을 실행했던 초기 상태로 되돌리고 싶다면
 &lt;code&gt;rm -rf .git&lt;/code&gt;과 같은 방식으로 기존의 &lt;code&gt;.git&lt;/code&gt; 폴더 자체를 깔끔하게 제거한 이후에
 &lt;code&gt;git init&lt;/code&gt;을 실행해야 한다. 이렇게 하면 모든 git 설정, 브랜치 정보, 커밋 내역이 깔끔하게 제거된다.&lt;/p&gt;&lt;/div&gt;&lt;div num=&quot;2&quot;&gt;&lt;p&gt;로컬에서 &lt;code&gt;git config --global init.defaultBranch &amp;lt;이름&amp;gt;&lt;/code&gt; 명령어를 실행하여
 &lt;code&gt;git init&lt;/code&gt; 명령어를 실행했을 때 생성할 디폴트 브랜치의 이름을 지정할 수 있다.
