@@ -1,6 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[RSS Feed | bugoverdose]]></title><description><![CDATA[공부하고 경험한 내용을 깔끔하게 설명하는 것을 목표로 하는 개발 블로그입니다. 컴퓨터과학, 웹 개발 등 다양한 주제를 포괄적으로 다룹니다.]]></description><link>https://bugoverdose.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Sun, 05 Jun 2022 05:32:12 GMT</lastBuildDate><item><title><![CDATA[Swagger: JWT 인증 버튼 셋업]]></title><description><![CDATA[Swagger UI 페이지에서 Authorize 버튼을 등록해보자. 특히 앞에 'Bearer'라는 문자열을 자동으로 추가하여 Authorization 헤더에 토큰을 설정하는 방법을 알아보자.]]></description><link>https://bugoverdose.github.io/development/swagger-auth-tutorial/</link><guid isPermaLink="false">https://bugoverdose.github.io/development/swagger-auth-tutorial/</guid><pubDate>Sun, 05 Jun 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;&lt;strong&gt;&lt;div to=&quot;/development/swagger-tutorial&quot;&gt;지난 게시글&lt;/div&gt;&lt;/strong&gt;에서는
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[RSS Feed | bugoverdose]]></title><description><![CDATA[공부하고 경험한 내용을 깔끔하게 설명하는 것을 목표로 하는 개발 블로그입니다. 컴퓨터과학, 웹 개발 등 다양한 주제를 포괄적으로 다룹니다.]]></description><link>https://bugoverdose.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Sun, 05 Jun 2022 09:19:45 GMT</lastBuildDate><item><title><![CDATA[Swagger: JWT 인증 버튼 셋업]]></title><description><![CDATA[Swagger UI 페이지에서 Authorize 버튼을 등록해보자. 특히 앞에 'Bearer'라는 문자열을 자동으로 추가하여 Authorization 헤더에 토큰을 설정하는 방법을 알아보자.]]></description><link>https://bugoverdose.github.io/development/swagger-auth-tutorial/</link><guid isPermaLink="false">https://bugoverdose.github.io/development/swagger-auth-tutorial/</guid><pubDate>Sun, 05 Jun 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;&lt;strong&gt;&lt;div to=&quot;/development/swagger-tutorial&quot;&gt;지난 게시글&lt;/div&gt;&lt;/strong&gt;에서는
 Spring Boot 애플리케이션에 &lt;code&gt;Swagger&lt;/code&gt;를 설정하고
-&lt;code&gt;Swagger&lt;/code&gt; UI 페이지를 조작하여 API를 테스트하는 방법을 다루었다.&lt;/p&gt;&lt;p&gt;해당 게시글에서는 인증 기능이 존재하는 애플리케이션에서
+&lt;code&gt;Swagger&lt;/code&gt; UI 페이지를 조작하여 API를 테스트하는 방법을 다루었다.
+해당 게시글에서는 인증 기능이 존재하는 애플리케이션에서
 &lt;code&gt;Swagger&lt;/code&gt;를 사용하기 위한 최소한의 셋업을 다루어보고자 한다.&lt;/p&gt;&lt;h2&gt;인증과 인가&lt;/h2&gt;&lt;p&gt;기본 개념부터 정리해보자.
 &lt;strong&gt;인증(Authentication)&lt;/strong&gt;이란 사용자가 누구인지 확인하는 과정, 즉
 기본적으로 아이디와 비밀번호를 받아 로그인을 하는 과정을 의미한다.
@@ -17,16 +18,18 @@ Spring Boot 애플리케이션에 &lt;code&gt;Swagger&lt;/code&gt;를 설정하�
 만일 이때 클라이언트에게 적절한 권한이 없다고 판단되면
 서버는 상태코드 403를 응답한다.&lt;/p&gt;&lt;h2&gt;Authorize 버튼의 필요성&lt;/h2&gt;&lt;p&gt;&lt;code&gt;Swagger&lt;/code&gt;를 사용하는 입장에서 중요한 점은
 인증 성공 이후 서버로 보내는 모든 HTTP 요청들에서
-헤더에 특정 값을 포함시켜야 한다는 점이다.&lt;/p&gt;&lt;p&gt;기본적으로 로그인 요청을 통해 발급 받은 JWT 토큰을 메모장에 저장해놓고,
-개별 요청에 대해 일일이 &lt;code&gt;Authorization&lt;/code&gt; 헤더에 해당 값을 붙여넣기하는 방법을 생각해볼 수 있다.
-개별 API에 대해 &lt;code&gt;Authorization&lt;/code&gt; 헤더에 값을 대입할 수 있는
-입력 칸을 일일이 등록할 수 있다면 충분할 것이다.
-그러나 이 방법은 기본적으로 API를 테스트하는 입장에서 굉장히 번거롭다.&lt;/p&gt;&lt;p&gt;그러한 맥락에서 우리는 개별 API가 아니라 Swagger UI 페이지의 상단에
-&lt;code&gt;Authorize 버튼&lt;/code&gt;을 도입하고자 한다. 이 버튼은 기본적으로
+특정한 헤더를 포함해야 한다는 점이다.&lt;/p&gt;&lt;p&gt;기본적으로 로그인 요청을 통해 발급 받은 JWT 토큰을 메모장에 저장해놓고,
+특정 API로 요청을 보낼 때마다 일일이
+&lt;code&gt;Authorization&lt;/code&gt; 헤더에 해당 값을 붙여넣기하는 방법을 생각해볼 수 있다.
+개별 API에 대해 &lt;code&gt;Authorization&lt;/code&gt; 헤더 값을 입력할 수 있는 칸을 제공하도록
+설정할 수만 있다면 이렇게 구현하는 것도 하나의 방법일 수는 있다.
+그러나 이 방법은 사용하기 굉장히 번거로울 것이다.&lt;/p&gt;&lt;p&gt;편리성의 측면에서 가장 이상적인 것은 Swagger UI 페이지의 상단에
+&lt;code&gt;Authorize 버튼&lt;/code&gt;을 도입하는 방법이다. 이 버튼은 기본적으로
 &lt;strong&gt;서버로 전송되는 모든 HTTP 요청 메시지들에 특정한 정보를 공통적으로 포함시키는 기능&lt;/strong&gt;을
 제공한다.
-로그인을 통해 확인된 토큰 값을 이 기능을 통해 &lt;code&gt;Authorization&lt;/code&gt; 헤더에 설정해놓으면,
-&lt;strong&gt;로그인에 성공한 사용자의 브라우저 상태를 모방&lt;/strong&gt;하는 것이 가능해진다.&lt;/p&gt;&lt;p&gt;실제 예시를 통해 이를 확인해보자.&lt;/p&gt;&lt;h2&gt;실습 환경 셋업&lt;/h2&gt;&lt;p&gt;우선 프로젝트에서 Swagger를 사용할 수 있도록 설정해보자.
+로그인을 통해 토큰을 발급 받은 후,
+이 버튼을 통해 &lt;code&gt;Authorization&lt;/code&gt; 헤더에 토큰을 설정해놓으면,
+우리는 &lt;strong&gt;로그인에 성공한 사용자의 브라우저 상태를 모방&lt;/strong&gt;하는 것이 가능해진다.&lt;/p&gt;&lt;p&gt;실제 예시를 통해 이를 확인해보자.&lt;/p&gt;&lt;h2&gt;실습 환경 셋업&lt;/h2&gt;&lt;p&gt;우선 프로젝트에서 Swagger를 사용할 수 있도록 설정해보자.
 &lt;code&gt;build.gradle&lt;/code&gt; 파일에 &lt;code&gt;io.springfox:springfox-boot-starter:3.0.0&lt;/code&gt;
 의존성을 추가하는 등의 과정은 이미
 &lt;strong&gt;&lt;div to=&quot;/development/swagger-tutorial&quot;&gt;지난 게시글&lt;/div&gt;&lt;/strong&gt;에서
@@ -88,15 +91,14 @@ Spring Boot 애플리케이션에 &lt;code&gt;Swagger&lt;/code&gt;를 설정하�
 대입함으로써 &lt;code&gt;Authorization&lt;/code&gt; 헤더에 특정 값이 전달되도록 설정하였다.&lt;/p&gt;&lt;p&gt;이제 애플리케이션을 실행하고
 &lt;code&gt;http://localhost:8080/swagger-ui/&lt;/code&gt;에 접속하면
 아래와 같은 방식으로 &lt;code&gt;Authorize 버튼&lt;/code&gt;을 사용할 수 있다.&lt;/p&gt;&lt;p&gt;&lt;img src=&quot;/3de0cef9c869cdaf2e258b90819e8d2a/authorization-gif.gif&quot; alt=&quot;Authorization GIF&quot;/&gt;&lt;/p&gt;&lt;h2&gt;JWT 토큰 기반 인증을 위한 설정&lt;/h2&gt;&lt;p&gt;그런데 중요한 점이 하나 있다.
-일반적으로 토큰 기반 인증(&lt;code&gt;token authentication&lt;/code&gt;;
-aka. &lt;code&gt;Bearer authentication&lt;/code&gt;)은
-아래와 같이 &lt;code&gt;Bearer&lt;/code&gt;라는 문자열 다음에 토큰 담아서 보내는 형식을 띠고 있다.&lt;/p&gt;&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre style=&quot;counter-reset:linenumber NaN&quot; class=&quot;language-text line-numbers&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;Authorization: Bearer &amp;lt;토큰&amp;gt;&lt;/code&gt;&lt;span aria-hidden=&quot;true&quot; class=&quot;line-numbers-rows&quot; style=&quot;white-space:normal;width:auto;left:0&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;이러한 상황에서는 &lt;code&gt;Authorize 버튼&lt;/code&gt;에
-&lt;code&gt;토큰&lt;/code&gt; 값을 그대로 대입하는 것이 아니라
-&lt;code&gt;Bearer 토큰&lt;/code&gt;과 같은 형식으로 앞에 &lt;code&gt;Bearer&lt;/code&gt;라는 문자열을
-추가해줘야 한다. 이는 굉장히 번거롭다고 볼 수 있다.&lt;/p&gt;&lt;p&gt;그러한 맥락에서 이번에는 &lt;code&gt;Swagger&lt;/code&gt;의 &lt;code&gt;OpenAPI 3.0&lt;/code&gt;에서 지원하는
-&lt;code&gt;Bearer Authentication&lt;/code&gt; 기능을 사용하여
-&lt;code&gt;Authorize 버튼&lt;/code&gt;을 설정해보자.
-아래의 코드를 확인해보자.&lt;/p&gt;&lt;div class=&quot;gatsby-highlight has-highlighted-lines&quot; data-language=&quot;java&quot;&gt;&lt;pre style=&quot;counter-reset:linenumber NaN&quot; class=&quot;language-java line-numbers&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;token annotation punctuation&quot;&gt;@Configuration&lt;/span&gt;
+일반적으로 토큰 기반 인증(&lt;strong&gt;token authentication&lt;/strong&gt;;
+aka. &lt;strong&gt;Bearer authentication&lt;/strong&gt;)은
+아래와 같이 &lt;code&gt;Bearer&lt;/code&gt;라는 문자열 다음에 토큰 담아서 보내는 형식을 띠고 있다.&lt;/p&gt;&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre style=&quot;counter-reset:linenumber NaN&quot; class=&quot;language-text line-numbers&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;Authorization: Bearer &amp;lt;토큰&amp;gt;&lt;/code&gt;&lt;span aria-hidden=&quot;true&quot; class=&quot;line-numbers-rows&quot; style=&quot;white-space:normal;width:auto;left:0&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;위와 같은 셋업을 사용하는 경우, &lt;code&gt;Authorize 버튼&lt;/code&gt;에
+&lt;code&gt;토큰&lt;/code&gt; 값을 그대로 등록하는 것이 아니라
+앞에 &lt;code&gt;Bearer&lt;/code&gt;라는 문자열을 추가해줘야 할 것이다.
+이는 다소 번거로우며 충분히 실수하기 쉬운 작업이라고 볼 수 있다.&lt;/p&gt;&lt;p&gt;이러한 문제를 해결하기 위해
+이번에는 &lt;code&gt;Swagger&lt;/code&gt;의 &lt;code&gt;OpenAPI 3.0&lt;/code&gt;에서 지원하는
+&lt;code&gt;Bearer Authentication&lt;/code&gt; 기능을 사용하여 &lt;code&gt;Authorize 버튼&lt;/code&gt;을 설정해보자.&lt;/p&gt;&lt;div class=&quot;gatsby-highlight has-highlighted-lines&quot; data-language=&quot;java&quot;&gt;&lt;pre style=&quot;counter-reset:linenumber NaN&quot; class=&quot;language-java line-numbers&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;token annotation punctuation&quot;&gt;@Configuration&lt;/span&gt;
 &lt;span class=&quot;token keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;SwaggerConfiguration&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
 
     &lt;span class=&quot;token keyword&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;String&lt;/span&gt; REFERENCE &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&amp;quot;Bearer 토큰 값&amp;quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
@@ -134,8 +136,8 @@ aka. &lt;code&gt;Bearer authentication&lt;/code&gt;)은
 그리고 이번에는 &lt;code&gt;SecurityScheme&lt;/code&gt; 구현체로
 &lt;code&gt;HttpAuthenticationScheme&lt;/code&gt; 객체를 등록하였으며
 &lt;code&gt;JWT_BEARER_BUILDER&lt;/code&gt;를 사용했다는 점에 유의하자.&lt;/p&gt;&lt;p&gt;이제 애플리케이션을 실행하고 이전과 동일한 방식으로
-&lt;code&gt;Authorize 버튼&lt;/code&gt;을 사용해보자.&lt;/p&gt;&lt;p&gt;&lt;img src=&quot;/8388ce1f8a3132b4c04c9dcbbbc0fcf8/bearer-auth-gif.gif&quot; alt=&quot;Beaerer Auth GIF&quot;/&gt;&lt;/p&gt;&lt;p&gt;이전과 동일한 값을 입력했음에도 앞에 &lt;code&gt;Bearer&lt;/code&gt;라는 문자열이
-추가된다는 점을 확인할 수 있다.&lt;/p&gt;&lt;h2&gt;맺으며&lt;/h2&gt;&lt;p&gt;&lt;code&gt;Bearer Authentication&lt;/code&gt; 설정에 대한 자료를 찾는게
+&lt;code&gt;Authorize 버튼&lt;/code&gt;을 사용해보자.&lt;/p&gt;&lt;p&gt;&lt;img src=&quot;/8388ce1f8a3132b4c04c9dcbbbc0fcf8/bearer-auth-gif.gif&quot; alt=&quot;Beaerer Auth GIF&quot;/&gt;&lt;/p&gt;&lt;p&gt;이전과 동일한 값을 입력했음에도
+자동으로 앞에 &lt;code&gt;Bearer&lt;/code&gt;라는 문자열이 추가된다는 점을 확인할 수 있다.&lt;/p&gt;&lt;h2&gt;맺으며&lt;/h2&gt;&lt;p&gt;&lt;code&gt;Bearer Authentication&lt;/code&gt; 설정에 대한 자료를 찾는게
 생각보다 번거로워서 기본적인 셋업 방법을 공유하고자 글로 정리해보았다.
 &lt;a href=&quot;https://swagger.io/docs/specification/about/&quot;&gt;공식문서&lt;/a&gt;를
 보면 토큰 기반 인증 외에도 다양한 인증 방식을 지원하고 있음을 알 수 있다.
