@@ -1,4 +1,71 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[RSS Feed | bugoverdose]]></title><description><![CDATA[공부하고 경험한 내용을 깔끔하게 설명하는 것을 목표로 하는 개발 블로그입니다. 컴퓨터과학, 웹 개발 등 다양한 주제를 포괄적으로 다룹니다.]]></description><link>https://bugoverdose.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Sun, 05 Jun 2022 12:21:28 GMT</lastBuildDate><item><title><![CDATA[Swagger: JWT 인증 버튼 셋업]]></title><description><![CDATA[Swagger UI 페이지에서 Authorize 버튼을 등록해보자. 특히 Authorization 헤더에 토큰을 설정할 때 'Bearer'라는 문자열이 자동으로 추가되도록 설정하는 방법을 알아보자.]]></description><link>https://bugoverdose.github.io/development/swagger-auth-tutorial/</link><guid isPermaLink="false">https://bugoverdose.github.io/development/swagger-auth-tutorial/</guid><pubDate>Sun, 05 Jun 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;&lt;strong&gt;&lt;div to=&quot;/development/swagger-tutorial&quot;&gt;지난 게시글&lt;/div&gt;&lt;/strong&gt;에서는
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[RSS Feed | bugoverdose]]></title><description><![CDATA[공부하고 경험한 내용을 깔끔하게 설명하는 것을 목표로 하는 개발 블로그입니다. 컴퓨터과학, 웹 개발 등 다양한 주제를 포괄적으로 다룹니다.]]></description><link>https://bugoverdose.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Thu, 23 Jun 2022 15:31:28 GMT</lastBuildDate><item><title><![CDATA[[리뷰] 오브젝트 독후감]]></title><description><![CDATA[스터디원들과 함께 조영호의 오브젝트를 완독하였다. 책에 대한 전반적인 후기를 남기고자 한다.]]></description><link>https://bugoverdose.github.io/essay/object-book-review/</link><guid isPermaLink="false">https://bugoverdose.github.io/essay/object-book-review/</guid><pubDate>Fri, 24 Jun 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;알 사람은 다 알겠지만 조영호의 &lt;a href=&quot;http://www.yes24.com/Product/Goods/74219491&quot;&gt;오브젝트&lt;/a&gt;는
+객체지향 프로그래밍을 공부함에 있어 빼놓을 수 없는 책이다.&lt;/p&gt;&lt;p&gt;우테코에서 크루들과 함께 스터디를 하며 해당 서적을 완독한 기념으로
+책에 대한 전반적인 후기를 남기고자 한다.
+아직 해당 서적을 읽지 않았거나, 구매 여부에 대해 고민하는 사람들이 있다면
+이 글이 도움이 되기를 바란다.&lt;/p&gt;&lt;h2&gt;무엇이 담겨 있는가&lt;/h2&gt;&lt;p&gt;OOP에 대해 구글에 검색해보면 &amp;quot;객체지향의 특징은 추상화, 캡슐, 상속, 다형성&amp;quot;이라고
+말하며 각 개념에 대해 설명하는 블로그 글을 쉽게 발견할 수 있다.
+그러나 이러한 용어 설명만으로는 &amp;quot;객체지향적인 설계&amp;quot;가 무엇이며,
+실제로 객체지향적인 코드를 어떻게 작성할 수 있는지에 대해 이해할 수 없을 것이다.&lt;/p&gt;&lt;p&gt;한편 면접 및 시험 준비를 위해 &amp;quot;결합도는 낮고 응집도는 높아야 한다&amp;quot;거나
+SOLID의 각 원칙을 암기하고 그대로 읊는 것은 누구나 할 수 있는 일이다.
+그러나 이러한 암기만으로는
+실제로 어떠한 코드에 대해 &amp;quot;SOLID에 위배된다&amp;quot;고 평가하거나,
+의식적으로 결합도를 낮추는 방향으로 코드를 리팩터링을 하기 어려울 것이다.
+애초에 이러한 행위가 &lt;em&gt;왜&lt;/em&gt; 중요한지, 그 이유에 대해 설명할 줄 모르는 사람도 많을 것이다.&lt;/p&gt;&lt;p&gt;만일 당신이 이러한 경험에 공감할 수 있다면
+오브젝트를 읽었을 때 지적인 쾌감을 느낄 것이다.&lt;/p&gt;&lt;p&gt;&amp;quot;코드로 이해하는 객체지향 설계&amp;quot;라는 부제를 통해 알 수 있듯이
+오브젝트는 기본적으로 다양한 예시 코드를 통해 객체지향 설계에 대해 심도 있게 서술하는 책이다.
+다만, 저자는 단순히 &amp;quot;이런 것이 좋은 코드다&amp;quot;라고 제시하지 않는다.
+저자는 객체지향 설계라는 맥락에서 현재 이 코드가 &lt;strong&gt;왜 좋지 않은 코드&lt;/strong&gt;인지를 설명하고,
+이를 어떠한 방향으로 개선할 수 있으며, 그것이 &lt;strong&gt;어떠한 측면에서 개선된 코드&lt;/strong&gt;인지를
+체계적으로 설명하고자 노력한다.
+그리고 이러한 과정에서 저자는 소프트웨어 전반에 있어
+중요한 용어와 원칙에 대해 굉장히 자연스럽게 체계적으로 언급하며 지나간다.&lt;/p&gt;&lt;h2&gt;누가 읽으면 좋은가&lt;/h2&gt;&lt;p&gt;개인적으로 모든 애플리케이션 개발자에게 이 책을 읽는 것을 권하고 싶다.
+다만, 기초적인 자바 문법을 이해하고 있으며,
+이를 활용하여 애플리케이션을 구현하고 리팩터링해본 경험이 조금이라도 있어야
+책의 내용을 제대로 내재화할 수 있을 것이라고 생각한다.&lt;/p&gt;&lt;p&gt;스칼라와 자바스크립트도 일부 포함되어있기는 하지만
+이 책은 기본적으로 최소한의 자바 문법을 안다는 가정하에
+모든 내용이 작성되어있다. 때문에 만일 자바 기초 문법을 모른다면
+코드를 이해하는 과정에서 불필요하게 시간이 낭비될 것이라 생각한다.&lt;/p&gt;&lt;p&gt;기초 문법을 이해하더라도 이 책의 내용을 이해하기 위해서는
+실제로 &amp;quot;좋지 않은 설계&amp;quot;를 작성해보았고
+이로 인해 고통받아본 경험이 조금이라도 있어야 한다고 생각한다.
+그렇지 않고서는 이 책에서 설명하는 문제의식에 대해 진심으로 공감하기는 어려울 것이라고 생각한다.&lt;/p&gt;&lt;p&gt;한편, 본인이 당분간 자바나 코틀린을 사용할 일이 전혀 없는 상황이라면
+굳이 지금 이 책을 읽는 것이 본인에게 효과적일지에 대해 고민해봐야 한다고 생각한다.
+이 책을 읽는 기간 동안 책의 내용을 실제로 본인의 코드에 적용할 수 있어야
+그 내용을 보다 자신만의 것으로 내재화할 수 있을 것이다.&lt;/p&gt;&lt;h3&gt;대안은 없는가&lt;/h3&gt;&lt;p&gt;만일 자바와 무관하게 객체지향 프로그래밍에 대해 공부를 하고 싶다면
+저자 분이 오브젝트 이전에 쓰신
+&lt;a href=&quot;http://www.yes24.com/Product/Goods/18249021&quot;&gt;객체지향의 사실과 오해&lt;/a&gt;&lt;div num=&quot;1&quot;&gt;&lt;/div&gt;라는
+서적도 존재한다.
+특정한 프로그래밍 언어에 종속되지 않은 체 객체지향의 본질을 다루고 있으며
+상대적으로 짧기 때문에 부담 없이 읽을 수 있을 것이다.&lt;/p&gt;&lt;p&gt;다만, 개인적으로는 오브젝트의 하위호환처럼 느껴지기 때문에 절반 정도밖에 읽지 않았다.
+실제로 오브젝트 초반(p6)을 보면 &amp;quot;코드 없이 개념적으로 특정 프로그래밍 패러다임에 대해 설명하는 것은 어떤 영감도 주지 못한다.&amp;quot;라며
+저자 스스로 전작에 대해 셀프디스를 하고 있다.&lt;/p&gt;&lt;p&gt;그래도 일단은 우아한테크코스 백엔드 과정 레벨1 필독서 중 하나였기 때문에 읽을 가치가 있는 좋은 책이라고 생각한다.&lt;/p&gt;&lt;h2&gt;어떻게 읽어야 하는가&lt;/h2&gt;&lt;p&gt;필자는 이 책을 우아한테크코스 기간 동안 크루들과 함께 스터디를 통해 함께 읽었다.
+2022년 3월부터 6월까지 매주 1챕터씩 읽고, 이에 대해 토론하는 방식으로 진행되었다.
+당시 각 스터디원은 함께 이야기하고 싶은 주제에 대해 &lt;a href=&quot;https://github.com/woowacourse-study/2022-object-study/issues&quot;&gt;깃헙 저장소&lt;/a&gt;에
+이슈로 남겼으니 궁금하다면 참고해도 좋다.&lt;/p&gt;&lt;p&gt;사실 이러한 스터디 진행 방식이 적합한 책과 그렇지 않은 책이 존재하는데,
+이 책은 확실히 이러한 스터디 방식이 적절했다고 생각한다.
+이 책은 점진적으로 내용을 음미하며, 궁금했던 내용에 대해 여럿이서 이야기를 하며 진행해야 하는 책이 맞다고 느껴진다.
+특히 우아한테크코스의 각종 미션들을 진행하며 책의 내용을 적용하고, 미션에서 작성한 코드를 통해
+책에서 이야기하는 바를 이해할 수 있었기 때문에 좋은 선순환이었다고 생각한다.
+대체 왜 이곳 필독서 목록에 오브젝트가 없는지 모르겠다.&lt;/p&gt;&lt;p&gt;한편 혼자서 책을 읽어야 하는데 내용이 난해하다고 느껴지는 상황이라면
+책을 끝까지 읽은 입장에서 책에 대해 몇 가지를 이야기하고 싶다.&lt;/p&gt;&lt;p&gt;우선 &lt;strong&gt;모든 내용을 이해하고 다음으로 넘어가야 한다는 강박관념을 지니지 말라&lt;/strong&gt;고 제안하고 싶다.
+기본적으로 이 책은 빌드업이 심하기 때문에 뒤의 내용을 읽어야 비로소 앞의 내용이 제대로 이해되는 것들이 많다.
+또한 몇 페이지에 걸쳐서 세부적으로 다루었던 내용을 뒤에서 깔끔하게 정리된 문장으로 다시 설명해주는 경우도 빈번하다.
+때문에 &lt;em&gt;중요한 내용이었다면 어차피 뒤에 다시 나오겠지 뭐&lt;/em&gt;라는 마인드를 어느 정도 탑재하고 진행하는 것을 권장하고 싶다.&lt;/p&gt;&lt;p&gt;또한 &lt;strong&gt;예시 코드는 글에서 언급하는 부분만 적당히 참고하라&lt;/strong&gt;고 제안하고 싶다.
+해당 서적의 모든 예제 코드는 글로 설명하는 내용을 뒷받침하기 위한 &lt;strong&gt;시각적 참고 자료&lt;/strong&gt;에 불과하다.
+때문에 저자는 기본적으로 &lt;strong&gt;끔찍한 코드&lt;/strong&gt;와 &lt;strong&gt;개선된 코드&lt;/strong&gt;를 보여줄 뿐, &lt;strong&gt;완벽한 정답&lt;/strong&gt;에 해당되는 코드를 제시하지 않는다.
+기본적으로 끔찍할 정도로 지저분한 코드가 있다면
+아마 해당 챕터의 후반부나 다음 챕터에서 이를 리팩터링하는 과정을 보여줄 것이다.
+그러나 만일 이러한 과정이 없더라도, &lt;em&gt;메서드명을 왜 이처럼 지었는가?&lt;/em&gt; 혹은 &lt;em&gt;매개변수로 저런 값을 받는 것이 맞는가?&lt;/em&gt;와 같은
+의문을 굳이 가지지 말자. 책은 그에 대한 대답을 전혀 해주지 않을 것이다.&lt;/p&gt;&lt;p&gt;마지막으로 다시 강조하는데 이 책은 &lt;strong&gt;빌드업이 심하다&lt;/strong&gt;.
+그러므로 &lt;strong&gt;초반부 내용은 가볍게 넘어가고&lt;/strong&gt;,
+중후반부만 제대로 읽어도 이 책으로부터 충분히 본전을 뽑을 수 있을 것이다.
+이 빌드업이 심하다는 점에 대해 구체적으로 설명하기가 힘든데,
+마지막 15장에서 디자인 패턴에 대해 설명하기 위해 이전의 챕터들이
+각각 다른 디자인 패턴을 구현하고 있었음을 밝히는 내용이 대표적인 예라고 생각한다.&lt;/p&gt;&lt;h2&gt;후기&lt;/h2&gt;&lt;p&gt;해당 서적은 소프트웨어 개발자에게 있어서 중요한 교과서라고 생각한다.
+물론 개인적으로 너무 얕게 설명하고 넘어갔다고 느낀 부분도 있었고,
+동의하기 어려운 내용도 있었고, 전혀 알 필요가 없다고 느낀 내용도 있었다.
+그러나 이 책을 읽으며 머릿속의 지식들이 보다 체계적으로 연결되었으며,
+설계에 대한 나름대로의 논리체계가 생겨났다.
+&amp;quot;배경지식이 쌓인다&amp;quot;는 느낌을 실시간으로 느끼면서 읽을 수 있는 몇 안되는 책이라고 생각한다.&lt;/p&gt;&lt;hr/&gt;&lt;div&gt;&lt;div num=&quot;1&quot;&gt;&lt;p&gt;표지 때문에 &amp;quot;토끼책&amp;quot;이라고도 불린다. 아는 척하기 좋은 지식이니 꼭 암기해놓자.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;</content:encoded></item><item><title><![CDATA[Swagger: JWT 인증 버튼 셋업]]></title><description><![CDATA[Swagger UI 페이지에서 Authorize 버튼을 등록해보자. 특히 Authorization 헤더에 토큰을 설정할 때 'Bearer'라는 문자열이 자동으로 추가되도록 설정하는 방법을 알아보자.]]></description><link>https://bugoverdose.github.io/development/swagger-auth-tutorial/</link><guid isPermaLink="false">https://bugoverdose.github.io/development/swagger-auth-tutorial/</guid><pubDate>Sun, 05 Jun 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;&lt;strong&gt;&lt;div to=&quot;/development/swagger-tutorial&quot;&gt;지난 게시글&lt;/div&gt;&lt;/strong&gt;에서는
 Spring Boot 애플리케이션에 &lt;code&gt;Swagger&lt;/code&gt;를 설정하고
 &lt;code&gt;Swagger&lt;/code&gt; UI 페이지를 조작하여 API를 테스트하는 방법을 다루었다.
 해당 게시글에서는 인증 기능이 존재하는 애플리케이션에서
