@@ -1,4 +1,102 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[RSS Feed | bugoverdose]]></title><description><![CDATA[공부하고 경험한 내용을 깔끔하게 설명하는 것을 목표로 하는 개발 블로그입니다. 컴퓨터과학, 웹 개발 등 다양한 주제를 포괄적으로 다룹니다.]]></description><link>https://bugoverdose.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Sun, 11 Sep 2022 12:21:50 GMT</lastBuildDate><item><title><![CDATA[[토이 프로젝트] MyS3: 나만의 작은 이미지 호스팅 서버]]></title><description><![CDATA[AWS S3를 사용할 수 없게 되어 EC2 인스턴스에서 실행가능한 대체품을 만들어보았습니다. 이미지 파일 업로드 및 조회 API를 제공하며, 업로드된 파일을 로컬 머신에서 직접 관리하는 구조입니다.]]></description><link>https://bugoverdose.github.io/development/image-hosting-server-toy-project/</link><guid isPermaLink="false">https://bugoverdose.github.io/development/image-hosting-server-toy-project/</guid><pubDate>Sun, 07 Aug 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;우테코 레벨3 도중 코치님이 AWS S3를 사용하지 말라고 하셔서
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[RSS Feed | bugoverdose]]></title><description><![CDATA[공부하고 경험한 내용을 깔끔하게 설명하는 것을 목표로 하는 개발 블로그입니다. 컴퓨터과학, 웹 개발 등 다양한 주제를 포괄적으로 다룹니다.]]></description><link>https://bugoverdose.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Sat, 24 Sep 2022 15:03:53 GMT</lastBuildDate><item><title><![CDATA[[번역] 커넥션 풀 사이즈에 대하여]]></title><description><![CDATA[HikariCP 공식 위키의 'About Pool Sizing' 페이지에 대한 번역입니다. 최적의 성능을 위해 데이터베이스 커넥션 풀 크기를 어떻게 설정해야 하는지에 대해 다룹니다.]]></description><link>https://bugoverdose.github.io/docs/database-connection-pool-sizing/</link><guid isPermaLink="false">https://bugoverdose.github.io/docs/database-connection-pool-sizing/</guid><pubDate>Sun, 25 Sep 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;nGrinder를 활용한 부하테스트 실험 도중,
+극단적인 수준의 데이터베이스 조회 작업을 지속적으로 발생시키자
+다음과 같은 예외를 마주하게 되었습니다.&lt;/p&gt;&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre style=&quot;counter-reset:linenumber NaN&quot; class=&quot;language-text line-numbers&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30004ms ...&lt;/code&gt;&lt;span aria-hidden=&quot;true&quot; class=&quot;line-numbers-rows&quot; style=&quot;white-space:normal;width:auto;left:0&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;이는 데이터베이스와 통신하는 데 필요한 커넥션을 커넥션풀에서 가져오는데 30초 넘게 걸려서 발생한 예외였으며,
+커넥션 풀의 사이즈를 10에서 150으로 늘리자 해당 예외&lt;em&gt;는&lt;/em&gt; 더 이상 나타나지 않게 되었습니다.&lt;/p&gt;&lt;p&gt;데이터베이스 커넥션 풀 규모를 수정해본 것은 처음이었는데,
+이번 기회에 커넥션 풀의 적정 규모 설정에 대해 자세히 정리해보고자 합니다.
+해당 글은 원문은 &lt;a href=&quot;https://github.com/brettwooldridge/HikariCP/wiki/About-Pool-Sizing&quot;&gt;HikariCP 공식 위키 문서&lt;/a&gt;에서
+확인할 수 있습니다.&lt;/p&gt;&lt;h2&gt;히카리 커넥션 풀 사이즈에 대하여&lt;/h2&gt;&lt;p&gt;커넥션 풀 설정은 개발자들이 흔히 실수하는 작업입니다.
+커넥션 풀을 설정하기 위해 이해해야 하는 원칙들이 존재하며,
+이 중 몇 가지는 우리의 직관에 위배된다고 느껴질 수도 있습니다.&lt;/p&gt;&lt;h3&gt;10,000명의 프론트엔드 동시 접속자들&lt;/h3&gt;&lt;p&gt;대략 1만 명의 사용자들이 빈번하게 접속하며
+데이터베이스 요청을 발생시키는 사이트가 있다고 해봅시다.
+초당 2만 개의 트랜잭션이 발생한다고 했을 때 커넥션 풀의 크기는 어느 정도여야 할까요?
+여기서 핵심은 얼마나 &lt;em&gt;커야 하는가&lt;/em&gt;가 아니라 얼마나 &lt;em&gt;작아야 하는가&lt;/em&gt;에 있습니다.&lt;/p&gt;&lt;p&gt;가급적이면 Oracle Real-World Performance 그룹에서 공개한
+&lt;a href=&quot;https://www.youtube.com/watch?v=_C77sBcAtSQ&quot;&gt;이 짧은 데모 영상&lt;/a&gt;을 확인해봅시다.&lt;/p&gt;&lt;p&gt;다른 변경 사항 없이 커넥션 풀 크기를 줄이는 것만으로도
+애플리케이션의 응답 시간을 최대 100ms에서 최대 2ms로 50배나
+개선할 수 있음을 영상에서 확인할 수 있습니다.&lt;/p&gt;&lt;h3&gt;이유&lt;/h3&gt;&lt;p&gt;적은 것이 오히려 좋다(less is more)는 깨달음은 다른 컴퓨팅 분야들에서도 확인할 수 있습니다.
+100개의 프로세스를 사용하는 &lt;em&gt;아파치&lt;/em&gt; 웹서버보다
+4개의 쓰레드만을 사용하는 &lt;em&gt;nginx&lt;/em&gt; 웹서버의 성능이 더 우월한 이유는 무엇일까요?
+컴퓨터과학 개론 수업 내용을 생각해보면 당연하지 않나요?&lt;/p&gt;&lt;p&gt;하나의 CPU 코어를 지닌 컴퓨터조차도 &amp;quot;동시에&amp;quot; 수십, 수백개의 쓰레드를 지원할 수 있습니다.
+그러나 이것이 &lt;em&gt;시분할&lt;/em&gt; 기법을 활용한 운영체제의 눈속임에 불과하다는 점을 [왠만하면] 알고 있어야 합니다.
+실제로는 하나의 코어는 한번에 단 &lt;em&gt;하나의&lt;/em&gt; 쓰레드만을 실행할 수 있습니다.
+그리고 운영체제에서 컨텍스트를 스위치하면 해당 코어는 다른 쓰레드의 코드를 실행하게 됩니다.
+단일 CPU 자원이 주어졌을 때, 시분할을 통해 &lt;strong&gt;A&lt;/strong&gt;와 &lt;strong&gt;B&lt;/strong&gt;를 &amp;quot;동시에&amp;quot; 실행하는 것보다
+&lt;strong&gt;A&lt;/strong&gt;와 &lt;strong&gt;B&lt;/strong&gt;를 순차적으로 실행하는 것이
+&lt;em&gt;언제나&lt;/em&gt; 더 빠를 것이라는 점이 기초적인 컴퓨팅 법칙입니다.
+쓰레드의 개수가 CPU 코어의 개수보다 많다면,
+그 이후부터는 쓰레드를 추가할수록 빨라지는 것이 아니라 느려집니다.&lt;/p&gt;&lt;p&gt;그것이 &lt;em&gt;거의&lt;/em&gt; 맞습니다...&lt;/p&gt;&lt;h3&gt;제한된 자원&lt;/h3&gt;&lt;p&gt;거의 맞기는 하지만 위의 설명처럼 간단한 것만은 아닙니다.
+몇 가지 요인들이 추가적으로 작용합니다.
+데이터베이스에서 병목을 발생시키는 주요 요인들은
+&lt;em&gt;CPU&lt;/em&gt;, &lt;em&gt;디스크&lt;/em&gt;, &lt;em&gt;네트워크&lt;/em&gt;라는 3가지로 요약됩니다.
+&lt;em&gt;메모리&lt;/em&gt;도 추가할 수 있지만 디스크와 네트워크에 비해 극단적으로 미미합니다.&lt;/p&gt;&lt;p&gt;&lt;em&gt;디스크&lt;/em&gt;와 &lt;em&gt;네트워크&lt;/em&gt;를 무시한다면 간단합니다.
+8개의 연산 코어를 지닌 서버에서는 커넥션 개수를 8개로 설정하는 것이 최적의 성능을 제공할 것입니다.
+그 이상을 넘어서면 컨텍스트 스위칭으로 인한 오버헤드 때문에 성능이 저하됩니다.
+그러나 &lt;em&gt;디스크&lt;/em&gt;와 &lt;em&gt;네트워크&lt;/em&gt;를 무시할 수는 없습니다.
+데이터베이스는 일반적으로 데이터를 &lt;em&gt;디스크&lt;/em&gt;에 저장합니다.
+이 디스크는 전통적으로 회전하는 철판과 읽기/쓰기 헤드로 구성되어있습니다.
+이 읽기/쓰기 헤드는 동시에 한 곳에만 존재하며 단 하나의 쿼리에 대해 데이터를 읽고 쓸 수 있습니다.
+그리고 다른 쿼리에 대해 데이터를 읽고 쓰기 위해서는 다른 위치를 &amp;quot;탐색&amp;quot;해야 합니다.
+때문에 탐색 시간 비용이 존재하며, 디스크가 다시 돌아올 때까지 기다려야 하는 회전 비용도 존재합니다.
+캐슁을 통해 개선될 수 있으나 이 원칙은 여전히 적용됩니다.&lt;/p&gt;&lt;p&gt;이 &amp;quot;I/O 대기&amp;quot; 시간 동안 커넥션, 쿼리, 쓰레드는 전부 디스크를 기다리며 &amp;quot;블록&amp;quot;됩니다.
+그리고 이 기간 동안 운영체제는 다른 쓰레드의 코드를 실행함으로써 CPU 자원을
+효율적으로 사용할 수 있습니다.
+즉, &lt;strong&gt;쓰레드가 I/O 작업에 의해 블록되기 때문에 물리적으로 존재하는 코어의 개수보다 더 많은 커넥션과 쓰레드를 지님으로써 더 많은 작업을 할 수 있게 됩니다.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;얼마나 더 많은 작업을 할 수 있을까요? 봅시다.
+이 질문은 &lt;em&gt;디스크 하위 시스템&lt;/em&gt;에도 의존합니다.
+최신 SSD 드라이브는 탐색 시간 비용이나 회전에 의한 요인이 없기 때문입니다.
+그렇다고 &amp;quot;SSD가 더 &lt;em&gt;빠르므로&lt;/em&gt; 더 &lt;em&gt;많은&lt;/em&gt; 쓰레드를 지녀도 된다&amp;quot;라고 착각하면 안됩니다.
+이는 180도 반대입니다.
+더 빠르고, 탐색 작업이 없고, 회전 딜레이가 없다는 말은 &lt;em&gt;블록킹이 적다&lt;/em&gt;는 뜻으로,
+[코어 개수에 가깝도록] &lt;em&gt;쓰레드 개수를 줄이는 것&lt;/em&gt;이 늘리는 것보다 성능이 좋습니다.
+&lt;em&gt;쓰레드 개수가 많은 것은 블록킹으로 인해 실행될 수 있는 기회가 생성될 때에만 더 좋게 동작합니다.&lt;/em&gt;&lt;/p&gt;&lt;p&gt;&lt;em&gt;네트워크&lt;/em&gt;는 &lt;em&gt;디스크&lt;/em&gt;와 비슷합니다.
+이더넷 인터페이스를 통해 데이터를 와이어 위에 쓰는 작업은
+전송 및 수신 버퍼에서의 대기로 인해 블록킹을 발생시킬 수 있습니다.
+10 기가비트 인터페이스는 기가비트 이더넷이 비해 덜 지연되며,
+기가비트 이더넷은 100 메가비트 이더넷에 비해 덜 지연됩니다.
+그러나 네트워크는 자원 블록킹에 있어 3순위 고려사항이며, 계산에서 제외시키는 경우도 있습니다.&lt;/p&gt;&lt;p&gt;&lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position:relative;display:block;margin-left:auto;margin-right:auto;max-width:590px&quot;&gt;
+      &lt;a class=&quot;gatsby-resp-image-link&quot; href=&quot;/static/7e7877f639a964e4616df6ccdf0d9816/cd78c/graph.png&quot; style=&quot;display:block&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;
+    &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom:79.72972972972973%;position:relative;bottom:0;left:0;background-image:url(&amp;#x27;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAQCAYAAAAWGF8bAAAACXBIWXMAABYlAAAWJQFJUiTwAAAB6ElEQVQ4y4VU2a7jIAzN/3/iPHTutFmVjUCALJBzddwSdapWdeQYHPt4wSQDgKZpcLlcMAwD6rrG7XYTXVmWIvu+R9u2yPMcXdfher2KzXEceKWsKApUVSWbZVngvRfpnJM1mevnbyEEeO+g1AhvLfRooJSF8wsyRidv24Z5nsX4HaVsnPeY1IiybNB0Cn4J6IYBvdbQZkbGUljGvu+SCR1ZOnXjOEJrLfu77NHUFX7yBn+KCjosMMGiXHqYaGHtA5CcAGOMAsDeUU7TJOCzMWjbHsWgoY8NfOIRsIeI2R/YA2CtRUbj1wzfkd4iWucwzSOCs4iTQTQzorU49ATMBnb+UDKz5B44sO4BeTdg7FtsWrGJiM4j7LvYxRAQ9iB+kiFfHA8eSgIMMfIUoN2Kv9cKdhwAOseIwICPoIl5kCcgT5b9SoA0kBLtgkteY1sW2d+dw39AXwGpIBm/4V/V4aAhcHd4A/QRkINNQO+c9OynVdJDKZ89CuF0/ArIFwEJwJtwGyz8tksPw5PT8dK3V0CSAPIqcd72bcOl7qHsKmAMkLJ7zvATnxmec6Y1unGE0VquIAeaOjLXxphTl9ZJPq+zNMjMaH38ANZ1lY8ETuCMnsCoU0qdMuk5z9nzxf9EDMJZ5a/tm+0vlD/bXMRNTuMAAAAASUVORK5CYII=&amp;#x27;);background-size:cover;display:block&quot;&gt;&lt;/span&gt;
+  &lt;img class=&quot;gatsby-resp-image-image&quot; alt=&quot;PostgreSQL benchmark&quot; title=&quot;PostgreSQL benchmark&quot; src=&quot;/static/7e7877f639a964e4616df6ccdf0d9816/fcda8/graph.png&quot; srcSet=&quot;/static/7e7877f639a964e4616df6ccdf0d9816/12f09/graph.png 148w,/static/7e7877f639a964e4616df6ccdf0d9816/e4a3f/graph.png 295w,/static/7e7877f639a964e4616df6ccdf0d9816/fcda8/graph.png 590w,/static/7e7877f639a964e4616df6ccdf0d9816/efc66/graph.png 885w,/static/7e7877f639a964e4616df6ccdf0d9816/c83ae/graph.png 1180w,/static/7e7877f639a964e4616df6ccdf0d9816/cd78c/graph.png 1236w&quot; sizes=&quot;(max-width: 590px) 100vw, 590px&quot; style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;/&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;&lt;p&gt;위의 PostgreSQL 지표를 보면 기울기가 점가 감소하며
+50개의 커넥션부터 TPS 값이 안정적으로 유지되는 것을 확인할 수 있습니다.
+그리고 위의 오라클 영상에서는 커넥션을 2048에서 96으로 감소시켰습니다.
+물론 코어의 개수가 16, 32개가 아니라면 96조차도 너무 높습니다&lt;/p&gt;&lt;h3&gt;공식&lt;/h3&gt;&lt;p&gt;아래의 공식은 PostgreSQL에서 출발점으로서 제공되었지만,
+다른 다양한 데이터베이스들에 보편적으로 적용될 수 있다고 믿습니다.
+여러분의 애플리케이션에 대해서도 예상되는 부하를 시뮬레이션하고
+이 출발점을 중심으로 다양한 풀 설정을 시도해보기를 바랍니다.&lt;/p&gt;&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre style=&quot;counter-reset:linenumber NaN&quot; class=&quot;language-text line-numbers&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;connections = ((core_count * 2) + effective_spindle_count)&lt;/code&gt;&lt;span aria-hidden=&quot;true&quot; class=&quot;line-numbers-rows&quot; style=&quot;white-space:normal;width:auto;left:0&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div title=&quot;PostgreSQL - 데이터베이스 커넥션 개수&quot;&gt;&lt;p&gt;&lt;em&gt;최적의 처리량을 위해서는 활성화된 커넥션의 개수가 ((core_count &lt;/em&gt; 2) + effective_spindle_count)
+정도여야 한다는 것이 수 년에 걸쳐 입증된 공식이다.
+하이퍼쓰레딩이 활성화되었더라도 코어 개수에 HT 쓰레드를 포함시키면 안 된다.
+활성화된 데이터가 전부 캐쉬되어있다면 효율적인 스핀들 개수는 0입니다.
+그리고 캐쉬 적중률이 감소할수록 점차 실제 스핀들의 개수에 가까워지게 됩니다.
+... 다만, 해당 공식이 SSD에 얼마나 적절하게 적용될 수 있는지에 대한 분석은 아직 없습니다.&lt;/p&gt;&lt;/div&gt;&lt;p&gt;이게 무슨 의미일까요? 여러분의 작고 소중한 하드디스크 1개 짜리 4-Core i7 서버의
+커넥션 풀 크기는 9개(&lt;code&gt;((4 * 2) + 1) = 9&lt;/code&gt;)여야 합니다. 예쁘게 반올림해서 10으로 설정합시다.
+너무 낮다고 생각하나요? 한번 테스트해보세요.
+3000명의 프론트엔드 사용자가 간단한 쿼리를 발생시킨다고 했을 때
+6000 TPS의 성능으로 처리할 수 있을 것이라고 보장합니다.
+이러한 셋업에서 커넥션 풀 크기를 10보다 훨씬 높게 설정하여 부하 테스트를 진행하면
+TPS는 하락하고 응답 시간은 증가하는 것이 확인될 것입니다.&lt;/p&gt;&lt;h3&gt;격언: 커넥션을 기다리는 쓰레드들로 가득차 있는 작은 풀을 설정해야 한다.&lt;/h3&gt;&lt;p&gt;1만명의 프론트엔드 사용자들이 있을 때 커넥션 풀의 크기가 1만인 것은 순수한 광기입니다.
+1000도 끔찍합니다. 100조차도 과도하죠.
+여러분은 아무리 크더라도 최대 수십 개의 커넥션으로 구성된 작은 풀을 설정해야 하며,
+애플리케이션 쓰레드들이 풀로부터 커넥션을 받기 위해 블록되도록 해야 합니다.
+풀이 적절하게 설정되었다는 것은
+데이터베이스가 동시에 처리할 수 있는 쿼리의 개수의 한계에 딱 맞는 수치이며,
+이는 CPU 코어 개수의 2배를 크게 넘기지 않습니다.&lt;/p&gt;&lt;p&gt;우리는 고작 수십명의 프론트엔드 사용자들이 주기적으로 사용하는 사내 웹 애플리케이션의
+커넥션 풀 크기를 100으로 설정하는 놀라운 행각을 꾸준히 목격하고 있습니다.
+데이터베이스를 학대하지 맙시다.&lt;/p&gt;&lt;hr/&gt;&lt;h2&gt;풀 락킹&lt;/h2&gt;&lt;p&gt;복수의 커넥션을 요구하는 단일 작업으로 인해 풀 락킹(pool-locking) 문제가 발생할 수도 있습니다.
+이는 기본적으로 애플리케이션 레벨에서의 이슈입니다.
+물론 이러한 시나리오에서 풀 크기를 늘리는 것을 통해 락을 완화시킬 수 있겠지만,
+그 전에 애플리케이션 레벨에서 할 수 있는 작업을 확인해보는 것을 권장합니다.&lt;/p&gt;&lt;p&gt;데드락을 회피하기 위한 풀 크기 계산식은 간단한 자원 할당 공식입니다.&lt;/p&gt;&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre style=&quot;counter-reset:linenumber NaN&quot; class=&quot;language-text line-numbers&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;pool size = Tn x (Cm - 1) + 1&lt;/code&gt;&lt;span aria-hidden=&quot;true&quot; class=&quot;line-numbers-rows&quot; style=&quot;white-space:normal;width:auto;left:0&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;Tn&lt;/code&gt;은 쓰레드의 최대 개수, &lt;code&gt;Cm&lt;/code&gt;은 단일 쓰레드에 의해 &lt;em&gt;동시에 사용되는 커넥션&lt;/em&gt;의 최대 개수입니다.&lt;/p&gt;&lt;p&gt;예를 들어, 3개의 쓰레드(&lt;code&gt;Tn=3&lt;/code&gt;)에서 특정한 작업을 수행하기 위해 각자 4개의 커넥션(&lt;code&gt;Cm=4&lt;/code&gt;)을
+필요로 하는 경우를 생각해봅시다.
+데드락이 절대로 발생하지 않도록 보장하는 커넥션 풀 크기는 아래와 같이 10개입니다.&lt;/p&gt;&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre style=&quot;counter-reset:linenumber NaN&quot; class=&quot;language-text line-numbers&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;pool size = 3 x (4 - 1) + 1 = 10&lt;/code&gt;&lt;span aria-hidden=&quot;true&quot; class=&quot;line-numbers-rows&quot; style=&quot;white-space:normal;width:auto;left:0&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;다른 예로, 최대 8개의 쓰레드(&lt;code&gt;Tn=8&lt;/code&gt;)에서 특정 작업을 위해 각자 3개의 커넥션(&lt;code&gt;Cm=3&lt;/code&gt;)을 요구하는 경우,
+데드락을 완벽하게 예방하기 위한 커넥션 풀 크기는 아래와 같이 17개입니다.&lt;/p&gt;&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre style=&quot;counter-reset:linenumber NaN&quot; class=&quot;language-text line-numbers&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;pool size = 8 x (3 - 1) + 1 = 17&lt;/code&gt;&lt;span aria-hidden=&quot;true&quot; class=&quot;line-numbers-rows&quot; style=&quot;white-space:normal;width:auto;left:0&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;👉 이 값은 최적의 풀 크기가 아니라, 데드락을 회피하기 위한 최소값입니다.&lt;/p&gt;&lt;p&gt;👉 일부 환경에서는 JTA(Java Transaction Manager)를 사용함으로써
+요구되는 커넥션의 개수를 극단적으로 줄일 수 있습니다.
+이 경우 이미 현재 트랜잭션에서 &lt;code&gt;Connection&lt;/code&gt;를 지니고 있는 쓰레드에서
+&lt;code&gt;getConnection()&lt;/code&gt;을 호출했을 때 동일한 커넥션을 반환하도록 하는 방식을 사용합니다.&lt;/p&gt;&lt;hr/&gt;&lt;h2&gt;주의사항&lt;/h2&gt;&lt;p&gt;적절한 풀 사이즈 값은 궁극적으로 배포된 서버에 따라 천차만별입니다.&lt;/p&gt;&lt;p&gt;예를 들어, 굉장히 긴 트랜잭션과 짧은 트랜잭션이 혼합되어 있는 시스템의 커넥션 풀을 최적화하는 것은
+어려운 일입니다. 이러한 경우, 복수의 풀 인스턴스를 생성하는 것이 적절할 수 있습니다.
+오래 걸리는 작업을 위한 풀 하나와 &amp;quot;실시간&amp;quot; 쿼리를 위한 풀 하나로 분리하여 사용하는 것이죠.&lt;/p&gt;&lt;p&gt;대체로 긴 트랜잭션들로 구성된 시스템의 경우
+일반적으로 필요한 커넥션의 개수에 있어 &amp;quot;외부&amp;quot; 제약조건이 존재합니다.
+무조건 일정 개수의 작업을 함께 실행시키는 작업 실행 큐가 그 예입니다.
+이러한 경우, 작업 큐의 크기에 맞추어 커넥션 풀 크기를 설정하는 것이 아니라
+오히려 그 반대로 커넥션 풀 사이즈에 맞추어 작업 큐의 사이즈를 조정해야 합니다.&lt;/p&gt;&lt;hr/&gt;&lt;div&gt;&lt;/div&gt;&lt;ul&gt;&lt;li&gt;원문: &lt;a href=&quot;https://github.com/brettwooldridge/HikariCP/wiki/About-Pool-Sizing&quot;&gt;About Pool Sizing - HikariCP 깃헙 위키&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://wiki.postgresql.org/wiki/Number_Of_Database_Connections&quot;&gt;Number Of Database Connections - PostgreSQL&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[[토이 프로젝트] MyS3: 나만의 작은 이미지 호스팅 서버]]></title><description><![CDATA[AWS S3를 사용할 수 없게 되어 EC2 인스턴스에서 실행가능한 대체품을 만들어보았습니다. 이미지 파일 업로드 및 조회 API를 제공하며, 업로드된 파일을 로컬 머신에서 직접 관리하는 구조입니다.]]></description><link>https://bugoverdose.github.io/development/image-hosting-server-toy-project/</link><guid isPermaLink="false">https://bugoverdose.github.io/development/image-hosting-server-toy-project/</guid><pubDate>Sun, 07 Aug 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;우테코 레벨3 도중 코치님이 AWS S3를 사용하지 말라고 하셔서
 EC2 인스턴스에서 실행가능한 이미지 호스팅 서버를 직접 구현해보았습니다.
 다양한 한계로 인해 실제 S3를 대체하기는 어렵겠지만,
 개인적으로 재밌는 프로젝트였기에 이에 대해 기록하고자 합니다.&lt;/p&gt;&lt;p&gt;해당 게시글은 개발 초기 단계 결과물에 대한 데모를 목적으로 하고 있습니다.
