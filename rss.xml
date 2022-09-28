@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[RSS Feed | bugoverdose]]></title><description><![CDATA[공부하고 경험한 내용을 깔끔하게 설명하는 것을 목표로 하는 개발 블로그입니다. 컴퓨터과학, 웹 개발 등 다양한 주제를 포괄적으로 다룹니다.]]></description><link>https://bugoverdose.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Wed, 28 Sep 2022 15:25:51 GMT</lastBuildDate><item><title><![CDATA[무중단 DB 마이그레이션과 호환성 문제 해결]]></title><description><![CDATA[DB 마이그레이션 및 API 마이그레이션 작업을 무중단 배포로 수행하는 과정에서 발생할 수 있는 호환성 문제와 이에 대한 해결 방안에 대해 이야기합니다. 꼭꼭 서비스 개발 과정에서 직면한 문제를 예시로 설명합니다.]]></description><link>https://bugoverdose.github.io/development/zero-downtime-deployment-and-compatibility/</link><guid isPermaLink="false">https://bugoverdose.github.io/development/zero-downtime-deployment-and-compatibility/</guid><pubDate>Wed, 28 Sep 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;릴리즈한 서비스에서 DB 마이그레이션 및 API 마이그레이션 작업을 수행할 일이 있었습니다.
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[RSS Feed | bugoverdose]]></title><description><![CDATA[공부하고 경험한 내용을 깔끔하게 설명하는 것을 목표로 하는 개발 블로그입니다. 컴퓨터과학, 웹 개발 등 다양한 주제를 포괄적으로 다룹니다.]]></description><link>https://bugoverdose.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Wed, 28 Sep 2022 16:40:30 GMT</lastBuildDate><item><title><![CDATA[무중단 DB 마이그레이션과 호환성 문제 해결]]></title><description><![CDATA[DB 마이그레이션 및 API 마이그레이션 작업을 무중단 배포로 수행하는 과정에서 발생할 수 있는 호환성 문제와 이에 대한 해결 방안에 대해 이야기합니다. 꼭꼭 서비스 개발 과정에서 직면한 문제를 예시로 설명합니다.]]></description><link>https://bugoverdose.github.io/development/zero-downtime-deployment-and-compatibility/</link><guid isPermaLink="false">https://bugoverdose.github.io/development/zero-downtime-deployment-and-compatibility/</guid><pubDate>Wed, 28 Sep 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;릴리즈한 서비스에서 DB 마이그레이션 및 API 마이그레이션 작업을 수행할 일이 있었습니다.
 이러한 작업을 롤링 배포로 진행할 경우 일어날 수 있는 호환성 문제와
 이에 대한 해결 방안에 대해 이야기하고자 합니다.&lt;/p&gt;&lt;p&gt;해당 &lt;a href=&quot;https://github.com/woowacourse-teams/2022-kkogkkog/issues/322&quot;&gt;깃헙 이슈&lt;/a&gt;를
 통해 실제 프로젝트에서 진행된 과정을 부분적으로 확인할 수 있습니다.&lt;/p&gt;&lt;h2&gt;무중단 배포 아키텍처&lt;/h2&gt;&lt;p&gt;구버전(이하 V1)의 서버를 신버전(이하 V2)의 서버로 재배포하는 과정은 기본적으로 3단계로 이루어집니다.&lt;/p&gt;&lt;ol&gt;&lt;li&gt;V1 서버가 구동 중인 EC2 인스턴스로 V2 서버의 빌드 결과물을 전송(&lt;code&gt;scp&lt;/code&gt;)&lt;/li&gt;&lt;li&gt;구동 중인 V1 서버를 중단(&lt;code&gt;kill&lt;/code&gt;)&lt;/li&gt;&lt;li&gt;V2 서버를 새로 실행(&lt;code&gt;java -jar&lt;/code&gt;)&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;이때 문제가 되는 것은 2단계와 3단계 사이의 기간 동안 해당 EC2 인스턴스로 클라이언트의 요청이 들어오는 경우입니다.
@@ -69,15 +69,34 @@ V1.5에서 제공하는 v1 API까지 동일하게 제공해야 호환성 문제 
 이는 &lt;code&gt;/api/v1/~&lt;/code&gt;, &lt;code&gt;/api/v2/~&lt;/code&gt;와 같이 URI를 통해 API의 버전을 관리하면 쉽게 구현할 수 있습니다.
 이 상태로 V2 서버가 완전히 배포된 이후에
 v1 API 대신 v2 API를 호출하도록 수정한 프론트엔드 애플리케이션을 배포하게 되면
-모든 작업이 완료됩니다.&lt;/p&gt;&lt;p&gt;이 상태에서는 불필요해진 &lt;code&gt;reservation&lt;/code&gt; 테이블과 &lt;code&gt;/api/v1/~&lt;/code&gt; 형식의 API를 제거해도
-시스템에 아무런 문제가 없습니다.&lt;/p&gt;&lt;h4&gt;블루-그린 배포를 통한 API 마이그레이션&lt;/h4&gt;&lt;p&gt;한편 &lt;strong&gt;블루-그린 배포(blue-green deployment)&lt;/strong&gt;를 통해 API 마이그레이션을 수행하는 경우도 생각해볼 수 있습니다.
-&lt;a href=&quot;https://hudi.blog/zero-downtime-deployment/&quot;&gt;후디의 블로그&lt;/a&gt;에서 훔처온 이미지를 확인하면 이해하기 쉽습니다.&lt;/p&gt;&lt;p&gt;&lt;img src=&quot;/4787416bca99a5dd28577d99caa44340/blue-green-deployment.gif&quot; alt=&quot;블루-그린 배포&quot;/&gt;&lt;/p&gt;&lt;p&gt;기본적으로 V2 서버(그린)들이 완전히 구동되었을 때
+모든 작업이 완료됩니다.&lt;/p&gt;&lt;p&gt;그리고 이제 불필요해진 &lt;code&gt;reservation&lt;/code&gt; 테이블과 &lt;code&gt;/api/v1/~&lt;/code&gt; 형식의 API를 제거해도
+시스템에 아무런 문제가 없습니다.&lt;/p&gt;&lt;h4&gt;블루-그린 배포를 통한 API 마이그레이션&lt;/h4&gt;&lt;p&gt;한편 &lt;strong&gt;블루-그린 배포(blue-green deployment)&lt;/strong&gt;를 통해 API 마이그레이션을 수행하는 경우도 생각할 수 있습니다.
+마찬가지로 &lt;a href=&quot;https://hudi.blog/zero-downtime-deployment/&quot;&gt;후디의 블로그&lt;/a&gt;에서 훔쳐온 이미지를 확인하면 이해하기 쉽습니다.&lt;/p&gt;&lt;p&gt;&lt;img src=&quot;/4787416bca99a5dd28577d99caa44340/blue-green-deployment.gif&quot; alt=&quot;블루-그린 배포&quot;/&gt;&lt;/p&gt;&lt;p&gt;간단히 말해 V2 서버(그린)들이 완전히 구동되었을 때
 로드밸런서의 트래픽을 V1.5 서버(블루)에서 V2 서버(그린)들로 전환하는 방법입니다.
-그러나 이 방법을 사용하더라도 모든 트래픽이 그린으로 들어오기 시작했을 때
+그러나 이 방법을 사용하더라도 모든 트래픽이 그린으로 들어오게 되었을 때
 &lt;strong&gt;클라이언트에서는 여전히 블루를 기대하고 그린으로 요청을 보내게 됩니다.&lt;/strong&gt;
 즉, 잠깐동안만이라도 &lt;strong&gt;V2 서버에서 V1.5 서버의 기존 API를 제공해야 한다는 점은 위와 동일합니다.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;오히려 위와 같은 배포 방식을 선택할 경우, 굳이 EC2 인스턴스를 추가로 만들고,
 일일이 CI/CD 워크플로우를 셋업해주고, 셋업해주는 등의 불필요한 작업을 수행해야 합니다.
-때문에 유의미한 효용이 있지 않다면 저희 팀은 기본적으로 롤링 배포를 선택할 것 같습니다.&lt;/p&gt;&lt;hr/&gt;&lt;div&gt;참고문서&lt;/div&gt;&lt;ul&gt;&lt;li&gt;SAMSUNG SDS : &lt;a href=&quot;https://www.samsungsds.com/kr/insights/1256264_4627.html&quot;&gt;무중단 배포 아키텍처(Zero Downtime Deployment)&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;div&gt;&lt;div num=&quot;1&quot;&gt;&lt;p&gt;동일한 EC2 인스턴스에서 V1 서버가 구동 중일 때 V2를 미리 실행하는 경우를 생각해볼 수 있습니다.
+때문에 유의미한 효용이 있지 않다면 저희 팀은 기본적으로 롤링 배포를 선택할 것 같습니다.&lt;/p&gt;&lt;h2&gt;맺으며&lt;/h2&gt;&lt;p&gt;사실 해당 게시글에서 사용한 DB 마이그레이션 예시는
+모든 문제 상황에 적용할 수 없다고 생각합니다.
+상황에 따라 중단 배포를 진행해야만 하는 경우는 언제든지 존재할 수 있으며,
+이는 나쁜 것이 아니라고 생각합니다.
+특히 억지로 다운타임을 없애기 위한 중간 과정이 너무 복잡한 경우
+차라리 서비스를 일시적으로 중단시키는 것이 더 적은 비용을 초래할지도 모릅니다.&lt;/p&gt;&lt;p&gt;그러나 무중단 배포라는 목적이 아니더라도
+위에서 설명한 업무 진행 방식 및 설계는
+개발자들 간의 원활한 협업을 촉진할 수 있습니다.&lt;/p&gt;&lt;p&gt;기본적으로 리팩토링이 완료되기 전에 중간 버전의 서버에서
+DB 마이그레이션 과정을 미리 수행하는 경우,
+대규모 작업을 여러 PR로 잘게 쪼개어 진행할 수 있게 됩니다.&lt;/p&gt;&lt;p&gt;또한 기존 API와 신규 API를 함께 제공하는 것은
+다른 작업과의 병행을 가능하게 해줍니다.
+예를 들어, 해당 서버에서 추가적인 기능을 구현되었을 때
+프론트엔드에서 API 마이그레이션이 진행되지 않았더라도
+기존 API가 아직 존재한다면 문제 없이 운영 서버로 최신 버전을 배포할 수 있습니다.
+프론트엔드 개발자들도 조금 더 여유를 가지고 우선순위가 더 높은
+다른 작업들을 끝낸 이후에 API 마이그레이션을 진행할 수 있게 됩니다.
+이와는 반대로 클라이언트에서 갑자기 기존 API를 호출할 수 없게 된다면,
+신규 API로의 마이그레이션이 진행되기 전까지
+해당 서버는 운영환경에 배포될 수 없으며,
+추가적인 기능을 구현하더라도 개발용 사이트에서 QA를 진행할 수가 없습니다.&lt;/p&gt;&lt;hr/&gt;&lt;div&gt;참고문서&lt;/div&gt;&lt;ul&gt;&lt;li&gt;SAMSUNG SDS : &lt;a href=&quot;https://www.samsungsds.com/kr/insights/1256264_4627.html&quot;&gt;무중단 배포 아키텍처(Zero Downtime Deployment)&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;div&gt;&lt;div num=&quot;1&quot;&gt;&lt;p&gt;동일한 EC2 인스턴스에서 V1 서버가 구동 중일 때 V2를 미리 실행하는 경우를 생각해볼 수 있습니다.
 그러나 V1 서버에 할당된 포트와 동일한 포트에 대해 V2 실행하는 것은 불가능합니다.&lt;/p&gt;&lt;/div&gt;&lt;div num=&quot;2&quot;&gt;&lt;p&gt;다음은 DB 마이그레이션의 계기가 된 도메인 리팩토링에 대한 간소화된 설명입니다.&lt;/p&gt;&lt;p&gt;저희 서비스는 사용자들 사이에 &amp;#x27;쿠폰&amp;#x27;을 주고 받고, &amp;#x27;쿠폰&amp;#x27;에 대한 &amp;#x27;사용 요청&amp;#x27;을 &amp;#x27;예약 날짜&amp;#x27;와 함께
 보내는 구조입니다. &lt;code&gt;coupon&lt;/code&gt; 테이블에서 각 쿠폰 데이터를 관리하며,
 특정 쿠폰에 대해 예약 요청이 들어오면 &lt;code&gt;reservation&lt;/code&gt; 테이블에 해당 쿠폰에 대한 예약 데이터가
