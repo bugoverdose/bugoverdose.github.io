@@ -1,4 +1,98 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[RSS Feed | bugoverdose]]></title><description><![CDATA[공부하고 경험한 내용을 깔끔하게 설명하는 것을 목표로 하는 개발 블로그입니다. 컴퓨터과학, 웹 개발 등 다양한 주제를 포괄적으로 다룹니다.]]></description><link>https://bugoverdose.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Sun, 25 Sep 2022 10:43:19 GMT</lastBuildDate><item><title><![CDATA[[번역] 커넥션 풀 사이즈에 대하여]]></title><description><![CDATA[HikariCP 공식 위키의 'About Pool Sizing' 페이지에 대한 번역입니다. 최적의 성능을 위해 데이터베이스 커넥션 풀 크기를 어떻게 설정해야 하는지에 대해 다룹니다.]]></description><link>https://bugoverdose.github.io/docs/database-connection-pool-sizing/</link><guid isPermaLink="false">https://bugoverdose.github.io/docs/database-connection-pool-sizing/</guid><pubDate>Sun, 25 Sep 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;nGrinder를 활용한 부하테스트 실험 도중,
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[RSS Feed | bugoverdose]]></title><description><![CDATA[공부하고 경험한 내용을 깔끔하게 설명하는 것을 목표로 하는 개발 블로그입니다. 컴퓨터과학, 웹 개발 등 다양한 주제를 포괄적으로 다룹니다.]]></description><link>https://bugoverdose.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Wed, 28 Sep 2022 12:40:36 GMT</lastBuildDate><item><title><![CDATA[무중단 DB 마이그레이션과 호환성 문제 해결]]></title><description><![CDATA[DB 마이그레이션 및 API 마이그레이션 작업을 무중단 배포로 수행하는 과정에서 발생할 수 있는 호환성 문제와 이에 대한 해결 방안에 대해 이야기합니다. 꼭꼭 서비스 개발 과정에서 직면한 문제를 예시로 설명합니다.]]></description><link>https://bugoverdose.github.io/development/zero-downtime-deployment-and-compatibility/</link><guid isPermaLink="false">https://bugoverdose.github.io/development/zero-downtime-deployment-and-compatibility/</guid><pubDate>Wed, 28 Sep 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;릴리즈한 서비스에서 DB 마이그레이션 및 API 마이그레이션 작업을 수행할 일이 있었습니다.
+이러한 작업을 롤링 배포로 진행할 경우 일어날 수 있는 호환성 문제와
+이에 대한 해결 방안에 대해 이야기하고자 합니다.&lt;/p&gt;&lt;p&gt;해당 &lt;a href=&quot;https://github.com/woowacourse-teams/2022-kkogkkog/issues/322&quot;&gt;깃헙 이슈&lt;/a&gt;를
+통해 실제 프로젝트에서 진행된 과정을 부분적으로 확인할 수 있습니다.&lt;/p&gt;&lt;h2&gt;무중단 배포 아키텍처&lt;/h2&gt;&lt;p&gt;구버전(이하 V1)의 서버를 신버전(이하 V2)의 서버로 재배포하는 과정은 기본적으로 3단계로 이루어집니다.&lt;/p&gt;&lt;ol&gt;&lt;li&gt;V1 서버가 구동 중인 EC2 인스턴스로 V2 서버의 빌드 결과물을 전송(&lt;code&gt;scp&lt;/code&gt;)&lt;/li&gt;&lt;li&gt;구동 중인 V1 서버를 중단(&lt;code&gt;kill&lt;/code&gt;)&lt;/li&gt;&lt;li&gt;V2 서버를 새로 실행(&lt;code&gt;java -jar&lt;/code&gt;)&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;이때 문제가 되는 것은 2단계와 3단계 사이의 기간 동안 해당 EC2 인스턴스로 클라이언트의 요청이 들어오는 경우입니다.
+이 짧은 기간 동안은 당연히 서버가 존재하지 않기 때문에 정상적인 서비스 운영이 불가능해집니다.&lt;div num=&quot;1&quot;&gt;&lt;/div&gt;
+은행과 같이 특정 시간대마다 요청을 받지 않는 서비스의 경우 이처럼 &lt;strong&gt;중단 배포(downtime deployment)&lt;/strong&gt;를 해도 무관합니다.
+하지만 대부분의 경우, 서비스가 릴리즈되어 실제 사용자들이 존재하는 경우 이러한 다운타임이 존재하지 않는 것이 이상적입니다.&lt;/p&gt;&lt;p&gt;바로 이러한 문제를 해결하기 위한 방법이 바로 &lt;strong&gt;무중단 배포(zero-downtime deployment) 아키텍처&lt;/strong&gt;입니다.
+기본적으로 다음과 같이 복수의 EC2 인스턴스에서 WAS를 구동시키고,
+앞단에 로드밸런서 및 리버스 프록시 서버를 두는 경우 쉽게 무중단 배포를 구현할 수 있습니다.&lt;/p&gt;&lt;p&gt;&lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position:relative;display:block;margin-left:auto;margin-right:auto;max-width:590px&quot;&gt;
+      &lt;a class=&quot;gatsby-resp-image-link&quot; href=&quot;/static/6aed8a92487f8d3e8126eff065972b15/0f246/zero-downtime-deployment-setup.png&quot; style=&quot;display:block&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;
+    &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom:50.67567567567568%;position:relative;bottom:0;left:0;background-image:url(&amp;#x27;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAKCAYAAAC0VX7mAAAACXBIWXMAABYlAAAWJQFJUiTwAAABJklEQVQoz5WSzUrDQBSF83p147Kb7nwCVwbfQNeVWiyKC12IoCUaqIILf6KIqREhURDxp0UQbcCkmckkM0cSk2DVju1sZjhzzse9c0eBZHHO050QUmhCCFkEyl9iEsphjuOgVJqAqqoFWAZVhl3kIc/7gGGc4MqyEnE8YOJLzHmA0hCHx6fQdnRsazps56YAfvdJgIMVRIxhq6lhobaIWr2BC7Od6nH2HP8Cf5ri7PjiErh9lsHkbf+qMDcuGe+orD7i6M7H1Poz5vZfsWG6KC8/wHwKsl8gRgeutX3M7LqwuiFmdRcr5x72bgNMN3u47NAvoBgDWD3ooly3cXbvodKwMd/qYNN8w2T1OtVGqnBwICEYDSAER0j64BEDjyPQwAfE8KF8AoLp/UZ6RzDbAAAAAElFTkSuQmCC&amp;#x27;);background-size:cover;display:block&quot;&gt;&lt;/span&gt;
+  &lt;img class=&quot;gatsby-resp-image-image&quot; alt=&quot;무중단 배포 셋업&quot; title=&quot;무중단 배포 셋업&quot; src=&quot;/static/6aed8a92487f8d3e8126eff065972b15/fcda8/zero-downtime-deployment-setup.png&quot; srcSet=&quot;/static/6aed8a92487f8d3e8126eff065972b15/12f09/zero-downtime-deployment-setup.png 148w,/static/6aed8a92487f8d3e8126eff065972b15/e4a3f/zero-downtime-deployment-setup.png 295w,/static/6aed8a92487f8d3e8126eff065972b15/fcda8/zero-downtime-deployment-setup.png 590w,/static/6aed8a92487f8d3e8126eff065972b15/efc66/zero-downtime-deployment-setup.png 885w,/static/6aed8a92487f8d3e8126eff065972b15/0f246/zero-downtime-deployment-setup.png 1118w&quot; sizes=&quot;(max-width: 590px) 100vw, 590px&quot; style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;/&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;&lt;p&gt;이러한 구조에서 가장 쉽게 실행할 수 있는 무중단 배포 기법은 바로 &lt;strong&gt;롤링 배포(rolling deployment)&lt;/strong&gt;입니다.
+&lt;a href=&quot;https://hudi.blog/zero-downtime-deployment/&quot;&gt;후디의 블로그&lt;/a&gt;의 이미지를 보면 그 과정을 쉽게 이해할 수 있습니다.&lt;/p&gt;&lt;p&gt;&lt;img src=&quot;/bf6f561cf6dd6e9fe9cbc45530dcadb2/rolling-deployment.gif&quot; alt=&quot;롤링 배포&quot;/&gt;&lt;/p&gt;&lt;p&gt;간단히 말하자면 V1 서버를 중단하고 V2 서버를 실행하는 작업을 개별 WAS에 대해 순차적으로 반복하는 것입니다.
+이때 nginx를 로드밸런서로 사용하게 되면,
+&lt;strong&gt;특정 WAS의 다운타임 기간 동안 해당 WAS로 트래픽을 보내지 않기 때문에&lt;/strong&gt; 쉽게 진행할 수 있습니다.&lt;/p&gt;&lt;p&gt;여기에 Jenkins, Github Action 등을 통해
+각 WAS를 순차적으로 V1 서버를 중단하고 V2 서버를 실행하는 파이프라인 및 워크플로우를
+구현하면 무중단 배포를 어느 정도 자동화할 수 있을 것입니다.&lt;/p&gt;&lt;h2&gt;무중단 DB 마이그레이션&lt;/h2&gt;&lt;p&gt;운영 중인 서비스에서 도메인 구조를 리팩토링하는 과정에서
+새로운 도메인 구조를 위해 DB 마이그레이션을 수행할 일이 생겨났습니다.&lt;div num=&quot;2&quot;&gt;&lt;/div&gt;&lt;/p&gt;&lt;p&gt;요구되는 DB 마이그레이션 작업 자체는 굉장히 간단합니다.
+다음과 같이 특정 테이블의 컬럼을 다른 테이블로 옮기기만 하면 됩니다.&lt;/p&gt;&lt;ol&gt;&lt;li&gt;&lt;code&gt;coupon&lt;/code&gt; 테이블에 &lt;code&gt;meeting_date&lt;/code&gt;라는 컬럼을 새로 추가&lt;/li&gt;&lt;li&gt;&lt;code&gt;reservation&lt;/code&gt; 테이블의 &lt;code&gt;meeting_date&lt;/code&gt; 컬럼에 저장된 데이터를 전부 &lt;code&gt;coupon&lt;/code&gt; 테이블로 이전&lt;/li&gt;&lt;li&gt;더 이상 필요없는 &lt;code&gt;reservation&lt;/code&gt; 테이블을 &lt;code&gt;DROP&lt;/code&gt;&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;사실 일시적으로 V1 서버를 중단시키고, 그 사이에 일련의 SQL문들을 실행한 이후에, V2 서버를 재실행한다면
+1분 이내에 모든 DB 마이그레이션 작업을 끝낼 수 있습니다.
+특히 &lt;a href=&quot;https://flywaydb.org&quot;&gt;Flyway&lt;/a&gt;를 통해
+V2 서버가 구동되는 시점에 자동으로 관련 SQL문들을 실행하도록 하는 경우,
+서버의 다운타임은 10초 이내일 것입니다.&lt;/p&gt;&lt;h3&gt;무중단 배포의 호환성 문제&lt;/h3&gt;&lt;p&gt;그런데 위의 과정을 무중단 배포로 진행한다면 몇 가지 문제가 발생합니다.&lt;/p&gt;&lt;p&gt;예를 들어 롤링 배포를 진행하는 경우, V1 서버와
+리팩토링 완료 후의 V2 서버 간의 &lt;strong&gt;호환성(compatibility)&lt;/strong&gt; 문제가 발생합니다.
+롤링 배포 진행 과정에서는 &lt;strong&gt;V1 서버와 V2 서버가 공존하는 시기&lt;/strong&gt;가 잠시 동안 존재합니다.
+이 기간 동안 들어오는 트래픽은 로드밸런서를 통해 두 가지 버전의 서버로 분산되어 전달됩니다.&lt;/p&gt;&lt;p&gt;이때 만일 &lt;code&gt;Flyway&lt;/code&gt;를 통해 V2 서버 구동 시점에 DB 마이그레이션 작업을 전부 끝내고
+&lt;code&gt;reservation&lt;/code&gt; 테이블을 제거하는 경우, 즉, 위의 1, 2, 3단계를 전부 수행하는 경우를 생각해봅시다.
+아직 존재하는 V1 서버에서 &lt;code&gt;reservation&lt;/code&gt; 테이블에 접근하려는 경우 상태 코드 500의 예외가 발생할 것입니다.&lt;/p&gt;&lt;p&gt;물론 &lt;code&gt;reservation&lt;/code&gt; 테이블을 제거하지 않고 DB 마이그레이션 작업, 즉 위의 1, 2단계만 수행하는 경우도 생각해볼 수 있습니다.
+그러나 이 경우 V1 서버에서 &lt;code&gt;reservation&lt;/code&gt; 테이블의 &lt;code&gt;meeting_date&lt;/code&gt;의 데이터를 생성/삭제한다면
+해당 내역은 &lt;code&gt;coupon&lt;/code&gt; 테이블의 &lt;code&gt;meeting_date&lt;/code&gt; 컬럼에는 반영되지 않으므로
+&lt;strong&gt;데이터 무결성(data integrity)이 깨지게 됩니다.&lt;/strong&gt;
+예를 들어, 이 기간 동안 예약이 취소되는 경우 &lt;code&gt;coupon&lt;/code&gt; 테이블의 &lt;code&gt;meeting_date&lt;/code&gt;에 값이 여전히 존재할 수도 있습니다.
+또한 예약이 생성되었음에도 예약 날짜 정보가 &lt;code&gt;reservation&lt;/code&gt; 테이블에만 저장되고,
+&lt;code&gt;coupon&lt;/code&gt; 테이블에는 반영되지 않고 여전히 &lt;code&gt;null&lt;/code&gt;이 담길 수도 있습니다.
+이는 저희 서비스에 치명적이며 찾아내기 너무나도 어려운 버그를 유발하게 됩니다.
+최악의 경우 이러한 문제를 사용자들이 보고하기 전까지 개발자들이 눈치 못챌 수도 있습니다.&lt;/p&gt;&lt;p&gt;이 외에도 경우가 있겠으나 V1 서버에서 V2 서버로 재배포를 하는 모든 경우에 유사한 문제가 발생합니다.&lt;div num=&quot;3&quot;&gt;&lt;/div&gt;
+그러므로 이런 경우에는 차라리 중단 배포를 하는 것이 이상적입니다.&lt;/p&gt;&lt;h3&gt;과도기 버전을 통한 호환성 보장&lt;/h3&gt;&lt;p&gt;이러한 문제를 해결하는 방법은 생각보다 간단합니다.
+&lt;strong&gt;V1과 V2 모두와 호환되는 중간 단계의 V1.5 서버&lt;/strong&gt;를 배포하는 것입니다.&lt;/p&gt;&lt;p&gt;기본적으로 V1.5 서버에서 제공하는 API의 기능은 V1 서버와 거의 동일하며
+둘 다 &lt;code&gt;reservation&lt;/code&gt; 테이블의 &lt;code&gt;meeting_date&lt;/code&gt; 컬럼을 활용해야 합니다.
+다만, 지금과 같은 경우 V1.5 서버 구동 시점에는 Flyway를 통해
+&lt;code&gt;coupon&lt;/code&gt; 테이블에 &lt;code&gt;meeting_date&lt;/code&gt;라는 컬럼을 새로 추가하도록 합니다.
+그리고 클라이언트가 V1.5 서버의 예약 관련 API가 호출했을 때
+&lt;code&gt;reservation&lt;/code&gt; 테이블의 &lt;code&gt;meeting_date&lt;/code&gt; 관련
+변경 내역을 &lt;code&gt;coupon&lt;/code&gt; 테이블의 &lt;code&gt;meeting_date&lt;/code&gt;에 동일하게 반영되도록 합니다.&lt;/p&gt;&lt;p&gt;이 경우 V1만 존재하는 시점, V1와 V1.5가 공존하는 시점, V1.5만 존재하는 시점
+모두 &lt;strong&gt;&lt;code&gt;reservation&lt;/code&gt; 테이블의 &lt;code&gt;meeting_date&lt;/code&gt;를 활용하고 그 값을 동일한 방식으로 수정합니다.&lt;/strong&gt;&lt;/p&gt;&lt;h3&gt;DB 마이그레이션을 통한 데이터 무결성 보장&lt;/h3&gt;&lt;p&gt;기본적으로 V1.5 서버들이 구동되는 시점에
+&lt;code&gt;coupon&lt;/code&gt; 테이블과 &lt;code&gt;reservation&lt;/code&gt; 테이블의 &lt;code&gt;meeting_date&lt;/code&gt; 컬럼 사이의 데이터 정합성은 깨집니다.
+그러나 애초에 V1.5 서버에서는 &lt;code&gt;coupon&lt;/code&gt; 테이블의 부정확한 &lt;code&gt;meeting_date&lt;/code&gt; 컬럼을 사용하지 않으므로
+&lt;strong&gt;아직은&lt;/strong&gt; 비즈니스 로직상 아무런 문제도 없습니다.&lt;/p&gt;&lt;p&gt;이제 &lt;strong&gt;모든 WAS가 V1.5로 완전히 대체된 이후, 아무때나 &lt;code&gt;reservation&lt;/code&gt; 테이블의 &lt;code&gt;meeting_date&lt;/code&gt; 값을 기준으로 &lt;code&gt;coupon&lt;/code&gt; 테이블의 &lt;code&gt;meeting_date&lt;/code&gt; 값을 동기화하는 실질적인 DB 마이그레이션을 실행&lt;/strong&gt;하면 됩니다.
+V1 서버에 의해 여태까지 &lt;code&gt;reservation&lt;/code&gt; 테이블에 쌓였던 &lt;code&gt;meeting_date&lt;/code&gt; 데이터는
+&lt;code&gt;coupon&lt;/code&gt; 테이블에서는 아직 &lt;code&gt;null&lt;/code&gt;로 존재하기 때문입니다.
+그러므로 실제로 &lt;code&gt;coupon&lt;/code&gt; 테이블의 &lt;code&gt;meeting_date&lt;/code&gt; 데이터를 사용하는
+V2 서버가 배포되기 전에 모든 데이터를 정상적으로 만들 필요가 있습니다.
+이 마이그레이션 작업은 Flyway를 통해 V2 서버의 구동 시점에 수행해도 되고,
+V2 서버 배포 이전에 별도로 수행해도 됩니다.&lt;/p&gt;&lt;p&gt;중요한 점은 DB 마이그레이션이 수행한 이후에도 &lt;code&gt;coupon&lt;/code&gt; 테이블의 &lt;code&gt;meeting_date&lt;/code&gt; 데이터는
+아직 사용되지 않음에도 불구하고,
+V1.5 서버에 의한 &lt;code&gt;reservation&lt;/code&gt; 테이블 변경 내역은 &lt;code&gt;coupon&lt;/code&gt; 테이블에도 꾸준히 반영된다는 점입니다.
+그러므로 향후 클라이언트에서 V2 서버의 API를 통해 &lt;code&gt;coupon&lt;/code&gt; 테이블의 &lt;code&gt;meeting_date&lt;/code&gt;를 사용하게 되었을 때
+아무런 호환성 문제가 발생하지 않게 됩니다.&lt;/p&gt;&lt;p&gt;한편, 주의할 점은 이 DB 마이그레이션 작업을 Flyway를 통해 V1.5 서버의 구동 시점에 수행해서는 안된다는 점입니다.
+V1와 V1.5 서버가 공존하는 기간에 DB 마이그레이션 작업이 완료되는 경우,
+V1 서버에서 &lt;code&gt;reservation&lt;/code&gt; 테이블을 변경했을 때 &lt;code&gt;coupon&lt;/code&gt; 테이블에 반영되지 않기 때문입니다.
+즉, &lt;strong&gt;DB 마이그레이션을 수행해야 하는 대상이 그 사이에 추가로 생겨나는 것&lt;/strong&gt;입니다.
+이 때문에 모든 서버가 확실히 중간 단계로 대체된 이후에 DB 마이그레이션을 한번에 묶어서 진행해야 합니다.&lt;/p&gt;&lt;h3&gt;API 버저닝을 통한 API 마이그레이션&lt;/h3&gt;&lt;p&gt;마지막으로 유의할 점은 API 마이그레이션 작업입니다.
+V2 서버에서는 마음놓고 &lt;code&gt;coupon&lt;/code&gt; 테이블의 &lt;code&gt;meeting_date&lt;/code&gt;를 사용할 수 있지만,
+그렇다고 &lt;code&gt;reservation&lt;/code&gt; 테이블을 사용하는 기존 API를 제거할 수는 없습니다.
+왜냐하면 &lt;strong&gt;V1.5에서 V2로 변경하는 동안 클라이언트에서는 여전히 V1.5 서버의 API를 사용하기 때문입니다.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;이 때문에 V2 서버에서 새로 구현된 v2 API만이 아니라
+V1.5에서 제공하는 v1 API까지 동일하게 제공해야 호환성 문제 없이 무중단 배포를 진행할 수 있게 됩니다.
+이는 &lt;code&gt;/api/v1/~&lt;/code&gt;, &lt;code&gt;/api/v2/~&lt;/code&gt;와 같이 URI를 통해 API의 버전을 관리하면 쉽게 구현할 수 있습니다.
+이 상태로 V2 서버가 완전히 배포된 이후에
+v1 API 대신 v2 API를 호출하도록 수정한 프론트엔드 애플리케이션을 배포하게 되면
+모든 작업이 완료됩니다.&lt;/p&gt;&lt;p&gt;이 상태에서는 불필요해진 &lt;code&gt;reservation&lt;/code&gt; 테이블과 &lt;code&gt;/api/v1/~&lt;/code&gt; 형식의 API를 제거해도
+시스템에 아무런 문제가 없습니다.&lt;/p&gt;&lt;h4&gt;블루-그린 배포를 통한 API 마이그레이션&lt;/h4&gt;&lt;p&gt;한편 &lt;strong&gt;블루-그린 배포(blue-green deployment)&lt;/strong&gt;를 통해 API 마이그레이션을 수행하는 경우도 생각해볼 수 있습니다.
+&lt;a href=&quot;https://hudi.blog/zero-downtime-deployment/&quot;&gt;후디의 블로그&lt;/a&gt;에서 훔처온 이미지를 확인하면 이해하기 쉽습니다.&lt;/p&gt;&lt;p&gt;&lt;img src=&quot;/4787416bca99a5dd28577d99caa44340/blue-green-deployment.gif&quot; alt=&quot;블루-그린 배포&quot;/&gt;&lt;/p&gt;&lt;p&gt;기본적으로 V2 서버(그린)들이 완전히 구동되었을 때
+로드밸런서의 트래픽을 V1.5 서버(블루)에서 V2 서버(그린)들로 전환하는 방법입니다.
+그러나 이 방법을 사용하더라도 모든 트래픽이 그린으로 들어오기 시작했을 때
+&lt;strong&gt;클라이언트에서는 여전히 블루를 기대하고 그린으로 요청을 보내게 됩니다.&lt;/strong&gt;
+즉, 잠깐동안만이라도 &lt;strong&gt;V2 서버에서 V1.5 서버의 기존 API를 제공해야 한다는 점은 위와 동일합니다.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;오히려 위와 같은 배포 방식을 선택할 경우, 굳이 EC2 인스턴스를 추가로 만들고,
+일일이 CI/CD 워크플로우를 셋업해주고, 셋업해주는 등의 불필요한 작업을 수행해야 합니다.
+때문에 유의미한 효용이 있지 않다면 저희 팀은 기본적으로 롤링 배포를 선택할 것 같습니다.&lt;/p&gt;&lt;hr/&gt;&lt;div&gt;참고문서&lt;/div&gt;&lt;ul&gt;&lt;li&gt;SAMSUNG SDS : &lt;a href=&quot;https://www.samsungsds.com/kr/insights/1256264_4627.html&quot;&gt;무중단 배포 아키텍처(Zero Downtime Deployment)&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;div&gt;&lt;div num=&quot;1&quot;&gt;&lt;p&gt;동일한 EC2 인스턴스에서 V1 서버가 구동 중일 때 V2를 미리 실행하는 경우를 생각해볼 수 있습니다.
+그러나 V1 서버에 할당된 포트와 동일한 포트에 대해 V2 실행하는 것은 불가능합니다.&lt;/p&gt;&lt;/div&gt;&lt;div num=&quot;2&quot;&gt;&lt;p&gt;다음은 DB 마이그레이션의 계기가 된 도메인 리팩토링에 대한 간소화된 설명입니다.&lt;/p&gt;&lt;p&gt;저희 서비스는 사용자들 사이에 &amp;#x27;쿠폰&amp;#x27;을 주고 받고, &amp;#x27;쿠폰&amp;#x27;에 대한 &amp;#x27;사용 요청&amp;#x27;을 &amp;#x27;예약 날짜&amp;#x27;와 함께
+보내는 구조입니다. &lt;code&gt;coupon&lt;/code&gt; 테이블에서 각 쿠폰 데이터를 관리하며,
+특정 쿠폰에 대해 예약 요청이 들어오면 &lt;code&gt;reservation&lt;/code&gt; 테이블에 해당 쿠폰에 대한 예약 데이터가
+&amp;#x27;예약 날짜&amp;#x27; 정보와 함께 생성됩니다. 만일 쿠폰 사용 요청에 대해 &amp;#x27;요청 취소&amp;#x27; 혹은
+&amp;#x27;요청 거절&amp;#x27;을 선택하는 경우 해당 쿠폰에 대한 예약 데이터는 &lt;code&gt;reservation&lt;/code&gt; 테이블에서 삭제됩니다.
+동일한 쿠폰에 대해서는 최대 1개의 예약만 존재할 수 있습니다.&lt;/p&gt;&lt;p&gt;문제는 &lt;code&gt;reservation&lt;/code&gt; 테이블이 &lt;code&gt;meeting_date&lt;/code&gt; 컬럼 하나를 관리한다는 점 외에는 존재 의의가 없다는 점입니다.
+애플리케이션 내에서 &lt;code&gt;Reservation&lt;/code&gt;이라는 객체는 데이터 저장소의 역할만을 지닐 뿐,
+그 어떠한 자율적인 책임을 지니지 못합니다. 즉, 객체 지향적이지 않습니다.
+또한 성능 개선을 위해 쿠폰 관련 로직에서 매번 JPQL문으로 &lt;code&gt;coupon&lt;/code&gt; 테이블과 &lt;code&gt;reservation&lt;/code&gt; 테이블을
+JOIN한 &lt;code&gt;CouponReservation&lt;/code&gt; 객체를 만들어 사용하면서 코드 복잡성이 증가하였으며,
+예약 관련 API를 호출하는 프론트엔드 코드도 복잡도가 높아졌습니다.&lt;/p&gt;&lt;p&gt;이 때문에 &lt;code&gt;reservation&lt;/code&gt; 테이블을 제거하고, &lt;code&gt;reservation&lt;/code&gt;의 &lt;code&gt;meeting_date&lt;/code&gt; 컬럼을 &lt;code&gt;coupon&lt;/code&gt; 테이블에서
+직접 관리하고 “예약”이라는 개념을 API와 DB에서 완전히 제거하는 리팩토링을 진행하게 되었습니다.&lt;/p&gt;&lt;/div&gt;&lt;div num=&quot;3&quot;&gt;&lt;p&gt;특히 블루-그린 배포(blue-green deployment)를 진행하더라도
+&lt;strong&gt;DB 마이그레이션 작업 진행과 관련하여 유사한 문제가 발생합니다.&lt;/strong&gt;
+V1 서버들(블루)에서 V2 서버들(그린)으로 &lt;strong&gt;로드밸런서의 트래픽을 전환하기 직전에 DB 마이그레이션을 진행&lt;/strong&gt;해야 하는데,
+&lt;strong&gt;DB 마이그레이션이 진행되는 도중에는 V1으로 트래픽이 가면 안되기 때문&lt;/strong&gt;입니다.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;</content:encoded></item><item><title><![CDATA[[번역] 커넥션 풀 사이즈에 대하여]]></title><description><![CDATA[HikariCP 공식 위키의 'About Pool Sizing' 페이지에 대한 번역입니다. 최적의 성능을 위해 데이터베이스 커넥션 풀 크기를 어떻게 설정해야 하는지에 대해 다룹니다.]]></description><link>https://bugoverdose.github.io/docs/database-connection-pool-sizing/</link><guid isPermaLink="false">https://bugoverdose.github.io/docs/database-connection-pool-sizing/</guid><pubDate>Sun, 25 Sep 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;nGrinder를 활용한 부하테스트 실험 도중,
 극단적인 수준의 데이터베이스 조회 작업을 지속적으로 발생시키자
 다음과 같은 예외를 마주하게 되었습니다.&lt;/p&gt;&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre style=&quot;counter-reset:linenumber NaN&quot; class=&quot;language-text line-numbers&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30004ms ...&lt;/code&gt;&lt;span aria-hidden=&quot;true&quot; class=&quot;line-numbers-rows&quot; style=&quot;white-space:normal;width:auto;left:0&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;이는 데이터베이스와 통신하는 데 필요한 커넥션을 커넥션풀에서 가져오는데 30초 넘게 걸려서 발생한 예외였으며,
 커넥션 풀의 사이즈를 10에서 150으로 늘리자 해당 예외&lt;em&gt;는&lt;/em&gt; 더 이상 나타나지 않게 되었습니다.&lt;/p&gt;&lt;p&gt;데이터베이스 커넥션 풀 규모를 수정해본 것은 처음이었는데,
