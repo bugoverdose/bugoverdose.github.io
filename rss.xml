@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[RSS Feed | bugoverdose]]></title><description><![CDATA[공부하고 경험한 내용을 깔끔하게 설명하는 것을 목표로 하는 개발 블로그입니다. 컴퓨터과학, 웹 개발 등 다양한 주제를 포괄적으로 다룹니다.]]></description><link>https://bugoverdose.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Wed, 28 Sep 2022 16:40:30 GMT</lastBuildDate><item><title><![CDATA[무중단 DB 마이그레이션과 호환성 문제 해결]]></title><description><![CDATA[DB 마이그레이션 및 API 마이그레이션 작업을 무중단 배포로 수행하는 과정에서 발생할 수 있는 호환성 문제와 이에 대한 해결 방안에 대해 이야기합니다. 꼭꼭 서비스 개발 과정에서 직면한 문제를 예시로 설명합니다.]]></description><link>https://bugoverdose.github.io/development/zero-downtime-deployment-and-compatibility/</link><guid isPermaLink="false">https://bugoverdose.github.io/development/zero-downtime-deployment-and-compatibility/</guid><pubDate>Wed, 28 Sep 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;릴리즈한 서비스에서 DB 마이그레이션 및 API 마이그레이션 작업을 수행할 일이 있었습니다.
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[RSS Feed | bugoverdose]]></title><description><![CDATA[공부하고 경험한 내용을 깔끔하게 설명하는 것을 목표로 하는 개발 블로그입니다. 컴퓨터과학, 웹 개발 등 다양한 주제를 포괄적으로 다룹니다.]]></description><link>https://bugoverdose.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Thu, 29 Sep 2022 02:10:33 GMT</lastBuildDate><item><title><![CDATA[무중단 DB 마이그레이션과 호환성 문제 해결]]></title><description><![CDATA[DB 마이그레이션 및 API 마이그레이션 작업을 무중단 배포로 수행하는 과정에서 발생할 수 있는 호환성 문제와 이에 대한 해결 방안에 대해 이야기합니다. 꼭꼭 서비스 개발 과정에서 직면한 문제를 예시로 설명합니다.]]></description><link>https://bugoverdose.github.io/development/zero-downtime-deployment-and-compatibility/</link><guid isPermaLink="false">https://bugoverdose.github.io/development/zero-downtime-deployment-and-compatibility/</guid><pubDate>Wed, 28 Sep 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;릴리즈한 서비스에서 DB 마이그레이션 및 API 마이그레이션 작업을 수행할 일이 있었습니다.
 이러한 작업을 롤링 배포로 진행할 경우 일어날 수 있는 호환성 문제와
 이에 대한 해결 방안에 대해 이야기하고자 합니다.&lt;/p&gt;&lt;p&gt;해당 &lt;a href=&quot;https://github.com/woowacourse-teams/2022-kkogkkog/issues/322&quot;&gt;깃헙 이슈&lt;/a&gt;를
 통해 실제 프로젝트에서 진행된 과정을 부분적으로 확인할 수 있습니다.&lt;/p&gt;&lt;h2&gt;무중단 배포 아키텍처&lt;/h2&gt;&lt;p&gt;구버전(이하 V1)의 서버를 신버전(이하 V2)의 서버로 재배포하는 과정은 기본적으로 3단계로 이루어집니다.&lt;/p&gt;&lt;ol&gt;&lt;li&gt;V1 서버가 구동 중인 EC2 인스턴스로 V2 서버의 빌드 결과물을 전송(&lt;code&gt;scp&lt;/code&gt;)&lt;/li&gt;&lt;li&gt;구동 중인 V1 서버를 중단(&lt;code&gt;kill&lt;/code&gt;)&lt;/li&gt;&lt;li&gt;V2 서버를 새로 실행(&lt;code&gt;java -jar&lt;/code&gt;)&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;이때 문제가 되는 것은 2단계와 3단계 사이의 기간 동안 해당 EC2 인스턴스로 클라이언트의 요청이 들어오는 경우입니다.
@@ -75,7 +75,13 @@ v1 API 대신 v2 API를 호출하도록 수정한 프론트엔드 애플리케�
 로드밸런서의 트래픽을 V1.5 서버(블루)에서 V2 서버(그린)들로 전환하는 방법입니다.
 그러나 이 방법을 사용하더라도 모든 트래픽이 그린으로 들어오게 되었을 때
 &lt;strong&gt;클라이언트에서는 여전히 블루를 기대하고 그린으로 요청을 보내게 됩니다.&lt;/strong&gt;
-즉, 잠깐동안만이라도 &lt;strong&gt;V2 서버에서 V1.5 서버의 기존 API를 제공해야 한다는 점은 위와 동일합니다.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;오히려 위와 같은 배포 방식을 선택할 경우, 굳이 EC2 인스턴스를 추가로 만들고,
+즉, 잠깐동안만이라도 &lt;strong&gt;V2 서버에서 V1.5 서버의 기존 API를 제공해야 한다는 점은 위와 동일합니다.&lt;/strong&gt;
+이는 백엔드와 프론트엔드 애플리케이션 모두 신규 API를 사용하도록 하여
+&lt;strong&gt;둘 다 동시에 블루에서 그린으로 전환하더라도 마찬가지&lt;/strong&gt;입니다.
+프론트엔드 서버가 재배포되더라도 모든 클라이언트에서
+즉각적으로 프론트엔드 서버로 요청을 보내 신규 HTML, CSS, JS 파일 등을 가져오지는 않기 때문입니다.
+브라우저에 로드된 이전 버전의 HTML, CSS, JS 파일을 사용하는 경우,
+이를 그대로 사용하는 사용자들은 당연히 V1.5 서버에서 제공하던 기존 API를 호출하게 됩니다.&lt;/p&gt;&lt;p&gt;오히려 위와 같은 배포 방식을 선택할 경우, 굳이 EC2 인스턴스를 추가로 만들고,
 일일이 CI/CD 워크플로우를 셋업해주고, 셋업해주는 등의 불필요한 작업을 수행해야 합니다.
 때문에 유의미한 효용이 있지 않다면 저희 팀은 기본적으로 롤링 배포를 선택할 것 같습니다.&lt;/p&gt;&lt;h2&gt;맺으며&lt;/h2&gt;&lt;p&gt;사실 해당 게시글에서 사용한 DB 마이그레이션 예시는
 모든 문제 상황에 적용할 수 없다고 생각합니다.
