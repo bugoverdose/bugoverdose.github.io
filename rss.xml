@@ -1,4 +1,85 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[RSS Feed | bugoverdose]]></title><description><![CDATA[공부하고 경험한 내용을 깔끔하게 설명하는 것을 목표로 하는 개발 블로그입니다. 컴퓨터과학, 웹 개발 등 다양한 주제를 포괄적으로 다룹니다.]]></description><link>https://bugoverdose.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Thu, 29 Sep 2022 02:10:33 GMT</lastBuildDate><item><title><![CDATA[무중단 DB 마이그레이션과 호환성 문제 해결]]></title><description><![CDATA[DB 마이그레이션 및 API 마이그레이션 작업을 무중단 배포로 수행하는 과정에서 발생할 수 있는 호환성 문제와 이에 대한 해결 방안에 대해 이야기합니다. 꼭꼭 서비스 개발 과정에서 직면한 문제를 예시로 설명합니다.]]></description><link>https://bugoverdose.github.io/development/zero-downtime-deployment-and-compatibility/</link><guid isPermaLink="false">https://bugoverdose.github.io/development/zero-downtime-deployment-and-compatibility/</guid><pubDate>Wed, 28 Sep 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;릴리즈한 서비스에서 DB 마이그레이션 및 API 마이그레이션 작업을 수행할 일이 있었습니다.
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[RSS Feed | bugoverdose]]></title><description><![CDATA[공부하고 경험한 내용을 깔끔하게 설명하는 것을 목표로 하는 개발 블로그입니다. 컴퓨터과학, 웹 개발 등 다양한 주제를 포괄적으로 다룹니다.]]></description><link>https://bugoverdose.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Fri, 30 Sep 2022 09:40:31 GMT</lastBuildDate><item><title><![CDATA[[번역] DataSource: 커넥션 풀링과 분산 트랜잭션]]></title><description><![CDATA[오라클 공식 문서 'Package javax.sql'에 대한 번역입니다. DriverManager의 대체품인 DataSource가 커넥션 풀링과 분산 트랜잭션 기능을 어떻게 지원하는지에 대해 설명합니다.]]></description><link>https://bugoverdose.github.io/docs/datasource-vs-drivermanager/</link><guid isPermaLink="false">https://bugoverdose.github.io/docs/datasource-vs-drivermanager/</guid><pubDate>Fri, 30 Sep 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;우테코 레벨1 체스 미션 도중 별도의 프레임워크 없이
+자바 코드만으로 데이터베이스를 조작할 일이 있었습니다.
+당시 MySQL DB와의 커넥션을 수립하기 위해 &lt;code&gt;DriverManager.getConnection()&lt;/code&gt;를 사용했습니다.
+그런데 실제 프레임워크들에서는 &lt;code&gt;DriverManager&lt;/code&gt; 대신
+&lt;code&gt;Datasource&lt;/code&gt;만을 사용하는 것으로 보여서 그동안 의아했습니다.&lt;/p&gt;&lt;p&gt;DB 커넥션에 대해 공부하는 김에 &lt;code&gt;Datasource&lt;/code&gt;와 &lt;code&gt;DriverManager&lt;/code&gt;과의 차이를
+정리해보고자 간단하게 번역해보았습니다.
+해당 글의 원문 및 전문은
+&lt;a href=&quot;https://docs.oracle.com/en/java/javase/11/docs/api/java.sql/javax/sql/package-summary.html&quot;&gt;오라클 공식 문서&lt;/a&gt;에서
+확인할 수 있습니다.&lt;/p&gt;&lt;h2&gt;DataSource 객체를 사용하여 커넥션 만들기&lt;/h2&gt;&lt;p&gt;&lt;code&gt;javax.sql&lt;/code&gt; 패키지는 데이터 소스에 대한 커넥션을 만드는 데 있어 선호되는 방식을 제공합니다.
+기존 메커니즘인 &lt;code&gt;DriverManager&lt;/code&gt; 클래스는 여전히 유효하며,
+이를 사용하는 코드도 그대로 동작합니다.
+그러나 새로운 &lt;code&gt;DataSource&lt;/code&gt; 메커니즘은 기존 &lt;code&gt;DriverManager&lt;/code&gt; 메커니즘에 비해
+다양한 장점을 지니므로 보다 선호됩니다.&lt;/p&gt;&lt;p&gt;&lt;code&gt;DataSource&lt;/code&gt; 객체를 사용하여 커넥션을 생성할 때의 주요 이점은 다음과 같습니다.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;데이터 소스의 프로퍼티를 런타임에 변경할 수 있습니다. 데이터 소스 및 드라이버가 변경되었을 때
+애플리케이션의 코드를 수정할 필요가 없다는 뜻입니다.&lt;/li&gt;&lt;li&gt;중간 계층의 인프라와 함께 동작하도록 구현된 &lt;code&gt;DataSource&lt;/code&gt; 객체를
+사용하면 Connection 풀링, Statement 풀링, 분산 트랜잭션이 가능해집니다.
+&lt;code&gt;DriverManager&lt;/code&gt;를 통해 만들어진 Connection 객체의 경우
+Connection 풀링, Statement 풀링, 분산 트랜잭션 기능이 제공되지 않습니다.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;드라이버 벤더들에서 &lt;code&gt;DataSource&lt;/code&gt; 구현체를 제공합니다.
+특정한 &lt;code&gt;DataSource&lt;/code&gt; 객체는 특정한 물리적 데이터 소스를 상징합니다.
+&lt;code&gt;DataSource&lt;/code&gt; 객체가 생성하는 각 커넥션은
+해당 물리적 데이터 소스에 대한 연결입니다.&lt;/p&gt;&lt;p&gt;JNDI(Java Naming and Directory Interface) API를 사용하는
+명칭 서비스를 통해 시스템 관리자는 데이터소스에 대한 논리적 명칭을 등록합니다.
+애플리케이션은 &lt;code&gt;DataSource&lt;/code&gt;에 등록된 논리적 명칭을 조회함으로써
+자신이 원하는 &lt;code&gt;DataSource&lt;/code&gt; 객체를 가져옵니다.
+그리고 이를 사용하여 해당 &lt;code&gt;DataSource&lt;/code&gt; 객체가 상징하는
+물리적 데이터 소스에 대한 연결을 생성할 수 있습니다.&lt;/p&gt;&lt;p&gt;&lt;code&gt;DataSource&lt;/code&gt; 객체는 중간 계층의 인프라와 함께 협력하여,
+자신을 통해 생성되는 커넥션을 풀링하여 재사용하도록 구현될 수 있습니다.
+이러한 &lt;code&gt;DataSource&lt;/code&gt; 구현체를 사용하는 애플리케이션은
+자동으로 커넥션 풀에 관리되는 커넥션을 가져오게 됩니다.
+&lt;code&gt;DataSource&lt;/code&gt; 객체는 중간 계층의 인프라와 함께 협력하여
+커넥션을 풀링하여 재사용하도록 구현될 수 있습니다.
+또한 &lt;code&gt;DataSource&lt;/code&gt; 객체는 중간 계층의 인프라와 함께 협력하여,
+분산 트랜잭션에 사용될 수 있는 커넥션을 생성하도록 구현될 수도 있습니다.&lt;/p&gt;&lt;h2&gt;Connection Pooling과 Statement Pooling&lt;/h2&gt;&lt;p&gt;중간 계층의 커넥션 풀 관리자와 함께 동작하도록 구현된
+&lt;code&gt;DataSource&lt;/code&gt; 객체를 통해 만들어지는 커넥션은 커넥션 풀링이 적용됩니다.
+새로운 커넥션을 생성하는 작업은 비용이 크기 때문에 커넥션 풀링은 극단적으로 성능을 향상시킵니다.
+커넥션 풀링은 커넥션을 재사용함으로써, 새롭게 생성되어야 하는 커넥션의 개수를 크게 줄일 수 있습니다.&lt;/p&gt;&lt;p&gt;커넥션 풀링은 완전히 투명합니다.
+Java EE 설정의 중간 계층에서 자동으로 일어나기 때문에
+애플리케이션의 관점에서 코드가 수정될 필요가 없습니다.
+애플리케이션에서는 &lt;code&gt;DataSource.getConnection&lt;/code&gt; 메서드를 통해
+풀에서 관리되는 커넥션을 받을 수 있으며,
+일반적인 &lt;code&gt;Connection&lt;/code&gt; 객체와 동일한 방식으로 다루면 됩니다.&lt;/p&gt;&lt;p&gt;&lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position:relative;display:block;margin-left:auto;margin-right:auto;max-width:650px&quot;&gt;
+      &lt;a class=&quot;gatsby-resp-image-link&quot; href=&quot;/static/c7da9ef317739a9aa43b04f253fa25c9/82158/connection-pool-and-statement-pool.png&quot; style=&quot;display:block&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;
+    &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom:53.987730061349694%;position:relative;bottom:0;left:0;background-image:url(&amp;#x27;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAALCAYAAAB/Ca1DAAAACXBIWXMAABYlAAAWJQFJUiTwAAAB0klEQVQoz32T62/SUBTA9/9/9IvGLCYuakxMnIAKYzwmk/As0PJ+dIPxWieDSktLW8rPsBVlju18uck99/fLPefce4AX6/X6btU1jfF4zPV4jKIoWJa1PYJh6uj6FNsyPOghu4mD/4VSpU4wHCMUjhGNn5PJl5hrOktLI1X2E8x85FQ4RmjFkDohtMX0Af9IWBTLpMsBGt0sSfETZ6kTrpVbJrNLItI3jnJ5fOUiHwoFvuT9zOZ9j3f3C0uiRKZ6jDwQUPUBzU4NRZnirHQSzQyf6yOSgwlfOxO+V7Ko2uB5YTZfJPjjPULlJ7/VBUWxinIzxbJVwlKEVymJUEsmO5oQKMW4VbvPC3v9Ia1Oj4uLK9ryJfWWjGEssR0ToZ0lJ9eQ+i3EXpuSnMMw1f093ITrbZaHCkfpCqnL+3KWtoNuetN2wTacXWz/lLey8VznMFHhtT/Py6hIujvEXa3uco7tUEw2iPkFhFQLa2n/FT664VZY6CuE41VGUp9Eskmk2oWVi2U5SKkGpy8O8b0N8OZdnGb56p51108/m5lh4ouKnGc7JCpder9UD3LR1AVSskbyRKSUkVlo5tMl7yamC5PC4IaRqu1+iH+9dtd7+7cR/gHEaDi4isII2QAAAABJRU5ErkJggg==&amp;#x27;);background-size:cover;display:block&quot;&gt;&lt;/span&gt;
+  &lt;img class=&quot;gatsby-resp-image-image&quot; alt=&quot;connection-pool-and-statement-pool&quot; title=&quot;connection-pool-and-statement-pool&quot; src=&quot;/static/c7da9ef317739a9aa43b04f253fa25c9/a6d36/connection-pool-and-statement-pool.png&quot; srcSet=&quot;/static/c7da9ef317739a9aa43b04f253fa25c9/222b7/connection-pool-and-statement-pool.png 163w,/static/c7da9ef317739a9aa43b04f253fa25c9/ff46a/connection-pool-and-statement-pool.png 325w,/static/c7da9ef317739a9aa43b04f253fa25c9/a6d36/connection-pool-and-statement-pool.png 650w,/static/c7da9ef317739a9aa43b04f253fa25c9/82158/connection-pool-and-statement-pool.png 696w&quot; sizes=&quot;(max-width: 650px) 100vw, 650px&quot; style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;/&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;&lt;p&gt;커넥션 풀링에 사용되는 클래스와 인터페이스는 다음과 같습니다.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;code&gt;ConnectionPoolDataSource&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;PooledConnection&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;ConnectionEvent&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;ConnectionEventListener&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;StatementEvent&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;StatementEventListener&lt;/code&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;커넥션 풀 관리자는 3계층의 구조에서 중간 계층에 존재하며,
+안보이는 곳에서 이러한 클래스와 인터페이스를 활용합니다.
+&lt;code&gt;ConnectionPoolDataSource&lt;/code&gt; 객체에서
+&lt;code&gt;PooledConnection&lt;/code&gt; 객체를 생성하게 되면,
+해당 &lt;code&gt;PooledConnection&lt;/code&gt; 객체와 함께
+커넥션 풀 관리자는 &lt;code&gt;ConnectionEventListener&lt;/code&gt; 객체로서 등록됩니다.
+커넥션이 닫히거나 예외가 발생하는 경우, 커넥션 풀 관리자는
+리스너로서 &lt;code&gt;ConnectionEvent&lt;/code&gt; 객체를 전달받습니다.&lt;/p&gt;&lt;p&gt;&lt;code&gt;DatabaseMetaData.supportsStatementPooling&lt;/code&gt; 메서드를 호출하면
+커넥션 풀 관리자가 &lt;code&gt;PreparedStatement&lt;/code&gt;를 위한
+&lt;code&gt;Statement&lt;/code&gt; 풀링 기능을 지원하는지를 알 수 있습니다.
+이 경우 &lt;code&gt;PooledConnection&lt;/code&gt; 객체와 함께
+커넥션 풀 관리자는 &lt;code&gt;StatementEventListener&lt;/code&gt;로서 등록됩니다.
+&lt;code&gt;PreparedStatement&lt;/code&gt;가 닫히거나 예외가 발생하는 경우,
+커넥션 풀 관리자는 리스너로서 &lt;code&gt;StatementEvent&lt;/code&gt; 객체를 전달받습니다.&lt;/p&gt;&lt;h2&gt;분산 트랜잭션&lt;/h2&gt;&lt;p&gt;풀에서 관리되는 커넥션과 마찬가지로
+중관 계층 인프라와 함께 협력하도록 구현된 &lt;code&gt;DataSource&lt;/code&gt; 객체는
+분산 트랜잭션 기능을 제공할 수도 있습니다.
+분산 트랜잭션을 통해 애플리케이션은
+단일 트랜잭션으로 복수의 서버에 존재하는 데이터 소스에 접근할 수 있습니다.&lt;/p&gt;&lt;p&gt;&lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position:relative;display:block;margin-left:auto;margin-right:auto;max-width:650px&quot;&gt;
+      &lt;a class=&quot;gatsby-resp-image-link&quot; href=&quot;/static/37bcb3d4bcedf6334056b017aaacef92/1e043/distributed-transaction.png&quot; style=&quot;display:block&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;
+    &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom:72.39263803680981%;position:relative;bottom:0;left:0;background-image:url(&amp;#x27;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAOCAIAAACgpqunAAAACXBIWXMAAAsTAAALEwEAmpwYAAACTklEQVQoz3VSS08TURidn+EPMGzcGRdqXZiYSGKMMTHEmNClC4SFAjHqQhEXNSoYBYkPtGrKQo0IRsSmWOiDPjRgBarN8ChD7WAfzHRGZpjXdz8zdwpSE25mMZM553znfPcwWHsIYHL504tM+wwfRsSyrL5KLPeG+DArICKQGjCz9QYEEDHBBm7Mu56tNzRN7A4k33xJLZx8FDnkeT808hZRB6q/IzmzNNcVPNs+5rrsO1Mor/Bl+cjd8SdDw5jxmpUc5W4jAyEW2A8i6romibIqa/NcWtM0RLQAprPFhfxvNCQw1Go0YgsQgsyWkKqqgiAAgGMMCDheKBoomACxajKXyuLT0elAcjaf46qqhABYjoTziYgFgRelNYejqFphTf6jbDCN3f76ntTh6/6BjzE6kPy3f8uA6NJg34J7YLlt7lccEX3RTMdo9ubIT2b/peHjd0J17u7mzofSWqlSkURRrNAjiqKirM+kZq+G6/ulUy3Ruo5Bd3GleOHl2B7PxIkHYeZ8z4e9Lc/3NV4b8kfsyQA1107Nz/Mz9yJNXcOtOd6O9jiYdt0ONvu+MpZpTH7LLGY5oVQ0DIM6twAtZ1t0STbf1E3LrG5L0w2uJIvrGkM2QwIA9anQoNUubP6Fqiip8WWTLQALwMHlc6v+qdcDmSs/VuMIuKGbc1w5sSjwlY2tgtDrsB1tb5jtKskGOtmDXuX0uVDd+NS7VJpze2NHeybHYjG05B3r6UzOFbP931vbPh+46Gvg8uxKvnSsL+7pvQX3dxnsCMX968lfyeDl/+p5WogAAAAASUVORK5CYII=&amp;#x27;);background-size:cover;display:block&quot;&gt;&lt;/span&gt;
+  &lt;img class=&quot;gatsby-resp-image-image&quot; alt=&quot;distributed-transaction&quot; title=&quot;distributed-transaction&quot; src=&quot;/static/37bcb3d4bcedf6334056b017aaacef92/a6d36/distributed-transaction.png&quot; srcSet=&quot;/static/37bcb3d4bcedf6334056b017aaacef92/222b7/distributed-transaction.png 163w,/static/37bcb3d4bcedf6334056b017aaacef92/ff46a/distributed-transaction.png 325w,/static/37bcb3d4bcedf6334056b017aaacef92/a6d36/distributed-transaction.png 650w,/static/37bcb3d4bcedf6334056b017aaacef92/1e043/distributed-transaction.png 690w&quot; sizes=&quot;(max-width: 650px) 100vw, 650px&quot; style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;/&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;&lt;p&gt;분산 트랜잭션에 사용되는 클래스와 인터페이스는 다음과 같습니다.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;code&gt;XADataSource&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;XAConnection&lt;/code&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;해당 인터페이스들은 트랜잭션 관리자에 의해 사용되며,
+애플리케이션에 의해 직접적으로 다뤄지지는 않습니다.&lt;/p&gt;&lt;p&gt;&lt;code&gt;XAConnection&lt;/code&gt; 인터페이스는 &lt;code&gt;PooledConnection&lt;/code&gt; 인터페이스를 상속받습니다.
+그러므로 풀에서 관리되는 커넥션에 적용되는 모든 것은
+분산 트랜잭션에 포함된 커넥션에도 적용된됩니다.
+트랜잭션 관리자는 중간 계층에 위차히여 모든 것을 투명하게 처리합니다.
+애플리케이션 코드에서의 유일한 변경 사항은
+애플리케이션에서 트랜잭션 관리자의 트랜잭션 처리 과정에 관여할 수 없게 된다는 점입니다.
+구체적으로 말하자면, 애플리케이션에서는
+&lt;code&gt;Connection.commit&lt;/code&gt;이나 &lt;code&gt;Connection.rollback&lt;/code&gt;를 호출할 수 없으며,
+&lt;code&gt;Connection.setAutoCommit(true)&lt;/code&gt;를 호출하여
+커넥션을 auto-commit 모드로 설정할 수도 없습니다.&lt;/p&gt;&lt;p&gt;애플리케이션에서는 분산 트랜잭션에 참여하기 위해 특별한 작업을 할 필요는 없습니다.
+평범하게 &lt;code&gt;DataSource.getConnection&lt;/code&gt; 메서드를 통해 데이터 소스에 대한 커넥션을 생성하면됩니다.
+트랜잭션에 대한 관리는 트랜잭션 관리자가 뒷단에서 수행합니다.
+&lt;code&gt;XADataSource&lt;/code&gt; 인터페이스에서 &lt;code&gt;XAConnection&lt;/code&gt; 객체를 생성하며,
+트랜잭션 관리자가 커넥션을 관리하는 데 필요한 &lt;code&gt;XAResource&lt;/code&gt; 객체는
+각 &lt;code&gt;XAConnection&lt;/code&gt; 객체에 의해 생성됩니다.&lt;/p&gt;&lt;hr/&gt;&lt;div&gt;&lt;/div&gt;&lt;ul&gt;&lt;li&gt;원문: &lt;a href=&quot;https://docs.oracle.com/en/java/javase/11/docs/api/java.sql/javax/sql/package-summary.html&quot;&gt;Package javax.sql&lt;/a&gt;&lt;/li&gt;&lt;li&gt;사진 출처 및 심화 학습 자료&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://d2.naver.com/helloworld/4717&quot;&gt;Naver D2 - Garbage Collection과 Statement Pool&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://medium.com/javarevisited/distributed-transaction-management-in-microservices-part-1-bb7dc1fbee9f&quot;&gt;Distributed Transaction Management in Microservices — Part 1&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[무중단 DB 마이그레이션과 호환성 문제 해결]]></title><description><![CDATA[DB 마이그레이션 및 API 마이그레이션 작업을 무중단 배포로 수행하는 과정에서 발생할 수 있는 호환성 문제와 이에 대한 해결 방안에 대해 이야기합니다. 꼭꼭 서비스 개발 과정에서 직면한 문제를 예시로 설명합니다.]]></description><link>https://bugoverdose.github.io/development/zero-downtime-deployment-and-compatibility/</link><guid isPermaLink="false">https://bugoverdose.github.io/development/zero-downtime-deployment-and-compatibility/</guid><pubDate>Wed, 28 Sep 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;릴리즈한 서비스에서 DB 마이그레이션 및 API 마이그레이션 작업을 수행할 일이 있었습니다.
 이러한 작업을 롤링 배포로 진행할 경우 일어날 수 있는 호환성 문제와
 이에 대한 해결 방안에 대해 이야기하고자 합니다.&lt;/p&gt;&lt;p&gt;해당 &lt;a href=&quot;https://github.com/woowacourse-teams/2022-kkogkkog/issues/322&quot;&gt;깃헙 이슈&lt;/a&gt;를
 통해 실제 프로젝트에서 진행된 과정을 부분적으로 확인할 수 있습니다.&lt;/p&gt;&lt;h2&gt;무중단 배포 아키텍처&lt;/h2&gt;&lt;p&gt;구버전(이하 V1)의 서버를 신버전(이하 V2)의 서버로 재배포하는 과정은 기본적으로 3단계로 이루어집니다.&lt;/p&gt;&lt;ol&gt;&lt;li&gt;V1 서버가 구동 중인 EC2 인스턴스로 V2 서버의 빌드 결과물을 전송(&lt;code&gt;scp&lt;/code&gt;)&lt;/li&gt;&lt;li&gt;구동 중인 V1 서버를 중단(&lt;code&gt;kill&lt;/code&gt;)&lt;/li&gt;&lt;li&gt;V2 서버를 새로 실행(&lt;code&gt;java -jar&lt;/code&gt;)&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;이때 문제가 되는 것은 2단계와 3단계 사이의 기간 동안 해당 EC2 인스턴스로 클라이언트의 요청이 들어오는 경우입니다.
@@ -122,7 +203,7 @@ V1 서버들(블루)에서 V2 서버들(그린)으로 &lt;strong&gt;로드밸런
 다음과 같은 예외를 마주하게 되었습니다.&lt;/p&gt;&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre style=&quot;counter-reset:linenumber NaN&quot; class=&quot;language-text line-numbers&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30004ms ...&lt;/code&gt;&lt;span aria-hidden=&quot;true&quot; class=&quot;line-numbers-rows&quot; style=&quot;white-space:normal;width:auto;left:0&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;이는 데이터베이스와 통신하는 데 필요한 커넥션을 커넥션풀에서 가져오는데 30초 넘게 걸려서 발생한 예외였으며,
 커넥션 풀의 사이즈를 10에서 150으로 늘리자 해당 예외&lt;em&gt;는&lt;/em&gt; 더 이상 나타나지 않게 되었습니다.&lt;/p&gt;&lt;p&gt;데이터베이스 커넥션 풀 규모를 수정해본 것은 처음이었는데,
 이번 기회에 커넥션 풀의 적정 규모 설정에 대해 자세히 정리해보고자 합니다.
-해당 글은 원문은 &lt;a href=&quot;https://github.com/brettwooldridge/HikariCP/wiki/About-Pool-Sizing&quot;&gt;HikariCP 공식 위키 문서&lt;/a&gt;에서
+해당 글의 원문은 &lt;a href=&quot;https://github.com/brettwooldridge/HikariCP/wiki/About-Pool-Sizing&quot;&gt;HikariCP 공식 위키 문서&lt;/a&gt;에서
 확인할 수 있습니다.&lt;/p&gt;&lt;h2&gt;히카리 커넥션 풀 사이즈에 대하여&lt;/h2&gt;&lt;p&gt;커넥션 풀 설정은 개발자들이 흔히 실수하는 작업입니다.
 커넥션 풀을 설정하기 위해 이해해야 하는 원칙들이 존재하며,
 이 중 몇 가지는 우리의 직관에 위배된다고 느껴질 수도 있습니다.&lt;/p&gt;&lt;h3&gt;10,000명의 프론트엔드 동시 접속자들&lt;/h3&gt;&lt;p&gt;대략 1만 명의 사용자들이 빈번하게 접속하며
