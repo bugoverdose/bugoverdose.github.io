@@ -1,0 +1,5 @@
+{
+    "componentChunkName": "component---src-templates-tag-js",
+    "path": "/tag/benchmark",
+    "result": {"data":{"allMdx":{"nodes":[{"frontmatter":{"title":"[Go] 벤치마크 테스트 기초","description":"Go 언어에서 성능 측정을 위해 제공하는 Benchmark 테스트에 대해 간략히 정리하겠습니다. Set 자료구조를 다양한 방식으로 구현하고 각 구현체의 성능을 비교해보고자 합니다.","date":"August 13, 2023","category":"development","tags":["go","test","benchmark"],"hero_image":null,"hero_image_alt":"benchmark image"},"id":"e1c867e6-8fce-50ef-b29f-84b06d83238c","slug":"development/go-benchmark/"}],"pageInfo":{"currentPage":1,"hasNextPage":false,"hasPreviousPage":false,"pageCount":1,"totalCount":1}}},"pageContext":{"slug":"benchmark","ko":"벤치마크","skip":0}},
+    "staticQueryHashes": ["1903006949","2193720160"]}
