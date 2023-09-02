@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[RSS Feed | bugoverdose]]></title><description><![CDATA[공부하고 경험한 내용을 깔끔하게 설명하는 것을 목표로 하는 개발 블로그입니다. 컴퓨터과학, 웹 개발 등 다양한 주제를 포괄적으로 다룹니다.]]></description><link>https://bugoverdose.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Sat, 02 Sep 2023 07:16:22 GMT</lastBuildDate><item><title><![CDATA[[Go] 벤치마크 테스트로 성능 측정하기]]></title><description><![CDATA[Go 언어에서 성능 측정을 위해 제공하는 벤치마크 테스트에 대해 간략히 정리하겠습니다. Set 자료구조를 다양한 방식으로 구현하고 각 구현체의 성능을 비교해보고자 합니다.]]></description><link>https://bugoverdose.github.io/development/go-benchmark/</link><guid isPermaLink="false">https://bugoverdose.github.io/development/go-benchmark/</guid><pubDate>Sun, 13 Aug 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Go 언어에서 성능 측정을 위해 제공하는 벤치마크(Benchmark) 테스트에 대해 간략히 정리하겠습니다.&lt;/p&gt;&lt;h2&gt;Set의 다양한 구현체&lt;/h2&gt;&lt;p&gt;요소의 중복을 허용하지 않는 세트(Set) 자료구조를 구현할 수 있는 방법은 다양합니다.
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[RSS Feed | bugoverdose]]></title><description><![CDATA[공부하고 경험한 내용을 깔끔하게 설명하는 것을 목표로 하는 개발 블로그입니다. 컴퓨터과학, 웹 개발 등 다양한 주제를 포괄적으로 다룹니다.]]></description><link>https://bugoverdose.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Sat, 02 Sep 2023 07:19:08 GMT</lastBuildDate><item><title><![CDATA[[Go] 벤치마크 테스트로 성능 측정하기]]></title><description><![CDATA[Go 언어에서 성능 측정을 위해 제공하는 벤치마크 테스트에 대해 간략히 정리하겠습니다. Set 자료구조를 다양한 방식으로 구현하고 각 구현체의 성능을 비교해보고자 합니다.]]></description><link>https://bugoverdose.github.io/development/go-benchmark/</link><guid isPermaLink="false">https://bugoverdose.github.io/development/go-benchmark/</guid><pubDate>Sun, 13 Aug 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Go 언어에서 성능 측정을 위해 제공하는 벤치마크(Benchmark) 테스트에 대해 간략히 정리하겠습니다.&lt;/p&gt;&lt;h2&gt;Set의 다양한 구현체&lt;/h2&gt;&lt;p&gt;요소의 중복을 허용하지 않는 세트(Set) 자료구조를 구현할 수 있는 방법은 다양합니다.
 내부적으로 어떻게 구현하든,
 &lt;code&gt;Add&lt;/code&gt; 메서드로 넘긴 요소는 세트에 정확히 하나 존재하고,
 &lt;code&gt;Remove&lt;/code&gt; 메서드로 넘긴 요소는 세트에 존재하지 않으면 됩니다.&lt;/p&gt;&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;go&quot;&gt;&lt;pre style=&quot;counter-reset:linenumber NaN&quot; class=&quot;language-go line-numbers&quot;&gt;&lt;code class=&quot;language-go&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;type&lt;/span&gt; Set &lt;span class=&quot;token keyword&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
@@ -760,17 +760,14 @@ Go 언어 학습 자체에 초점을 둔 서적을 읽는 것을 추천하고 �
 &lt;strong&gt;책을 참고자료 삼아 자신만의 인터프리터를 구현&lt;/strong&gt;하는 데에 초점을 맞춰야 한다고 생각합니다.&lt;/p&gt;&lt;p&gt;솔직히 말해 저의 경우 책의 흐름을 무지성으로 따라가지 않았습니다.
 책은 기본적으로 렉서 구현, 파서 구현, 평가 함수 구현을 단계적으로 다룹니다.
 즉, 특정한 문법이나 데이터 타입을 기능 단위로 구현하는 것이 아니라
-상향식(bottom-up)으로 접근하므로 초중반에는 프로젝트의 전체적인 구조를 파악하기 다소 힘들 수 있습니다.&lt;/p&gt;&lt;p&gt;이 점에 불만을 느꼈기 때문에 저는 철저히 기능 및 문법을
+상향식(bottom-up)으로 접근하므로 초중반에는 프로젝트의 전체적인 구조를 파악하기 다소 힘들 수 있습니다.&lt;/p&gt;&lt;p&gt;저는 이 점에 불만을 느끼고 철저히 기능 및 문법을
 점진적으로 하나씩 추가하는 방식으로 토이 프로젝트
 &lt;a href=&quot;https://github.com/bugoverdose/yail&quot;&gt;YAIL&lt;/a&gt;(Yet Another Interpreted Language)을 진행하였습니다.
-특히 저는 책에서 다루지 않는 &lt;strong&gt;변수 재할당 기능&lt;/strong&gt;을 구현하는 것만을 최우선 목표로 삼았으며,
+특히 책에서 다루지 않는 &lt;strong&gt;변수 재할당 기능&lt;/strong&gt;을 구현하는 것만을 최우선 목표로 삼았으며,
 코틀린 문법을 참고하여 변수 할당 시점에 &lt;code&gt;var&lt;/code&gt; 혹은 &lt;code&gt;val&lt;/code&gt; 키워드 중 하나를 사용하여
 해당 변수의 &lt;strong&gt;재할당 가능 여부를 명시&lt;/strong&gt;할 수 있도록 하였습니다.
 그리고 이 기능을 구현한 이후에 비로소 책에 언급된 다른 기능들을 하나씩 추가하였습니다.&lt;/p&gt;&lt;p&gt;한편, 저의 경우 책을 읽으며 마크다운 형식으로 내용을 정리하는 습관이 있습니다.
-마찬가지로 해당 서적도 챕터별로 내용을 정리하였는데,
-이 &lt;a href=&quot;https://github.com/bugoverdose/book-notes/blob/master/%EC%9D%B8%ED%84%B0%ED%94%84%EB%A6%AC%ED%84%B0/README.md&quot;&gt;깃헙 저장소&lt;/a&gt;에서
-확인할 수 있습니다.
-다만, 이 책의 경우 이처럼 &lt;strong&gt;내용을 세부적으로 정리하면서 읽는 것은 상당히 비효율적&lt;/strong&gt;이며 효용이 적다고 생각합니다.
+마찬가지로 해당 서적도 챕터별로 내용을 정리하였는데 솔직히 추천하지는 않습니다.
 이론 및 개념에 대한 설명들은 별도로 정리하는 것이 나쁘지는 않지만,
 책의 상당 부분이 그저 소스코드에 대한 설명으로 이루어져 있기에 애초에 정리하기 애매한 내용이 많습니다.&lt;/p&gt;&lt;p&gt;또한 이 책은 굳이 여러명이서 스터디를 진행하기에 적합한 책도 아니라고 생각합니다.
 만약 여러 명이서 읽고 싶다면, 각자 개별적으로 책을 읽어오고
