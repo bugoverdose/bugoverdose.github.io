@@ -1,4 +1,52 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[RSS Feed | Jinwoo's Blog]]></title><description><![CDATA[서버 엔지니어가 글쓰기 연습을 위해 개발한 기술 블로그입니다. 다양한 주제를 포괄적으로 다룹니다.]]></description><link>https://bugoverdose.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Thu, 04 Jul 2024 17:05:01 GMT</lastBuildDate><item><title><![CDATA[[k8s] ArgoCD과 Argo Rollouts 릴리즈별 k8s 버전 호환성 검토]]></title><description><![CDATA[ArgoCD과 Argo Rollouts 릴리즈들은 각각 특정 쿠버네티스 버전들에 대해서만 테스트되었습니다. 이를 확인하는 방법과 마이너 버전들 간의 Breaking Changes를 확인하는 방법이 대해 정리합니다.]]></description><link>https://bugoverdose.github.io/posts/78/</link><guid isPermaLink="false">https://bugoverdose.github.io/posts/78/</guid><pubDate>Fri, 05 Jul 2024 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;버전 호환성 검토의 필요성&lt;/h2&gt;&lt;p&gt;Argo CD는 쿠버네티스 환경에서 선언적인 GitOps 기반의 CD를 제공하기 위한 프로젝트입니다.
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[RSS Feed | Jinwoo's Blog]]></title><description><![CDATA[서버 엔지니어가 글쓰기 연습을 위해 개발한 기술 블로그입니다. 다양한 주제를 포괄적으로 다룹니다.]]></description><link>https://bugoverdose.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Sat, 06 Jul 2024 11:56:20 GMT</lastBuildDate><item><title><![CDATA[[k8s] 파드 생명주기, 노드 스케줄링, 컨테이너 재시작]]></title><description><![CDATA[쿠버네티스 공식문서 중 파드 생명주기 관련 내용을 가볍게 정리합니다. 노드 스케줄링, 파드의 단계, 컨테이너 상태 및 재시작 과정 등에 대해 다룹니다.]]></description><link>https://bugoverdose.github.io/posts/79/</link><guid isPermaLink="false">https://bugoverdose.github.io/posts/79/</guid><pubDate>Sat, 06 Jul 2024 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;파드와 노드&lt;/h2&gt;&lt;p&gt;파드는 쿠버네티스에서 생성하고 관리할 수 있는 가장 작은 배포 단위입니다.
+하나의 파드는 하나 이상의 컨테이너들로 구성되며, 파드들은 노드 하나에서 실행됩니다.&lt;/p&gt;&lt;p&gt;노드는 쿠버네티스 컨트롤 플레인에 의해 관리되는 가상 혹은 물리적인 머신입니다.
+하나의 클러스터 내에는 복수의 노드가 실행됩니다.&lt;/p&gt;&lt;p&gt;&lt;img src=&quot;/729a61a43a3edded1c5056f6c023d0b4/kubernetes-cluster-architecture.svg&quot; alt=&quot;kubernetes-cluster-architecture&quot;/&gt;&lt;/p&gt;&lt;p&gt;각 노드마다 파드를 실행시키기 위해 다음과 같은 노드 컴포넌트들이 설치 및 실행됩니다. &lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet/&quot;&gt;kubelet&lt;/a&gt; : 파드의 컨테이너들이 제대로 실행되는 것을 보장 &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://kubernetes.io/docs/setup/production-environment/container-runtimes/&quot;&gt;컨테이너 런타임&lt;/a&gt;: 노드에서 실질적으로 컨테이너들을 실행 (&lt;div to=&quot;/posts/77&quot;&gt;지난 게시글 참고&lt;/div&gt;)&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://kubernetes.io/docs/reference/command-line-tools-reference/kube-proxy/&quot;&gt;kube-proxy&lt;/a&gt; : 네트워크 프록시&lt;/li&gt;&lt;/ul&gt;&lt;h2&gt;파드의 단계와 노드 스케줄링&lt;/h2&gt;&lt;p&gt;파드의 상태(&lt;code&gt;status&lt;/code&gt;) 필드의 값은
+&lt;a href=&quot;https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.30/#podstatus-v1-core&quot;&gt;PodStatus&lt;/a&gt; 객체입니다.
+PodStatus 객체의 &lt;code&gt;phase&lt;/code&gt; 필드를 통해 파드의 현재 상태에 대한 전반적인 개요를 파악할 수 있습니다.
+기본적으로 각 파드는 아래 다섯 가지 단계(&lt;code&gt;phase&lt;/code&gt;) 중 하나를 지닙니다.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;code&gt;Pending&lt;/code&gt;: 하나 이상의 컨테이너가 아직 실행 중이지 않음. (ex. 파드가 노드에 스케줄링&lt;div num=&quot;1&quot;&gt;&lt;/div&gt;되기 이전, 컨테이너 이미지를 다운로드 받는 중, 등)&lt;/li&gt;&lt;li&gt;&lt;code&gt;Running&lt;/code&gt;: 파드가 노드에 바인딩&lt;div num=&quot;2&quot;&gt;&lt;/div&gt;되어 모든 컨테이너들이 생성됨. 최소 하나의 컨테이너가 시작, 실행, 재시작 중인 상태.&lt;/li&gt;&lt;li&gt;&lt;code&gt;Succeeded&lt;/code&gt;: 파드의 모든 컨테이너들이 성공적으로 제거(terminated in success)되었으며, 재시작하지 않음.&lt;/li&gt;&lt;li&gt;&lt;code&gt;Failed&lt;/code&gt;: 파드의 컨테이너들 중 최소 하나가 실패로 인해 제거(terminated in failure)되었고, 모든 컨테이너들이 종료되어 재시작하지 않음.
+재시작하지 않으나, &lt;/li&gt;&lt;li&gt;&lt;code&gt;Unknown&lt;/code&gt;: 파드의 상태를 알 수 없음. 파드가 바인딩된 노드와의 네트워크 통신에서의 문제.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;새로운 파드가 생성되면 해당 파드는 고유한 식별자(&lt;code&gt;.metadata.uid&lt;/code&gt;)를 할당 받으며, &lt;code&gt;Pending&lt;/code&gt; 단계가 됩니다.
+이후 파드는 스케줄링 과정을 거쳐, 특정 노드에 바인딩됩니다.
+특정 파드가 노드에 바인딩되면 쿠버네티스는 해당 파드를 노드에서 실행시키기 위한 작업을 진행합니다.
+컨테이너들이 전부 생성되었다면 파드는 &lt;code&gt;Running&lt;/code&gt; 단계가 되며,
+해당 노드가 중단되거나 파드 자체가 제거(terminated)될 때까지 실행됩니다.
+만일 컨테이너 생성 과정에서 문제가 발생했다면 &lt;code&gt;Running&lt;/code&gt; 단계에 도달하지 못할 수 있습니다.
+또한 모든 컨테이너들이 종료되었고 더 이상 재시작할 수 없는 상태가 되었다면,
+파드는 &lt;code&gt;Succeeded&lt;/code&gt; 혹은 &lt;code&gt;Failed&lt;/code&gt; 단계가 됩니다.&lt;/p&gt;&lt;p&gt;참고로 &lt;code&gt;kubectl&lt;/code&gt; 명령어들에서는
+제거되고 있는 파드를 &lt;code&gt;Terminating&lt;/code&gt;이라는 상태로 표시하는 경우가 있는데,
+이는 파드의 다섯 가지 단계들 중 하나는 아닙니다.&lt;/p&gt;&lt;h3&gt;파드 장애 회복&lt;/h3&gt;&lt;p&gt;파드가 회복할 수 없는 상태라고 판단될 경우 클러스터는 문제가 된 파드를 제거하고,
+클러스터 내 다른 컴포넌트들에서 적절하게 대응하기를 기대합니다.
+즉, 쿠버네티스에서는 기본적으로 기존 파드는 제거하고 새로운 파드에 의해 대체하는 방식으로 파드 장애에 대응됩니다.
+이 새로운 파드는 기존 파드와 &lt;code&gt;.metadata.uid&lt;/code&gt; 값이 다르며, 어떤 노드에 스케줄링될지도 보장할 수 없습니다.&lt;/p&gt;&lt;p&gt;예를 들어, 특히 파드가 스케줄링된 노드에 장애가 발생하는 경우,
+해당 파드는 unhealthy하다고 판정되고 쿠버네티스에 의해 제거됩니다.
+또한 리소스 부족 혹은 노드 유지보수로 인해 파드들이 제거(eviction)될 수도 있습니다.&lt;/p&gt;&lt;p&gt;이런 방식으로 동작하는 이유는
+파드들이 휘발적인(ephemeral) 것으로 간주되며,
+&lt;strong&gt;각 파드는 생명주기상 단 한 번만 특정 노드에 스케줄링&lt;/strong&gt;될 수 있기 때문입니다.
+즉, 노드에 문제가 있을 때 이미 특정 노드에 스케줄링된 파드를 다른 노드로 이동시키는 것은 애초에 구조적으로 불가능합니다.&lt;/p&gt;&lt;h2&gt;컨테이너 상태와 kubelet&lt;/h2&gt;&lt;p&gt;쿠버네티스는 파드의 개별 컨테이너들의 상태를 지속적으로 체크하며,
+상태 변화 시점에 &lt;code&gt;postStart&lt;/code&gt;, &lt;code&gt;preStop&lt;/code&gt;과 같은
+&lt;a href=&quot;https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/&quot;&gt;컨테이너 생명주기 훅&lt;/a&gt;을
+실행시킬 수도 있습니다.
+파드 내 컨테이너들은 세 가지 상태 중 하나를 지닙니다.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;code&gt;Waiting&lt;/code&gt;: 아직 프로그램을 실행하기 이전 상태.&lt;/li&gt;&lt;li&gt;&lt;code&gt;Running&lt;/code&gt;: 문제 없이 실행 중인 상태. &lt;code&gt;postStart&lt;/code&gt; 훅이 설정된 경우 이미 실행 완료.&lt;/li&gt;&lt;li&gt;&lt;code&gt;Terminated&lt;/code&gt;: 실행을 시작하였고, 종료된 상태. &lt;code&gt;preStop&lt;/code&gt; 훅이 설정된 경우 이미 실행 완료.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;파드가 특정 노드에 스케줄링된 이후, 해당 노드의 &lt;code&gt;kubelet&lt;/code&gt;는 컨테이너 런타임을 활용하여 해당 파드의 컨테이너들을 생성하고 실행시킵니다.
+각 컨테이너는 우선 &lt;code&gt;Waiting&lt;/code&gt; 상태에서 시작하며
+컨테이너 이미지를 저장소에서 풀 받거나, Secret의 값을 적용하는 등의 사전 작업을 진행합니다.
+컨테이너가 실행되었고, 별 이슈 없이 아직도 실행 중이라면 &lt;code&gt;Running&lt;/code&gt; 상태가 됩니다.
+컨테이너가 실행되기 시작한 이후 문제 없이 프로그램이 종료되었거나, 에러로 인해 종료된 경우 &lt;code&gt;Terminated&lt;/code&gt; 상태가 됩니다.&lt;/p&gt;&lt;p&gt;기본적으로 &lt;code&gt;kubectl describe pod &amp;lt;name-of-pod&amp;gt;&lt;/code&gt; 명령어를 통해 파드 내의 모든 컨테이너들의 상태를 조회할 수 있으며,
+&lt;code&gt;kubectl&lt;/code&gt;를 활용하여 컨테이너의 현재 상태와 관련된 추가 정보를 질의할 수도 있습니다.&lt;/p&gt;&lt;h3&gt;컨테이너 재시작&lt;/h3&gt;&lt;p&gt;파드가 &lt;code&gt;Running&lt;/code&gt; 단계일 때 특정 컨테이너가 종료(terminated)되면,
+&lt;code&gt;kubelet&lt;/code&gt;에서는 해당 파드 내에 동일한 컨테이너를 자동으로 재시작합니다.&lt;/p&gt;&lt;p&gt;이때 해당 파드의 재시작 정책을 어떻게 설정했는지에 따라 종료된 컨테이너를 재시작시키거나, 그대로 종료된 상태로 유지합니다.
+기본적으로 &lt;code&gt;restartPolicy&lt;/code&gt; 필드에는 세 가지 값 중 하나가 오며, 디폴트 값은 &lt;code&gt;Always&lt;/code&gt;입니다.
+파드 수준에서 재시작 정책을 수정하면 이는 app 컨테이너와
+일반적인 &lt;a href=&quot;https://kubernetes.io/docs/concepts/workloads/pods/init-containers/&quot;&gt;init 컨테이너&lt;/a&gt;에 적용됩니다.
+&lt;a href=&quot;https://kubernetes.io/docs/concepts/workloads/pods/sidecar-containers/&quot;&gt;사이드카 컨테이너&lt;/a&gt;의 경우
+컨테이너 수준에서 &lt;code&gt;restartPolicy&lt;/code&gt;를 별도로 정의해줘야 합니다.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;code&gt;Always&lt;/code&gt;: 종료되었으면 무조건 재시작&lt;/li&gt;&lt;li&gt;&lt;code&gt;OnFailure&lt;/code&gt;: 에러 코드(non-zero exit status)와 함께 종료된 경우에만 재시작&lt;/li&gt;&lt;li&gt;&lt;code&gt;Never&lt;/code&gt;: 자동으로 재시작하지 않음&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;code&gt;kubelet&lt;/code&gt;은 지수적 백오프(exponential backoff) 전략을 통해
+컨테이너가 제대로 실행될 때까지 컨테이너 재시작 작업을 반복합니다.
+즉, 기본적으로 다음의 단계를 거칩니다.&lt;/p&gt;&lt;ol&gt;&lt;li&gt;Initial crash: 최초로 컨테이너가 사망했을 때 즉시 재시작합니다.&lt;/li&gt;&lt;li&gt;Repeated crashes: 재시작 이후 컨테이너가 다시 종료하는 상황이 반복되는 상태입니다. 다음 재시도 이전까지 대기 시간을 적용합니다(10초, 20초, 40초, 80초, ...로 증가. 최대값은 300초)&lt;/li&gt;&lt;li&gt;&lt;code&gt;CrashLoopBackOff&lt;/code&gt; 상태: 컨테이너 재시작 과정이 반복되며 백오프 메커니즘이 동작하고 있는 상태입니다.&lt;/li&gt;&lt;li&gt;Backoff reset: 컨테이너가 재시작되고 문제 없이 실행된지 일정 기간(ex. 10분)이 지난 상태입니다.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;정리하자면 재시작된 컨테이너가 종료되는 과정이 무한히 반복되는 현상을 크래시 루프(crash loop)라고 합니다.
+만일 노드에서 특정 컨테이너를 재시작하는 과정을 무한히 반복하는데 과하게 자원을 사용한다면,
+오히려 문제 없는 시스템에서 이상이 생길 수 있습니다.
+이 때문에 &lt;code&gt;kubelet&lt;/code&gt;은 일정 기간 동안 대기한 다음에 재시도하되, 이 대기 기간을 증가시키는 지수적 백오프 전략을 취합니다.
+만일 컨테이너가 &lt;code&gt;CrashLoopBackOff&lt;/code&gt; 상태라면 다음 컨테이너 재시작 작업까지 대기하는 중이라는 의미이며,
+이때 개발자는 장애 원인 분석을 진행할 필요가 있습니다.&lt;/p&gt;&lt;h2&gt;맺으며&lt;/h2&gt;&lt;p&gt;최근 회사에서 장애 대응을 할 일이 있었습니다.
+지속적으로 컨테이너가 재시작되는 과정을 지켜보며, 관련 지식을 정리해볼 필요성을 느꼈습니다.
+해당 게시글은 이 주제에 대해 가볍게 다뤘을 뿐이므로 자세한 내용은
+&lt;a href=&quot;https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/&quot;&gt;공식문서&lt;/a&gt;를 숙독해보는 것을 추천드립니다.&lt;/p&gt;&lt;hr/&gt;&lt;div&gt;&lt;/div&gt;&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://kubernetes.io/docs/concepts/workloads/pods/&quot;&gt;Kubernetes - Pod&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://kubernetes.io/docs/concepts/architecture/nodes/&quot;&gt;Kubernetes - Nodes&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://kubernetes.io/docs/concepts/overview/components/#node-components&quot;&gt;Kubernetes - Node Components&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/&quot;&gt;Kubernetes - Pod Lifecycle&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;div&gt;&lt;div num=&quot;1&quot;&gt;&lt;p&gt;스케줄링이란 생성된 파드를 실행시킬 노드를 하나 선택하는 과정입니다.&lt;/p&gt;&lt;/div&gt;&lt;div num=&quot;2&quot;&gt;&lt;p&gt;바인딩이란 스케줄링된 노드에 실제로 파드를 할당하는 과정입니다.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;</content:encoded></item><item><title><![CDATA[[k8s] ArgoCD과 Argo Rollouts 릴리즈별 k8s 버전 호환성 검토]]></title><description><![CDATA[ArgoCD과 Argo Rollouts 릴리즈들은 각각 특정 쿠버네티스 버전들에 대해서만 테스트되었습니다. 이를 확인하는 방법과 마이너 버전들 간의 Breaking Changes를 확인하는 방법이 대해 정리합니다.]]></description><link>https://bugoverdose.github.io/posts/78/</link><guid isPermaLink="false">https://bugoverdose.github.io/posts/78/</guid><pubDate>Fri, 05 Jul 2024 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;버전 호환성 검토의 필요성&lt;/h2&gt;&lt;p&gt;Argo CD는 쿠버네티스 환경에서 선언적인 GitOps 기반의 CD를 제공하기 위한 프로젝트입니다.
 Argo Rollouts는 쿠버네티스에서 블루-그린 배포, 카나리 배포 등의 배포 기능을 제공해주기 위한 프로젝트입니다.
 이 둘은 서로 독립된 별개의 프로젝트들이지만, 하나의 클러스터에서 함께 활용되는 경우가 많으므로 함께 다루고자 합니다.&lt;/p&gt;&lt;p&gt;이 둘 모두 쿠버네티스 클러스터 내부에서 &lt;code&gt;argocd&lt;/code&gt;와 &lt;code&gt;argo-rollouts&lt;/code&gt;와 같은 네임스페이스 내부에 배포되어 실행됩니다.
 때문에 쿠버네티스 클러스터의 버전에 부합하는 Argo CD 및 Argo Rollouts 릴리즈들을 설치하여 실행해야 합니다.&lt;/p&gt;&lt;p&gt;또한 클러스터의 버전을 올리기 전에는 현재 Argo CD와 Argo Rollouts 릴리즈들이
